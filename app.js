@@ -5,12 +5,12 @@ var app = express();
 //var errorHandler = require('errorhandler');
 
 var routes = require('./routes');
-
+var path = require('path');
 
 var port = process.env.PORT || 3000;
 
 
-app.use(express.static(__dirname + 'public'));
+app.use(express.static(path.join(__dirname)));
 
 
 app.listen(port, function () {
