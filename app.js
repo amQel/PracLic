@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 
 var $ = require('jquery');
-windom.jQuery = $;
+window.jQuery = $;
 
 //var errorHandler = require('errorhandler');
 
