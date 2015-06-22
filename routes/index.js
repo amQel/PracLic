@@ -1,5 +1,8 @@
 exports.nauczyciel = function(req, res) {
 
+    var imieNazwisko = req.params.id;
+    var imie = imieNazwisko.split('.');
+    console.log(imie);
     var xml = '<?xml version="1.0" encoding="utf-8"?>\n';
     xml += '<response><ip>' + '</ip><tm>' + '</tm></response>';
     res.setHeader("Cache-Control", "no-cache, must-revalidate"); 
