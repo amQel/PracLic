@@ -1,16 +1,13 @@
 module.exports = function(app, passport) {
     app.get('/', function (req, res) {
-        res.render('index');
         if(req.isAuthenticated()){
-           res.render('index.ejs',{
+            res.render('index',{
             data : 'Zalogowano jako ' + req.user.local.email
-           }
-          );
+           });
         } else {
-        res.render('index.ejs', {
-           data : 'nie zalogowano'
-            }
-           );
+            res.render('index', {
+               data : 'nie zalogowano'
+            });
         }
     });
 

@@ -6,7 +6,8 @@ var userSchema = mongoose.Schema({
        email        : String,
        password     : String,
        courses      : [{ id : Number }],
-       role         : String
+       role         : String,
+       city         : String
    }
 });
 
