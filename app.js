@@ -25,7 +25,8 @@ app.use(express.static(path.join(__dirname)));
 // express
 app.use(morgan('dev'));
 app.use(cookieParser());
-app.use(bodyParser());
+app.use(bodyParser.json()); // html formsy
+app.use(bodyParser.urlencoded({ extended:true }));
 
 app.set('view engine', 'ejs');
 
