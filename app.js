@@ -9,10 +9,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var configDB = require('./config/database.js');
+var routes = require('./routes');
+var path = require('path');
+var static = require('serve-static');
+
 
 mongoose.connect(configDB.url);
 
 require('./config/passport')(passport);
+
+
+
+app.use(express.static(path.join(__dirname)));
 
 // express
 app.use(morgan('dev'));

@@ -33,6 +33,28 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
+    
+     app.get('/student', function (req, res) {
+         res.render('student', {
+             //tutaj dane użytkownika req.params .. 
+       });
+    });
+    app.get('/teacher', function (req, res) {
+         res.render('teacher', {
+             //tutaj dane użytkownika req.params .. 
+       });
+    });
+    app.get('/search', function (req, res) {
+         res.render('search', {
+             //tutaj dane użytkownika req.params .. 
+       });
+    });
+    app.get('/course', function (req, res) {
+         res.render('course', {
+             //tutaj dane użytkownika req.params .. 
+       });
+    });
+    
 };
 
 function isLoggedIn(req, res, next){
