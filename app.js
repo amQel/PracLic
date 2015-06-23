@@ -19,7 +19,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser());
 
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs');
 
 // passport
 app.use(session({ secret: '5Tnc0Sv2bMt0D536Jv69MQg5j5sT3tXd' }));
