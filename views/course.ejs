@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Our Courses</title>
+  <% include /partials/headStudent.ejs %>   
 </head>
-<body>
+<body class="container">
+<header>
+      <% include /partials/headerStudent.ejs %> 
+    </header>
    <ul>
 <% for(var i=0; i<courses.length; i++) {%>
    <li><%=  courses[i].id %></li>
@@ -15,6 +19,9 @@
    <br>
 <% } %>
 </ul>
-<a href="/">back to main</a>
+<a href="/">Back to profile</a>
+    <footer>
+        <% include /partials/footer.ejs %>   
+    </footer>
 </body>
 </html>

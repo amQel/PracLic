@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+    <% include /partials/headTeacher.ejs %>   
     <% include ./partials/headStudent.ejs %>   
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
 	<script>
@@ -50,12 +50,9 @@
 
  
     <header>
-      <% include ./partials/headerStudent.ejs %> 
+        <% include /partials/headerTeacher.ejs %>
     </header>
-   
-  
-   
-    <section class="round-border">
+   <section class="round-border">
 
 			<div>
 				<button href="#collapse1" class="nav-toggle">Zmien email</button>
@@ -75,10 +72,10 @@
 			</div>
 		</section>
         <br>
-    
+
     
     <footer>
-        <% include ./partials/footer.ejs %>   
+        <% include /partials/footer.ejs %>
     </footer>
 </body>
 </html>
