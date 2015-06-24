@@ -8,7 +8,8 @@ var couseSchema = mongoose.Schema({
            name : String,
            subject : String,
            description : String
-       }
+       },
+       courseUsers: [ { name : String } ]
 });
 
 
