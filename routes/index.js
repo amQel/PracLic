@@ -74,7 +74,19 @@ module.exports = function(app, passport) {
         res.redirect('/');
     });
     
+      app.post('/changeaccount',function(req, res){
+          
+        res.render('changeaccountStudent', {
+           user : req.user
+       });
+    });
     
+    app.post('/changeaccountTeacher',function(req, res){
+          
+        res.render('changeaccountTeacher', {
+           user : req.user
+       });
+    });
     
      app.get('/student', function (req, res) {
           if(req.user.local.role=='student'){

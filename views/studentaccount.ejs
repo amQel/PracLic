@@ -54,11 +54,12 @@
     </header>
    
   
-   
+   <form action="/changeaccount" method="post">
     <section class="round-border">
 
 			<div>
-				<button href="#collapse1" class="nav-toggle">Zmien email</button>
+				<button type="button" href="#collapse1" class="nav-toggle">Zmien email</button>
+               
 			</div>
 			<div id="collapse1" style="display:none">
 				<input type="text" name="email">
@@ -68,7 +69,8 @@
     <section class="round-border">
 
 			<div>
-				<button href="#collapse2" class="toggle">Zmien password</button>
+				<button type="button" href="#collapse2" class="toggle">Zmien password</button>
+                
 			</div>
 			<div id="collapse2" style="display:none">
 				<input type="password" name="password">
@@ -76,6 +78,10 @@
 		</section>
         <br>
     
+        
+        
+        <button type="submit">Change</button>
+    </form>
     
     <footer>
         <% include ./partials/footer.ejs %>   

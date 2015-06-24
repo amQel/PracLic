@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <% include /partials/headTeacher.ejs %>   
-    <% include ./partials/headStudent.ejs %>   
+     
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
 	<script>
 		$(document).ready(function() {
@@ -52,10 +52,12 @@
     <header>
         <% include /partials/headerTeacher.ejs %>
     </header>
+    
+    <form action="/changeaccountTeacher" method="post">
    <section class="round-border">
 
 			<div>
-				<button href="#collapse1" class="nav-toggle">Zmien email</button>
+				<button type="button" href="#collapse1" class="nav-toggle">Zmien email</button>
 			</div>
 			<div id="collapse1" style="display:none">
 				<input type="text" name="email">
@@ -65,14 +67,14 @@
     <section class="round-border">
 
 			<div>
-				<button href="#collapse2" class="toggle">Zmien password</button>
+				<button type="button" href="#collapse2" class="toggle">Zmien password</button>
 			</div>
 			<div id="collapse2" style="display:none">
 				<input type="password" name="password">
 			</div>
 		</section>
         <br>
-
+<button type="submit">Change</button>
     
     <footer>
         <% include /partials/footer.ejs %>
