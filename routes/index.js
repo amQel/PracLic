@@ -13,7 +13,8 @@ module.exports = function (app, passport) {
             });
         } else {
             res.render('index', {
-                data: 'nie zalogowano'
+                user: undefined,
+                data: 'Nie zalogowano'
             });
         }
     });
@@ -219,6 +220,12 @@ module.exports = function (app, passport) {
 
     app.get('/addcourse', function (req, res) {
         res.render('addcourse', {
+            user: req.user
+        });
+    });
+    
+    app.get('/index', function (req, res) {
+        res.render('index', {
             user: req.user
         });
     });
