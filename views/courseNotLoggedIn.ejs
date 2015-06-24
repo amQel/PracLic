@@ -2,12 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Our Courses</title>
-  <% include ./partials/headStudent.ejs %>   
+    <title>Our Courses</title> 
 </head>
 <body class="container">
 <header>
-      <% include ./partials/headerStudent.ejs %> 
     </header>
    <ul>
 <% for(var i=0; i<courses.length; i++) {%>
@@ -16,13 +14,11 @@
    <li><%= courses[i].courseInfo.name %></li>
    <li><%= courses[i].courseInfo.subject %></li>
    <li><%= courses[i].courseInfo.description %></li>
-   <a href="/zapisz/<%= courses[i].id %>">Zapisz mnie na ten kurs!</a>
    <br>
 <% } %>
 </ul>
-<a href="/profile">Back to profile</a>
-    <footer>
-        <% include ./partials/footer.ejs %>   
+<a href="/login">zaloguj się aby móc uczęszczać na kurs</a>
+    <footer> 
     </footer>
 </body>
 </html>

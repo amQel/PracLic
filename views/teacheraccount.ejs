@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-    <% include ./partials/headStudent.ejs %>   
+    <% include ./partials/headTeacher.ejs %>   
+     
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
 	<script>
 		$(document).ready(function() {
@@ -50,16 +50,14 @@
 
  
     <header>
-      <% include ./partials/headerStudent.ejs %> 
+        <% include ./partials/headerTeacher.ejs %>
     </header>
-   
-  
-   <form action="/changeaccount" method="post">
-    <section class="round-border">
+    
+    <form action="/changeaccountTeacher" method="post">
+   <section class="round-border">
 
 			<div>
 				<button type="button" href="#collapse1" class="nav-toggle">Zmien email</button>
-               
 			</div>
 			<div id="collapse1" style="display:none">
 				<input type="text" name="email">
@@ -70,21 +68,16 @@
 
 			<div>
 				<button type="button" href="#collapse2" class="toggle">Zmien password</button>
-                
 			</div>
 			<div id="collapse2" style="display:none">
 				<input type="password" name="password">
 			</div>
 		</section>
         <br>
-    
-        
-        
-        <button type="submit">Change</button>
-    </form>
+<button type="submit">Change</button>
     
     <footer>
-        <% include ./partials/footer.ejs %>   
+        <% include ./partials/footer.ejs %>
     </footer>
 </body>
 </html>

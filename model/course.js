@@ -3,7 +3,13 @@ var bcrypt = require('bcrypt-nodejs');
 
 var couseSchema = mongoose.Schema({
        id : Number,
-       teacher : String
+       teacher : String,
+       courseInfo : {
+           name : String,
+           subject : String,
+           description : String
+       },
+       courseUsers: [ { name : String } ]
 });
 
 
