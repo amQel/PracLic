@@ -73,6 +73,19 @@ module.exports = function(app, passport) {
        });
     });
     
+    app.get('/mycourses', function (req, res) {
+        var myCourses = [];
+        courses.forEach(function(course){
+            if(course.user == req.user.local.email){
+            myCourses.push(course);
+            }
+        });
+         res.render('myCourses', {
+             data : "kursy uzytkownika " + req.user.local.email,
+             courses : myCourses 
+       });
+    });
+    
     app.post('/newcourse',function(req, res){
         var course = {
             id : courses.length,
@@ -83,7 +96,7 @@ module.exports = function(app, passport) {
         courses.push(course);
         
         console.log(course);
-        res.redirect('/');
+        res.redirect('/mycourses');
     });
     
 };
