@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Our Courses</title> 
+</head>
+<body class="container">
+<header>
+    </header>
+   <ul>
+<% for(var i=0; i<courses.length; i++) {%>
+   <li><%=  courses[i].id %></li>
+   <li><%= courses[i].teacher %></li>
+   <li><%= courses[i].courseInfo.name %></li>
+   <li><%= courses[i].courseInfo.subject %></li>
+   <li><%= courses[i].courseInfo.description %></li>
+   <br>
+<% } %>
+</ul>
+<a href="/login">zaloguj się aby móc uczęszczać na kurs</a>
+    <footer> 
+    </footer>
+</body>
+</html>

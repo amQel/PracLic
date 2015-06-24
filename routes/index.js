@@ -128,10 +128,18 @@ module.exports = function(app, passport) {
     });
     app.get('/course', function (req, res) {
         var resend = function(req, res) {
+            if(req.isAuthenticated()){
             res.render('course', {
              courses : courses,
              user : req.user
          });
+        } else {
+            res.render('courseNotLoggedIn', {
+             courses : courses,
+             user : req.user
+         });
+            
+        }
         }
         reorganizeUsers(resend, req, res);
         
