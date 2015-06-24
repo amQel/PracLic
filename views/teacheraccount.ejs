@@ -2,6 +2,49 @@
 <html lang="en">
 <head>
     <% include /partials/headTeacher.ejs %>   
+    <% include ./partials/headStudent.ejs %>   
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
+	<script>
+		$(document).ready(function() {
+		  $('.toggle').click(function(){
+			
+			var collapse_content_selector = $(this).attr('href');					
+ 
+			var toggle_switch = $(this);
+			$(collapse_content_selector).toggle(function(){
+			  if($(this).css('display')=='none'){
+                                
+				toggle_switch.html('Zmien password');
+			  }else{
+                                //change the button label to be 'Hide'
+				toggle_switch.html('Nie zmieniaj passwordu');
+			  }
+			});
+		  });
+ 
+		});	
+		</script>
+    
+	<script>
+		$(document).ready(function() {
+		  $('.nav-toggle').click(function(){
+			
+			var collapse_content_selector = $(this).attr('href');					
+ 
+			var toggle_switch = $(this);
+			$(collapse_content_selector).toggle(function(){
+			  if($(this).css('display')=='none'){
+                                
+				toggle_switch.html('Zmien email');
+			  }else{
+                                //change the button label to be 'Hide'
+				toggle_switch.html('Nie zmieniaj emaila');
+			  }
+			});
+		  });
+ 
+		});	
+		</script>
 </head>
 <body class="container">
 
@@ -9,9 +52,26 @@
     <header>
         <% include /partials/headerTeacher.ejs %>
     </header>
-    <main>
-    
-    </main>
+   <section class="round-border">
+
+			<div>
+				<button href="#collapse1" class="nav-toggle">Zmien email</button>
+			</div>
+			<div id="collapse1" style="display:none">
+				<input type="text" name="email">
+			</div>
+		</section>
+
+    <section class="round-border">
+
+			<div>
+				<button href="#collapse2" class="toggle">Zmien password</button>
+			</div>
+			<div id="collapse2" style="display:none">
+				<input type="password" name="password">
+			</div>
+		</section>
+        <br>
 
     
     <footer>
