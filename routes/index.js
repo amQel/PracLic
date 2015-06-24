@@ -6,7 +6,7 @@ module.exports = function(app, passport) {
     app.get('/', function (req, res) {
         if(req.isAuthenticated()){
             res.render('index',{
-            data : 'Zalogowano jako ' + req.user.local.email
+            data : 'Zalogowano jako ' + req.user.local.email,user : req.user
            });
         } else {
             res.render('index', {
@@ -37,9 +37,7 @@ module.exports = function(app, passport) {
        });
     });
     
-    app.get('/student', function (req, res) {
-        res.render('student.ejs');
-    });
+   
     
     app.post('/login', passport.authenticate('login', {
         successRedirect : '/profile',
@@ -76,15 +74,32 @@ module.exports = function(app, passport) {
         res.redirect('/');
     });
     
+    
+    
      app.get('/student', function (req, res) {
-         res.render('student', {
-             //tutaj dane użytkownika req.params .. 
-       });
-    });
-    app.get('/teacher', function (req, res) {
-         res.render('teacher', {
+          if(req.user.local.role=='student'){
+       res.render('student', {
            user : req.user
        });
+        }
+        else{
+        res.render('index');
+    }
+         
+    });
+    app.get('/teacher', function (req, res) {
+           if(req.user.local.role=='teacher'){
+       res.render('teacher', {
+           user : req.user
+       });
+        }
+        else{
+        res.render('index', {
+           user : req.user
+       });
+    }
+             
+         
     });
     app.get('/search', function (req, res) {
          res.render('search', {
@@ -93,7 +108,15 @@ module.exports = function(app, passport) {
     });
     app.get('/course', function (req, res) {
          res.render('course', {
-             courses : courses
+             courses : courses,user : req.user
+         });
+    });
+    
+    
+    
+    app.get('/teacheraccount', function (req, res) {
+         res.render('teacheraccount', {
+             user : req.user
          });
     });
     
