@@ -13,13 +13,13 @@
 <% for(var i=0; i<courses.length; i++) {%>
    <li><%=  courses[i].id %></li>
    <li><%= courses[i].teacher %></li>
-   <li><%= courses[i].courseInfo.courseName %></li>
-   <li><%= courses[i].courseInfo.Subject %></li>
-   <li><%= courses[i].courseInfo.courseDescription %></li>
+   <li><%= courses[i].courseInfo.name %></li>
+   <li><%= courses[i].courseInfo.subject %></li>
+   <li><%= courses[i].courseInfo.description %></li>
    <br>
 <% } %>
 </ul>
-<a href="/">Back to profile</a>
+<a href="/profile">Back to profile</a>
     <footer>
         <% include ./partials/footer.ejs %>   
     </footer>
