@@ -1,6 +1,7 @@
 var path = require('path');
 
 var courses = [];
+var crs = require('../model/course');
 
 module.exports = function(app, passport) {
     
@@ -108,10 +109,20 @@ module.exports = function(app, passport) {
        });
     });
     app.get('/course', function (req, res) {
-         res.render('course', {
-             courses : courses,user : req.user
+        var resend = function(req, res) {
+            res.render('course', {
+             courses : courses,
+             user : req.user
          });
-    });
+        }
+        reorganizeUsers(resend, req, res);
+        
+         
+//     crs.remove({ 'id' : 0 }, function(err) {
+//    
+//       console.log(err);
+//    });
+});
     
     
     
@@ -128,9 +139,10 @@ module.exports = function(app, passport) {
     });
     
     app.get('/mycourses', function (req, res) {
+        var resnd = function(req, res){
         var myCourses = [];
         courses.forEach(function(course){
-            if(course.user == req.user.local.email){
+            if(course.teacher == req.user.local.email){
             myCourses.push(course);
             }
         });
@@ -138,19 +150,33 @@ module.exports = function(app, passport) {
              data : "kursy uzytkownika " + req.user.local.email,
              courses : myCourses 
        });
+    }
+        reorganizeUsers(resnd, req, res);
     });
     
     app.post('/newcourse',function(req, res){
-        var course = {
-            id : courses.length,
-            user : req.user.local.email,
-            courseInfo : req.body
-            
-        }
-        courses.push(course);
         
-        console.log(course);
+        var resnd = function(req, res){
+        var newCourse = new crs();
+        newCourse.id = courses.length;
+        newCourse.teacher = req.user.local.email;
+        newCourse.courseInfo.name = req.body.courseName;
+        newCourse.courseInfo.subject = req.body.Subject;
+        newCourse.courseInfo.description = req.body.courseDescription;
+        
+        newCourse.save(function(err){
+                        if(err){
+                            throw err;
+                        }
+                    });
+        
+        courses.push(newCourse);
         res.redirect('/mycourses');
+        }
+        
+        reorganizeUsers(resnd, req, res);
+        
+        
     });
 
     app.get('/cities/:id', function(req, res){
@@ -166,6 +192,21 @@ function isLoggedIn(req, res, next){
 
     res.redirect('/'); // jesli nie - index
 }
+
+var reorganizeUsers = function(cb, req, res){
+    courses = [];
+    crs.find({}, function(err, crss) {
+        crss.forEach(function(course){
+        console.log(course);
+        courses.push(course);
+        console.log(courses.length);
+        });
+        if (cb) cb(req, res);
+    });
+    
+};
+
+
 
 /*
 exports.nauczyciel = function(req, res) {
