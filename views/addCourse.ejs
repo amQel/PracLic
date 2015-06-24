@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Course</title>
+</head>
+
+<body>
+    <form action="/newcourse" method="post">
+        <div>
+            <label>Course Name</label>
+            <input type="text" name="courseName">
+        </div>
+        <div>
+            <label>Subject</label>
+            <select name="Subject" id="Subject">
+                <option value="J. polski">J. polski</option>
+                <option value="J. angielski">J. angielski</option>
+                <option value="J. niemiecki">J. niemiecki</option>
+                <option value="J. rosyjski">J. rosyjski</option>
+                <option value="Matematyka">Matematyka</option>
+                <option value="Chemia">Chemia</option>
+                <option value="Fizyka">Fizyka</option>
+                <option value="Biologia">Biologia</option>
+                <option value="Historia">Historia</option>
+                <option value="Geografia">Geografia</option>
+                <option value="Sztuka">Sztuka</option>
+                <option value="Religia">Religia</option>
+                <option value="WOS - Wiedza o społeczeństwie">WOS - Wiedza o społeczeństwie</option>
+                <option value="Informatyka">Informatyka</option>
+                <option value="Wychowanie fizyczne">Wychowanie fizyczne</option>
+            </select>
+        </div>
+        <div>
+            <label>Description</label>
+            <textarea rows="4" cols="40" name="courseDescription">Please add some description</textarea>
+        </div>
+        <button type="submit">Add</button>
+    </form>
+</body>
+
+</html>

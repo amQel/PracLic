@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Our Courses</title>
+    <title>my courses</title>
 </head>
 <body>
+  <p id="data"><%= data %></p>
    <ul>
 <% for(var i=0; i<courses.length; i++) {%>
    <li><%=  courses[i].id %></li>
@@ -15,5 +16,6 @@
    <br>
 <% } %>
 </ul>
+<a href="/profile">back to profile</a>
 </body>
 </html>

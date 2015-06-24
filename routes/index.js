@@ -1,4 +1,8 @@
+var courses = [];
+
+
 module.exports = function(app, passport) {
+    
     app.get('/', function (req, res) {
         if(req.isAuthenticated()){
             res.render('index',{
@@ -67,8 +71,40 @@ module.exports = function(app, passport) {
     });
     app.get('/course', function (req, res) {
          res.render('course', {
+             courses : courses
+         });
+    });
+    
+    app.get('/addcourse', function (req, res) {
+         res.render('addCourse', {
              //tutaj dane użytkownika req.params .. 
        });
+    });
+    
+    app.get('/mycourses', function (req, res) {
+        var myCourses = [];
+        courses.forEach(function(course){
+            if(course.user == req.user.local.email){
+            myCourses.push(course);
+            }
+        });
+         res.render('myCourses', {
+             data : "kursy uzytkownika " + req.user.local.email,
+             courses : myCourses 
+       });
+    });
+    
+    app.post('/newcourse',function(req, res){
+        var course = {
+            id : courses.length,
+            user : req.user.local.email,
+            courseInfo : req.body
+            
+        }
+        courses.push(course);
+        
+        console.log(course);
+        res.redirect('/mycourses');
     });
     
 };
