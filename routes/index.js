@@ -1,5 +1,6 @@
-var courses = [];
+var path = require('path');
 
+var courses = [];
 
 module.exports = function(app, passport) {
     
@@ -75,7 +76,7 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
-    
+
      app.get('/student', function (req, res) {
          res.render('student', {
              //tutaj dane użytkownika req.params .. 
@@ -128,7 +129,11 @@ module.exports = function(app, passport) {
         console.log(course);
         res.redirect('/mycourses');
     });
-    
+
+    app.get('/cities/:id', function(req, res){
+       var id = req.params.id;
+       res.sendFile(path.resolve('views/cities/' + id + '.html'));
+    });
 };
 
 function isLoggedIn(req, res, next){
