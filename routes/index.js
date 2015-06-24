@@ -29,6 +29,12 @@ module.exports = function (app, passport) {
             user: req.user
         });
     });
+    
+    app.get('/joinedcourses', function (req, res) {
+        res.render('joinedcourses', {
+            user: req.user
+        });
+    });
 
     app.get('/contactTeacher', function (req, res) {
         res.render('contactTeacher', {
@@ -156,6 +162,10 @@ module.exports = function (app, passport) {
 
     });
 
+    
+
+    
+    
     app.get('/zapisz/:id', function (req, res) {
         var ID = req.params.id;
         crs.findOne({

@@ -1,90 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    
-    <% include ./partials/headStudent.ejs %>   
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
-	<script>
-		$(document).ready(function() {
-		  $('.toggle').click(function(){
-			
-			var collapse_content_selector = $(this).attr('href');					
+
+    <% include ./partials/headStudent.ejs %>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
  
-			var toggle_switch = $(this);
-			$(collapse_content_selector).toggle(function(){
-			  if($(this).css('display')=='none'){
-                                
-				toggle_switch.html('Zmien password');
-			  }else{
-                                //change the button label to be 'Hide'
-				toggle_switch.html('Nie zmieniaj passwordu');
-			  }
-			});
-		  });
- 
-		});	
-		</script>
-    
-	<script>
-		$(document).ready(function() {
-		  $('.nav-toggle').click(function(){
-			
-			var collapse_content_selector = $(this).attr('href');					
- 
-			var toggle_switch = $(this);
-			$(collapse_content_selector).toggle(function(){
-			  if($(this).css('display')=='none'){
-                                
-				toggle_switch.html('Zmien email');
-			  }else{
-                                //change the button label to be 'Hide'
-				toggle_switch.html('Nie zmieniaj emaila');
-			  }
-			});
-		  });
- 
-		});	
-		</script>
 </head>
+
 <body class="container">
 
- 
+
     <header>
-      <% include ./partials/headerStudent.ejs %> 
+        <% include ./partials/headerStudent.ejs %>
     </header>
-   
-  
-   <form action="/changeaccount" method="post">
-    <section class="round-border">
 
-			<div>
-				<button type="button" href="#collapse1" class="nav-toggle">Zmien email</button>
-               
-			</div>
-			<div id="collapse1" style="display:none">
-				<input type="text" name="email">
-			</div>
-		</section>
 
-    <section class="round-border">
+    <form action="/changeaccount" method="post">
+        <section class="round-border">
 
-			<div>
-				<button type="button" href="#collapse2" class="toggle">Zmien password</button>
-                
-			</div>
-			<div id="collapse2" style="display:none">
-				<input type="password" name="password">
-			</div>
-		</section>
+            <div>
+                <button type="button" href="#collapse1" class="nav-toggle">Zmien email</button>
+
+            </div>
+            <div id="collapse1" style="display:none">
+                <input type="text" name="email">
+            </div>
+        </section>
+
+        <section class="round-border">
+
+            <div>
+                <button type="button" href="#collapse2" class="toggle">Zmien password</button>
+
+            </div>
+            <div id="collapse2" style="display:none">
+                <input type="password" name="password">
+            </div>
+        </section>
         <br>
-    
-        
-        
+
+
+
         <button type="submit">Change</button>
     </form>
-    
+
     <footer>
-        <% include ./partials/footer.ejs %>   
+        <% include ./partials/footer.ejs %>
     </footer>
 </body>
+<script src="/js/jquery.min.js"></script>
+<script src="../scripts/student.js"></script>
 </html>
