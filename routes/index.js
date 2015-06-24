@@ -39,9 +39,7 @@ module.exports = function(app, passport) {
        });
     });
     
-    app.get('/student', function (req, res) {
-        res.render('student.ejs');
-    });
+    
     
     app.post('/login', passport.authenticate('login', {
         successRedirect : '/profile',
