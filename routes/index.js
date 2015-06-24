@@ -15,6 +15,14 @@ module.exports = function(app, passport) {
         res.render('login', { message: req.flash('loginMessage') });
     });
 
+    app.get('/contact', function (req, res) {
+        res.render('contact.ejs');
+    });
+    
+    app.get('/student', function (req, res) {
+        res.render('student.ejs');
+    });
+    
     app.post('/login', passport.authenticate('login', {
         successRedirect : '/profile',
         failureRedirect : '/login',
