@@ -1,11 +1,13 @@
 "use strict"
 
-$(function () {
+$(document).ready(function(){
     var $registerForm = $("form");
+    var $provinceSelection = $registerForm.find('select[name=province]');
+    var $citySelection = $registerForm.find('select[name=city]');
 
-    var $provinceSelection = $registerForm.find('#prov');
     $provinceSelection.on("change", function () {
-       console.log("Beniz");
+       console.log($(this).val());
+        $citySelection.load('./cities/' + $(this).children(":selected").attr("id") + '.html');
     });
 });
 
@@ -16,7 +18,7 @@ Bielawa
 Bierutów
 Bogatynia
 Boguszów-Gorce
-Boles³awiec
+Boles³awie
 Bolków
 Brzeg Dolny
 Bystrzyca K³odzka
