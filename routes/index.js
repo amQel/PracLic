@@ -1,5 +1,6 @@
-var courses = [];
+var path = require('path');
 
+var courses = [];
 
 module.exports = function(app, passport) {
     
@@ -37,7 +38,9 @@ module.exports = function(app, passport) {
        });
     });
     
-   
+    app.get('/student', function (req, res) {
+        res.render('student.ejs');
+    });
     
     app.post('/login', passport.authenticate('login', {
         successRedirect : '/profile',
@@ -73,6 +76,7 @@ module.exports = function(app, passport) {
         req.logout();
         res.redirect('/');
     });
+
     
       app.post('/changeaccount',function(req, res){
           
@@ -88,6 +92,9 @@ module.exports = function(app, passport) {
        });
     });
     
+
+
+
      app.get('/student', function (req, res) {
           if(req.user.local.role=='student'){
        res.render('student', {
@@ -163,7 +170,11 @@ module.exports = function(app, passport) {
         console.log(course);
         res.redirect('/mycourses');
     });
-    
+
+    app.get('/cities/:id', function(req, res){
+       var id = req.params.id;
+       res.sendFile(path.resolve('views/cities/' + id + '.html'));
+    });
 };
 
 function isLoggedIn(req, res, next){
