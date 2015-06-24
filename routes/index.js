@@ -23,6 +23,10 @@ module.exports = function(app, passport) {
         res.render('contact.ejs');
     });
     
+    app.get('/studentaccount', function (req, res) {
+        res.render('studentaccount.ejs');
+    });
+    
     app.get('/student', function (req, res) {
         res.render('student.ejs');
     });
@@ -44,9 +48,17 @@ module.exports = function(app, passport) {
     }));
 
     app.get('/profile', isLoggedIn, function (req, res) {
-       res.render('profile', {
+        
+        if(req.user.local.role=='student'){
+       res.render('student', {
            user : req.user
        });
+        }
+        else{
+        res.render('teacher', {
+           user : req.user
+       });
+    }
     });
 
     app.get('/logout', function (req, res) {
