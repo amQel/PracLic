@@ -20,11 +20,21 @@ module.exports = function(app, passport) {
     });
 
     app.get('/contact', function (req, res) {
-        res.render('contact.ejs');
+        res.render('contact', {
+           user : req.user
+       });
+    });
+    
+     app.get('/contactTeacher', function (req, res) {
+        res.render('contactTeacher', {
+           user : req.user
+       });
     });
     
     app.get('/studentaccount', function (req, res) {
-        res.render('studentaccount.ejs');
+        res.render('studentaccount', {
+           user : req.user
+       });
     });
     
     app.get('/student', function (req, res) {
@@ -73,7 +83,7 @@ module.exports = function(app, passport) {
     });
     app.get('/teacher', function (req, res) {
          res.render('teacher', {
-             //tutaj dane użytkownika req.params .. 
+           user : req.user
        });
     });
     app.get('/search', function (req, res) {
@@ -88,8 +98,8 @@ module.exports = function(app, passport) {
     });
     
     app.get('/addcourse', function (req, res) {
-         res.render('addCourse', {
-             //tutaj dane użytkownika req.params .. 
+         res.render('addcourse', {
+           user : req.user
        });
     });
     
