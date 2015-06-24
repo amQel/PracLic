@@ -2,9 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>course</title>
+    <title>Our Courses</title>
 </head>
 <body>
-    EJS do zrobienia przez szpaka
+   <ul>
+<% for(var i=0; i<courses.length; i++) {%>
+   <li><%=  courses[i].id %></li>
+   <li><%= courses[i].user %></li>
+   <li><%= courses[i].courseInfo.courseName %></li>
+   <li><%= courses[i].courseInfo.Subject %></li>
+   <li><%= courses[i].courseInfo.courseDescription %></li>
+   <br>
+<% } %>
+</ul>
 </body>
 </html>
