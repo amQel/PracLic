@@ -2,16 +2,14 @@
 <html>
 <head>
     <title>Home page</title>
+        <link href="../css/main.css" rel="stylesheet" type="text/css" />
+   <% include /partials/headerIndex.ejs %>  
 </head>
 <body>
-    <div>
-        <a id="login" href="/login">Login</a>
-        <a id="register" href="/register">Register</a>
-        <p id="logged"><%= data %></p>
-        <a href="/student">Student</a>
-        <a href="/teacher">Teacher</a>
-        <a href="/course">Our Courses</a>
-        <a href="/search">search</a>
+   <header>   <% include /partials/headIndex.ejs %> </header>
+    <div class="jumbotron">
+    Nie masz jeszcze konta? Zarejestruj się!</br>
+    <a id="register" href="/register">Register</a>
     </div>
 </body>
 <script src="/js/jquery.min.js"></script>
