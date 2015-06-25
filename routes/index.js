@@ -140,7 +140,7 @@ module.exports = function (app, passport) {
                     courses: courses,
                     user: req.user
                 });
-
+//funkcja do czyszczenia bazy danych z kursów - wywolywac ostroznie
                 //                courses.forEach(function (id, course) {
                 //                    console.log("beniz" + course);
                 //                    crs.remove({
@@ -193,11 +193,7 @@ module.exports = function (app, passport) {
             }
         });
         res.redirect('/profile');
-        //        crs.update({id : req.params.id}, 
-        //                   {
-        //            
-        //                });
-
+        
     });
 
 
