@@ -13,7 +13,8 @@ module.exports = function (app, passport) {
             });
         } else {
             res.render('index', {
-                data: 'nie zalogowano'
+                user: undefined,
+                data: 'Nie zalogowano'
             });
         }
     });
@@ -26,6 +27,12 @@ module.exports = function (app, passport) {
 
     app.get('/contact', function (req, res) {
         res.render('contact', {
+            user: req.user
+        });
+    });
+    
+    app.get('/joinedcourses', function (req, res) {
+        res.render('joinedcourses', {
             user: req.user
         });
     });
@@ -156,6 +163,10 @@ module.exports = function (app, passport) {
 
     });
 
+    
+
+    
+    
     app.get('/zapisz/:id', function (req, res) {
         var ID = req.params.id;
         crs.findOne({
@@ -205,6 +216,12 @@ module.exports = function (app, passport) {
 
     app.get('/addcourse', function (req, res) {
         res.render('addcourse', {
+            user: req.user
+        });
+    });
+    
+    app.get('/index', function (req, res) {
+        res.render('index', {
             user: req.user
         });
     });

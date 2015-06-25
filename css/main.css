@@ -17,3 +17,8 @@ body {
   margin: 0 auto;
   text-align: center;
 }
+
+#logged {
+width: 400px;
+}
+
