@@ -2,20 +2,38 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <title>Your Courses</title>
     <% include ./partials/headStudent.ejs %>
 </head>
 
 <body class="container">
-
-
     <header>
         <% include ./partials/headerStudent.ejs %>
     </header>
-    <main>
-
-    </main>
-
-
+    <p><%= data %></p>
+    <ul>
+        <% for(var i=0; i<courses.length; i++) {%>
+            <li>
+                <%=courses[i].id %>
+            </li>
+            <li>
+                <%=courses[i].teacher %>
+            </li>
+            <li>
+                <%=courses[i].courseInfo.name %>
+            </li>
+            <li>
+                <%=courses[i].courseInfo.subject %>
+            </li>
+            <li>
+                <%=courses[i].courseInfo.description %>
+            </li>
+            <a href="/zapisz/<%= courses[i].id %>">Zapisz mnie na ten kurs!</a>
+            <br>
+            <% } %>
+    </ul>
+    <a href="/profile">Back to profile</a>
     <footer>
         <% include ./partials/footer.ejs %>
     </footer>

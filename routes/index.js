@@ -30,11 +30,32 @@ module.exports = function (app, passport) {
             user: req.user
         });
     });
-    
+
     app.get('/joinedcourses', function (req, res) {
-        res.render('joinedcourses', {
-            user: req.user
-        });
+        var resend = function (req, res) {
+            var sendInfo = [];
+            var dataToSend;
+            courses.forEach(function (curs, i) {
+                var joined = 0;
+                curs.courseUsers.forEach(function (user) {
+                    if (user.name == req.user.local.email) joined = 1;
+                });
+                if (joined) {
+                    sendInfo.push(curs);
+                }
+            });
+            if (sendInfo.length > 0) {
+                dataToSend = "Twoje kursy :";
+            } else {
+                dataToSend = "Nie jestes zapisany do żadnego kursu";
+            }
+            res.render('joinedcourses', {
+                user: req.user,
+                courses: sendInfo,
+                data: dataToSend
+            });
+        }
+        reorganizeUsers(resend, req, res);
     });
 
     app.get('/contactTeacher', function (req, res) {
@@ -147,7 +168,7 @@ module.exports = function (app, passport) {
                     courses: courses,
                     user: req.user
                 });
-//funkcja do czyszczenia bazy danych z kursów - wywolywac ostroznie
+                //funkcja do czyszczenia bazy danych z kursów - wywolywac ostroznie
                 //                courses.forEach(function (id, course) {
                 //                    console.log("beniz" + course);
                 //                    crs.remove({
@@ -163,10 +184,10 @@ module.exports = function (app, passport) {
 
     });
 
-    
 
-    
-    
+
+
+
     app.get('/zapisz/:id', function (req, res) {
         var ID = req.params.id;
         crs.findOne({
@@ -204,7 +225,7 @@ module.exports = function (app, passport) {
             }
         });
         res.redirect('/profile');
-        
+
     });
 
 
@@ -219,7 +240,7 @@ module.exports = function (app, passport) {
             user: req.user
         });
     });
-    
+
     app.get('/index', function (req, res) {
         res.render('index', {
             user: req.user
