@@ -6,7 +6,7 @@
 <link href="../css/register.css" rel="stylesheet" type="text/css"/>
 
     <%if(user !==undefined){ %>
-        <% include /partials/headerIndexTeacher.ejs %>
+        <% include /partials/headerIndexStudent.ejs %>
             <%} else {%>
 
                 <% include /partials/notlogged.ejs %>
@@ -30,6 +30,12 @@
                     <%=teachers[i].local.city %>
                 </li>
             
+                  <%if(user !==undefined){ %>
+            <a href="/opinion/<%= teachers[i].local.email%>">Wystaw Opinię!</a>
+            <br>
+            <%} else {%>
+                    <% }%>
+                   
                 <br>
                
             
