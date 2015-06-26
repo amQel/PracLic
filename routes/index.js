@@ -2,40 +2,34 @@ var path = require('path');
 
 var courses = [];
 var crs = require('../model/course');
+var usrs = require('../model/user');
+var opinion = require('../model/opinions');
+
 
 module.exports = function (app, passport) {
 
     app.get('/', function (req, res) {
         if (req.isAuthenticated()) {
-         if(req.user.local.role ==='student'){   
-            res.render('indexStudent', {
-                data: 'Zalogowano jako ' + req.user.local.email,
-                user: req.user
-            });
-        
-         }
-            
-        else{
-          res.render('indexTeacher', {
-                data: 'Zalogowano jako ' + req.user.local.email,
-                user: req.user
-            });
-        
-        
-        }
-        
-        
-        
-        } 
-        
-        
-        else {
+            if (req.user.local.role === 'student') {
+                res.render('indexStudent', {
+                    data: 'Zalogowano jako ' + req.user.local.email,
+                    user: req.user
+                });
+            } else {
+
+                res.render('indexTeacher', {
+                    data: 'Zalogowano jako ' + req.user.local.email,
+                    user: req.user
+                });
+            }
+        } else {
             res.render('index', {
                 user: undefined,
                 data: 'Nie zalogowano'
             });
         }
     });
+
 
     app.get('/login', function (req, res) {
         res.render('login', {
@@ -140,7 +134,25 @@ module.exports = function (app, passport) {
     });
 
 
+    app.get('/teachers', function (req, res) {
+        var renderTeacherData = [];
+        usrs.find({}, function (err, teachers) {
+            teachers.forEach(function (teacher) {
+                
+                if(teacher.local.role == 'teacher'){
+                    console.log(teacher.local.role);
+                    renderTeacherData.push(teacher);
+                }
+            });
+            console.log(renderTeacherData);
+            res.render('teachers', {
+            user : req.user,
+            teachers : renderTeacherData
+        });
+            
+        });
 
+    });
 
     app.get('/student', function (req, res) {
         if (req.user.local.role == 'student') {
@@ -165,6 +177,7 @@ module.exports = function (app, passport) {
 
 
     });
+
     app.get('/searchall', function (req, res) {
         
        
@@ -188,6 +201,17 @@ module.exports = function (app, passport) {
                  
     } );
     
+
+    
+    app.get('/opinion/:teacher', function(req, res){
+        var tchr = req.params.teacher;
+        res.render('teacherOpinion', {
+            user : req.user,
+            teacher : tchr
+        });
+        
+    });
+
     app.get('/search', function (req, res) {
        res.render('search');
     });
@@ -240,9 +264,6 @@ module.exports = function (app, passport) {
     });
 
 
-
-
-
     app.get('/zapisz/:id', function (req, res) {
         var ID = req.params.id;
         crs.findOne({
@@ -284,9 +305,9 @@ module.exports = function (app, passport) {
         res.redirect('/profile');
 
     });
-    
-    app.get('/wypisz/:id', function(req, res) {
-         var ID = req.params.id;
+
+    app.get('/wypisz/:id', function (req, res) {
+        var ID = req.params.id;
         crs.findOne({
             'id': ID
         }, function (err, course) {
@@ -294,20 +315,20 @@ module.exports = function (app, passport) {
                 console.log('modafukin erro');
             } else {
                 var courseToUpdate = course;
-                
+
                 crs.remove({
                     'id': courseToUpdate.id
                 }, function (err) {
                     console.log(err);
                 });
-                
-                
-                courseToUpdate.courseUsers.forEach(function(user, i) {
-                    if(user.name == req.user.local.email){
+
+
+                courseToUpdate.courseUsers.forEach(function (user, i) {
+                    if (user.name == req.user.local.email) {
                         courseToUpdate.courseUsers.splice(i, 1);
                     }
                 });
-                
+
                 var newCourse = new crs();
                 newCourse.id = courseToUpdate.id;
                 newCourse.teacher = courseToUpdate.teacher;
@@ -328,14 +349,14 @@ module.exports = function (app, passport) {
         });
         res.redirect('/joinedcourses');
     });
-    
-    app.get('/usun/:id', function(req, res) {
+
+    app.get('/usun/:id', function (req, res) {
         var ID = req.params.id;
         crs.remove({
-                    'id': ID
-                }, function (err) {
-                    console.log(err);
-                });
+            'id': ID
+        }, function (err) {
+            console.log(err);
+        });
         res.redirect('/mycourses');
     });
 
@@ -368,7 +389,7 @@ module.exports = function (app, passport) {
             });
             res.render('myCourses', {
                 data: "kursy uzytkownika " + req.user.local.email,
-                courses: myCourses.sort(sortCurses),user: req.user
+                courses: myCourses.sort(sortCurses), user: req.user
             });
         };
         reorganizeUsers(resnd, req, res);
@@ -400,10 +421,43 @@ module.exports = function (app, passport) {
 
 
     });
+    app.post('/opinion', function(req, res) {
+        var newOpinion = new opinion();
+        newOpinion.teacher = req.body.teacher;
+        newOpinion.opinion = req.body.opinion;
+        newOpinion.student = req.user.local.email;
+        newOpinion.save(function (err) {
+                    if (err) {
+                        console.log('error saving opinion');
+                        throw err;
+                    }
+                });
+        
+        res.redirect('/opinions');
+});
+    app.get('/opinions', function(req, res){
+        var opinions = [];
+        opinion.find({}, function(err, opn){
+            opn.forEach(function(opin){
+                console.log(opin);
+                opinions.push(opin);
+            });
+            res.render('opinions', {
+            user : req.user,
+            opinions : opinions
+        });
+        });
+        
+    });
 
     app.get('/cities/:id', function (req, res) {
         var id = req.params.id;
         res.sendFile(path.resolve('views/cities/' + id + '.html'));
+    });
+
+    app.get('/citiesCheck/:id', function (req, res) {
+        var id = req.params.id;
+        res.sendFile(path.resolve('views/cities/' + id + 'check.html'));
     });
 };
 
@@ -419,32 +473,28 @@ var reorganizeUsers = function (cb, req, res) {
     courses = [];
     crs.find({}, function (err, crss) {
         crss.forEach(function (course) {
-            console.log(course);
             courses.push(course);
-            console.log(courses.length);
         });
         if (cb) cb(req, res);
     });
 
 };
 
-
-
-var sortCurses = function(a, b){
+var sortCurses = function (a, b) {
     return a.id - b.id;
 };
 
 /*
-exports.nauczyciel = function(req, res) {
+ exports.nauczyciel = function(req, res) {
 
-    var imieNazwisko = req.params.id;
-    var imie = imieNazwisko.split('.');
-    console.log(imie);
-    var xml = '<?xml version="1.0" encoding="utf-8"?>\n';
-    xml += '<response><ip>' + '</ip><tm>' + '</tm></response>';
-    res.setHeader("Cache-Control", "no-cache, must-revalidate"); 
-    res.setHeader("Pragma", "no-cache");
-    res.setHeader("Content-Type", "text/xml; charset=utf-8");
-    res.end(xml);
-    
-};*/
+ var imieNazwisko = req.params.id;
+ var imie = imieNazwisko.split('.');
+ console.log(imie);
+ var xml = '<?xml version="1.0" encoding="utf-8"?>\n';
+ xml += '<response><ip>' + '</ip><tm>' + '</tm></response>';
+ res.setHeader("Cache-Control", "no-cache, must-revalidate");
+ res.setHeader("Pragma", "no-cache");
+ res.setHeader("Content-Type", "text/xml; charset=utf-8");
+ res.end(xml);
+
+ };*/
