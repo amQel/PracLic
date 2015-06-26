@@ -518,6 +518,12 @@ var sortCurses = function (a, b) {
     return a.id - b.id;
 };
 
+var usunOpinie = function() {
+    opinion.remove({
+        }, function (err) {
+            console.log(err);
+        });
+};
 /*
  exports.nauczyciel = function(req, res) {
 
