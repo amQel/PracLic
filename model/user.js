@@ -8,7 +8,8 @@ var userSchema = mongoose.Schema({
        courses      : [{ id : Number }],
        role         : String,
        province     : String,
-       cities       : [{ city : String }]
+       cities       : [{ city : String }],
+       avatar       : { data: Buffer, contentType: String }
    }
 });
 

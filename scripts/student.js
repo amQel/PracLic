@@ -14,13 +14,18 @@ $(document).ready(function () {
         });
     });
 
-    var $editForm = $("form");
-    var $provinceSelection = $editForm.find('select[name=province]');
-    var $citySelection = $editForm.find('#citiesCheck');
+    var $imageDisplay = $("#image-display");
 
-    $provinceSelection.load('./cities/provinces');
+    function readSingleFile(e) {
+        var file = e.target.files[0];
+        if (file) {
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = function(e){
+            $imageDisplay.html("<p>Super jest</p>");
+        };
+    }
 
-    $provinceSelection.on("change", function () {
-        $citySelection.load('./citiesCheck/' + $(this).children(":selected").attr("id"));
-    });
+    $("#image-uploader").on('change', readSingleFile, false);
 });

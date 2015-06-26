@@ -139,18 +139,18 @@ module.exports = function (app, passport) {
         
         usrs.find({}, function (err, teachers) {
             teachers.forEach(function (teacher) {
-                
-                if(teacher.local.role == 'teacher'){
+
+                if (teacher.local.role == 'teacher') {
                     console.log(teacher.local.role);
                     renderTeacherData.push(teacher);
                 }
             });
             console.log(renderTeacherData);
             res.render('teachers', {
-            user : req.user,
-            teachers : renderTeacherData
-        });
-            
+                user: req.user,
+                teachers: renderTeacherData
+            });
+
         });
 
     });
@@ -209,6 +209,7 @@ module.exports = function (app, passport) {
         }
 
     });
+    
     app.get('/teacher', function (req, res) {
         if (req.user.local.role == 'teacher') {
             res.render('teacher', {
@@ -247,10 +248,10 @@ module.exports = function (app, passport) {
     app.get('/opinion/:teacher', function(req, res){
         var tchr = req.params.teacher;
         res.render('teacherOpinion', {
-            user : req.user,
-            teacher : tchr
+            user: req.user,
+            teacher: tchr
         });
-        
+
     });
 
     app.get('/search', function (req, res) {
@@ -458,7 +459,8 @@ app.get('/courseTeacher', function (req, res) {
             });
             res.render('myCourses', {
                 data: "kursy uzytkownika " + req.user.local.email,
-                courses: myCourses.sort(sortCurses), user: req.user
+                courses: myCourses.sort(sortCurses),
+                user: req.user
             });
         };
         reorganizeUsers(resnd, req, res);
@@ -490,33 +492,50 @@ app.get('/courseTeacher', function (req, res) {
 
 
     });
-    app.post('/opinion', function(req, res) {
-        var newOpinion = new opinion();
-        newOpinion.teacher = req.body.teacher;
-        newOpinion.opinion = req.body.opinion;
-        newOpinion.student = req.user.local.email;
-        newOpinion.save(function (err) {
-                    if (err) {
-                        console.log('error saving opinion');
-                        throw err;
-                    }
-                });
-        
-        res.redirect('/opinions');
-});
-    app.get('/opinions', function(req, res){
+    app.post('/opinion', function (req, res) {
+
+        opinion.find({}, function (err, opn) {
+            var newOpinion = new opinion();
+
+            newOpinion.id = opn.length;
+            newOpinion.teacher = req.body.teacher;
+            newOpinion.opinion = req.body.opinion;
+            newOpinion.student = req.user.local.email;
+
+            newOpinion.save(function (err) {
+                if (err) {
+                    console.log('error saving opinion');
+                    throw err;
+                }
+            });
+
+            res.redirect('/opinions');
+
+        });
+
+    });
+    app.get('/opinions', function (req, res) {
         var opinions = [];
-        opinion.find({}, function(err, opn){
-            opn.forEach(function(opin){
+        opinion.find({}, function (err, opn) {
+            opn.forEach(function (opin) {
                 console.log(opin);
                 opinions.push(opin);
             });
             res.render('opinions', {
-            user : req.user,
-            opinions : opinions
+                user: req.user,
+                opinions: opinions
+            });
         });
+
+    });
+
+    app.get('/usunOpinion/:id', function (req, res) {
+        opinion.remove({
+            'id': req.params.id
+        }, function (err) {
+            console.log(err);
         });
-        
+        res.redirect('/opinions');
     });
 
     
@@ -544,6 +563,21 @@ app.get('/courseTeacher', function (req, res) {
         var id = req.params.id;
         res.sendFile(path.resolve('views/cities/' + id + 'check.html'));
     });
+    
+    
+    
+    
+    
+    
+    //to musi być na końcu, zostawić to tutaj!!!
+    app.get('*', function(req, res){
+        res.status(404);
+        res.render('myFavouritePage', {
+        tittle : "page not found",
+        user : req.user
+        } );
+    });
+
 };
 
 function isLoggedIn(req, res, next) {
