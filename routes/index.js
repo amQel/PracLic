@@ -54,7 +54,7 @@ module.exports = function (app, passport) {
                 courses: sendInfo,
                 data: dataToSend
             });
-        }
+        };
         reorganizeUsers(resend, req, res);
     });
 
@@ -69,10 +69,6 @@ module.exports = function (app, passport) {
             user: req.user
         });
     });
-
-
-
-
 
     app.post('/login', passport.authenticate('login', {
         successRedirect: '/profile',
@@ -178,7 +174,7 @@ module.exports = function (app, passport) {
                 //                    });
                 //                });
             }
-        }
+        };
         reorganizeUsers(resend, req, res);
 
 
@@ -259,7 +255,7 @@ module.exports = function (app, passport) {
                 data: "kursy uzytkownika " + req.user.local.email,
                 courses: myCourses
             });
-        }
+        };
         reorganizeUsers(resnd, req, res);
     });
 
@@ -281,7 +277,7 @@ module.exports = function (app, passport) {
 
             courses.push(newCourse);
             res.redirect('/mycourses');
-        }
+        };
 
         reorganizeUsers(resnd, req, res);
 
