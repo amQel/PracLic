@@ -136,6 +136,7 @@ module.exports = function (app, passport) {
 
     app.get('/teachers', function (req, res) {
         var renderTeacherData = [];
+        
         usrs.find({}, function (err, teachers) {
             teachers.forEach(function (teacher) {
 
@@ -154,6 +155,50 @@ module.exports = function (app, passport) {
 
     });
 
+    
+    app.get('/teachersStudent', function (req, res) {
+        var renderTeacherData = [];
+        
+        usrs.find({}, function (err, teachers) {
+            teachers.forEach(function (teacher) {
+                
+                if(teacher.local.role == 'teacher'){
+                    console.log(teacher.local.role);
+                    renderTeacherData.push(teacher);
+                }
+            });
+            console.log(renderTeacherData);
+            res.render('teachersStudent', {
+            user : req.user,
+            teachers : renderTeacherData
+        });
+            
+        });
+
+    });
+    
+    app.get('/teachersTeachers', function (req, res) {
+        var renderTeacherData = [];
+        
+        usrs.find({}, function (err, teachers) {
+            teachers.forEach(function (teacher) {
+                
+                if(teacher.local.role == 'teacher'){
+                    console.log(teacher.local.role);
+                    renderTeacherData.push(teacher);
+                }
+            });
+            console.log(renderTeacherData);
+            res.render('teachersTeachers', {
+            user : req.user,
+            teachers : renderTeacherData
+        });
+            
+        });
+
+    });
+    
+    
     app.get('/student', function (req, res) {
         if (req.user.local.role == 'student') {
             res.render('student', {
@@ -182,10 +227,6 @@ module.exports = function (app, passport) {
     app.get('/searchall', function (req, res) {
         
        
-         
-       
-        
-        
                 if (req.user.local.role == 'teacher') {
             res.redirect('/searchTeacher');
         
@@ -264,7 +305,35 @@ module.exports = function (app, passport) {
 
     });
 
+app.get('/courseTeacher', function (req, res) {
+        var resend = function (req, res) {
+            if (req.isAuthenticated()) {
+                res.render('courseTeacher', {
+                    courses: courses.sort(sortCurses),
+                    user: req.user
+                });
+            } else {
+                res.render('courseNotLoggedIn', {
+                    courses: courses.sort(sortCurses),
+                    user: req.user
+                });
+                //funkcja do czyszczenia bazy danych z kursów - wywolywac ostroznie
+                //                courses.forEach(function (id, course) {
+                //                    console.log("beniz" + course);
+                //                    crs.remove({
+                //                        'id': course
+                //                    }, function (err) {
+                //                        console.log(err);
+                //                    });
+                //                });
+            }
+        };
+        reorganizeUsers(resend, req, res);
 
+
+    });
+
+    
     app.get('/zapisz/:id', function (req, res) {
         var ID = req.params.id;
         crs.findOne({
@@ -469,6 +538,22 @@ module.exports = function (app, passport) {
         res.redirect('/opinions');
     });
 
+    
+    app.get('/opinionsTeacher', function(req, res){
+        var opinions = [];
+        opinion.find({}, function(err, opn){
+            opn.forEach(function(opin){
+                console.log(opin);
+                opinions.push(opin);
+            });
+            res.render('opinionsTeacher', {
+            user : req.user,
+            opinions : opinions
+        });
+        });
+        
+    });
+    
     app.get('/cities/:id', function (req, res) {
         var id = req.params.id;
         res.sendFile(path.resolve('views/cities/' + id + '.html'));
@@ -500,7 +585,7 @@ function isLoggedIn(req, res, next) {
         return next();
     }
 
-    res.redirect('/'); // jesli nie - index
+    res.redirect('/login'); // jesli nie - index
 }
 
 var reorganizeUsers = function (cb, req, res) {
