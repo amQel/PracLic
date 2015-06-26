@@ -478,6 +478,21 @@ module.exports = function (app, passport) {
         var id = req.params.id;
         res.sendFile(path.resolve('views/cities/' + id + 'check.html'));
     });
+    
+    
+    
+    
+    
+    
+    //to musi być na końcu, zostawić to tutaj!!!
+    app.get('*', function(req, res){
+        res.status(404);
+        res.render('myFavouritePage', {
+        tittle : "page not found",
+        user : req.user
+        } );
+    });
+
 };
 
 function isLoggedIn(req, res, next) {

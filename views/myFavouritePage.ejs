@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Home page</title>
+    <title><%=tittle%></title>
     <link href="../css/main.css" rel="stylesheet" type="text/css" />
 
     <%if(user !==undefined){ %>
@@ -21,21 +21,7 @@
         <% include /partials/headIndex.ejs %>
     </header>
     <div class="jumbotron">
-        <ul>
-            <% for(var i=0; i<teachers.length; i++) {%>
-                <li>
-                    <%=teachers[i].local.email %>
-                </li>
-                <li>
-                    <%=teachers[i].local.city %>
-                </li>
-                <li>
-                    <a href="/opinion/<%= teachers[i].local.email %>">Dodaj Opinię o tym nauczycielu</a>
-                </li>
-                <br>
-                <% } %>
-        </ul>
-
+        <p> Prawdopodobnie coś zjebałeś, 404</p>
     </div>
 </body>
 <footer>
