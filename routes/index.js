@@ -15,16 +15,13 @@ module.exports = function (app, passport) {
                     data: 'Zalogowano jako ' + req.user.local.email,
                     user: req.user
                 });
-
             } else {
+
                 res.render('indexTeacher', {
                     data: 'Zalogowano jako ' + req.user.local.email,
                     user: req.user
                 });
-
-
             }
-
         } else {
             res.render('index', {
                 user: undefined,
@@ -154,10 +151,8 @@ module.exports = function (app, passport) {
         });
             
         });
-        
-        
-    });
 
+    });
 
     app.get('/student', function (req, res) {
         if (req.user.local.role == 'student') {
@@ -223,9 +218,6 @@ module.exports = function (app, passport) {
 
 
     });
-
-
-
 
 
     app.get('/zapisz/:id', function (req, res) {
@@ -353,7 +345,7 @@ module.exports = function (app, passport) {
             });
             res.render('myCourses', {
                 data: "kursy uzytkownika " + req.user.local.email,
-                courses: myCourses.sort(sortCurses),user: req.user
+                courses: myCourses.sort(sortCurses), user: req.user
             });
         };
         reorganizeUsers(resnd, req, res);
@@ -418,6 +410,11 @@ module.exports = function (app, passport) {
         var id = req.params.id;
         res.sendFile(path.resolve('views/cities/' + id + '.html'));
     });
+
+    app.get('/citiesCheck/:id', function (req, res) {
+        var id = req.params.id;
+        res.sendFile(path.resolve('views/cities/' + id + 'check.html'));
+    });
 };
 
 function isLoggedIn(req, res, next) {
@@ -439,23 +436,21 @@ var reorganizeUsers = function (cb, req, res) {
 
 };
 
-
-
 var sortCurses = function (a, b) {
     return a.id - b.id;
 };
 
 /*
-exports.nauczyciel = function(req, res) {
+ exports.nauczyciel = function(req, res) {
 
-    var imieNazwisko = req.params.id;
-    var imie = imieNazwisko.split('.');
-    console.log(imie);
-    var xml = '<?xml version="1.0" encoding="utf-8"?>\n';
-    xml += '<response><ip>' + '</ip><tm>' + '</tm></response>';
-    res.setHeader("Cache-Control", "no-cache, must-revalidate"); 
-    res.setHeader("Pragma", "no-cache");
-    res.setHeader("Content-Type", "text/xml; charset=utf-8");
-    res.end(xml);
-    
-};*/
+ var imieNazwisko = req.params.id;
+ var imie = imieNazwisko.split('.');
+ console.log(imie);
+ var xml = '<?xml version="1.0" encoding="utf-8"?>\n';
+ xml += '<response><ip>' + '</ip><tm>' + '</tm></response>';
+ res.setHeader("Cache-Control", "no-cache, must-revalidate");
+ res.setHeader("Pragma", "no-cache");
+ res.setHeader("Content-Type", "text/xml; charset=utf-8");
+ res.end(xml);
+
+ };*/

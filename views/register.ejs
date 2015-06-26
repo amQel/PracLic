@@ -3,69 +3,39 @@
 
 <head>
     <title>Register page</title>
-     <link href="../css/register.css" rel="stylesheet" type="text/css" />
+    <link href="../css/register.css" rel="stylesheet" type="text/css"/>
     <meta charset="UTF-8">
 </head>
 
 <body>
-    <h1>Register</h1>
-    <% if(message.length> 0) { %>
-        <!-- bajerek dla ejsa, ogolnie jak bedzie error w loginie to tutaj pojdzie render -->
-        <div>
-            <%=message %>
-        </div>
-        <% } %>
+<h1>Register</h1>
+<% if(message.length > 0) { %>
+<!-- bajerek dla ejsa, ogolnie jak bedzie error w loginie to tutaj pojdzie render -->
+<div>
+    <%= message %>
+</div>
+<% } %>
 
-            <form action="/register" method="post" name="register-form">
-                <div>
-                    <label>Role</label>
-                    <select name="role">
-                        <option value="student">Student</option>
-                        <option value="teacher">Teacher</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Province</label>
-                    <select name="province">
-                        <option value="SELECT" disabled selected>Wybierz województwo</option>
-                        <option value="dolnośląskie" id="id1">dolnośląskie</option>
-                        <option value="kujawsko-pomorskie" id="id2">kujawsko-pomorskie</option>
-                        <option value="lubelskie" id="id3">lubelskie</option>
-                        <option value="lubuskie" id="id4">lubuskie</option>
-                        <option value="łódzkie" id="id5">łódzkie</option>
-                        <option value="małopolskie" id="id6">małopolskie</option>
-                        <option value="mazowieckie" id="id7">mazowieckie</option>
-                        <option value="opolskie" id="id8">opolskie</option>
-                        <option value="podkarpackie" id="id9">podkarpackie</option>
-                        <option value="podlaskie" id="id10">podlaskie</option>
-                        <option value="pomorskie" id="id11">pomorskie</option>
-                        <option value="śląskie" id="id12">śląskie</option>
-                        <option value="świętokrzyskie" id="id13">świętokrzyskie</option>
-                        <option value="warmińsko-mazurskie" id="id14">warmińsko-mazurskie</option>
-                        <option value="wielkopolskie" id="id15">wielkopolskie</option>
-                        <option value="zachodniopomorskie" id="id16">zachodniopomorskie</option>
-                    </select>
-                </div>
-                <div>
-                    <label>City</label>
-                    <select name="city">
+<form action="/register" method="post" name="register-form">
+    <div>
+        <label>Role</label>
+        <select name="role">
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+        </select>
+    </div>
+    <div>
+        <label>Email</label>
+        <input type="text" name="email">
+    </div>
+    <div>
+        <label>Password</label>
+        <input type="password" name="password">
+    </div>
+    <button type="submit">Register</button>
+</form>
 
-                    </select>
-                </div>
-                <div>
-                    <label>Email</label>
-                    <input type="text" name="email">
-                </div>
-                <div>
-                    <label>Password</label>
-                    <input type="password" name="password">
-                </div>
-                <button type="submit">Register</button>
-            </form>
-
-            <p>Have an account? <a href="/login">Login</a> </p>
-            <script src="/js/jquery.min.js"></script>
-            <script src="../scripts/register_cities.js"></script>
+<p>Have an account? <a href="/login">Login</a></p>
 </body>
 
 </html>
