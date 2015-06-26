@@ -3,6 +3,8 @@ var path = require('path');
 var courses = [];
 var crs = require('../model/course');
 var usrs = require('../model/user');
+var opinion = require('../model/opinions');
+
 
 module.exports = function (app, passport) {
 
@@ -179,6 +181,15 @@ module.exports = function (app, passport) {
         }
 
 
+    });
+    
+    app.get('/opinion/:teacher', function(req, res){
+        var tchr = req.params.teacher;
+        res.render('teacherOpinion', {
+            user : req.user,
+            teacher : tchr
+        });
+        
     });
     app.get('/search', function (req, res) {
         res.render('search', {
@@ -373,6 +384,34 @@ module.exports = function (app, passport) {
         reorganizeUsers(resnd, req, res);
 
 
+    });
+    app.post('/opinion', function(req, res) {
+        var newOpinion = new opinion();
+        newOpinion.teacher = req.body.teacher;
+        newOpinion.opinion = req.body.opinion;
+        newOpinion.student = req.user.local.email;
+        newOpinion.save(function (err) {
+                    if (err) {
+                        console.log('error saving opinion');
+                        throw err;
+                    }
+                });
+        
+        res.redirect('/opinions');
+});
+    app.get('/opinions', function(req, res){
+        var opinions = [];
+        opinion.find({}, function(err, opn){
+            opn.forEach(function(opin){
+                console.log(opin);
+                opinions.push(opin);
+            });
+            res.render('opinions', {
+            user : req.user,
+            opinions : opinions
+        });
+        });
+        
     });
 
     app.get('/cities/:id', function (req, res) {

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Our Courses</title>
+    <% include ./partials/headStudent.ejs %>
+</head>
+
+<body class="container">
+    <header>
+        <% include ./partials/headerStudent.ejs %>
+    </header>
+    <ul>
+        <% for(var i=0; i<opinions.length; i++) {%>
+            <li>
+                <%=opinions[i].student %>
+            </li>
+            <li>
+                <%=opinions[i].teacher %>
+            </li>
+            <li>
+                <%=opinions[i].opinion %>
+            </li>
+            <a href="/usunOpinion">Zapisz mnie na ten kurs!</a>
+            <br>
+            <% } %>
+    </ul>
+    <a href="/profile">Back to profile</a>
+    <footer>
+      
+
+       
+        <% include ./partials/footer.ejs %>
+    </footer>
+   
+</body>
+
+</html>
