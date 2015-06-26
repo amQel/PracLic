@@ -69,10 +69,10 @@ module.exports = function (app, passport) {
             }
             res.render('joinedcourses', {
                 user: req.user,
-                courses: sendInfo,
+                courses: sendInfo.sort(sortCurses),
                 data: dataToSend
             });
-        }
+        };
         reorganizeUsers(resend, req, res);
     });
 
@@ -87,10 +87,6 @@ module.exports = function (app, passport) {
             user: req.user
         });
     });
-
-
-
-
 
     app.post('/login', passport.authenticate('login', {
         successRedirect: '/profile',
@@ -178,12 +174,12 @@ module.exports = function (app, passport) {
         var resend = function (req, res) {
             if (req.isAuthenticated()) {
                 res.render('course', {
-                    courses: courses,
+                    courses: courses.sort(sortCurses),
                     user: req.user
                 });
             } else {
                 res.render('courseNotLoggedIn', {
-                    courses: courses,
+                    courses: courses.sort(sortCurses),
                     user: req.user
                 });
                 //funkcja do czyszczenia bazy danych z kursów - wywolywac ostroznie
@@ -196,7 +192,7 @@ module.exports = function (app, passport) {
                 //                    });
                 //                });
             }
-        }
+        };
         reorganizeUsers(resend, req, res);
 
 
@@ -233,6 +229,8 @@ module.exports = function (app, passport) {
                 newCourse.courseInfo.subject = courseToUpdate.courseInfo.subject;
                 newCourse.courseInfo.description = courseToUpdate.courseInfo.description;
                 newCourse.courseUsers = courseToUpdate.courseUsers;
+                newCourse.courseInfo.costPerHour = courseToUpdate.courseInfo.costPerHour;
+                newCourse.level = courseToUpdate.level;
 
                 newCourse.save(function (err) {
                     if (err) {
@@ -244,6 +242,16 @@ module.exports = function (app, passport) {
         });
         res.redirect('/profile');
 
+    });
+    
+    app.get('/usun/:id', function(req, res) {
+        var ID = req.params.id;
+        crs.remove({
+                    'id': ID
+                }, function (err) {
+                    console.log(err);
+                });
+        res.redirect('/mycourses');
     });
 
 
@@ -275,9 +283,9 @@ module.exports = function (app, passport) {
             });
             res.render('myCourses', {
                 data: "kursy uzytkownika " + req.user.local.email,
-                courses: myCourses
+                courses: myCourses.sort(sortCurses)
             });
-        }
+        };
         reorganizeUsers(resnd, req, res);
     });
 
@@ -290,6 +298,8 @@ module.exports = function (app, passport) {
             newCourse.courseInfo.name = req.body.courseName;
             newCourse.courseInfo.subject = req.body.Subject;
             newCourse.courseInfo.description = req.body.courseDescription;
+            newCourse.courseInfo.costPerHour = req.body.costPerHour;
+            newCourse.level = req.body.educationLevel;
 
             newCourse.save(function (err) {
                 if (err) {
@@ -299,7 +309,7 @@ module.exports = function (app, passport) {
 
             courses.push(newCourse);
             res.redirect('/mycourses');
-        }
+        };
 
         reorganizeUsers(resnd, req, res);
 
@@ -334,6 +344,10 @@ var reorganizeUsers = function (cb, req, res) {
 };
 
 
+
+var sortCurses = function(a, b){
+    return a.id - b.id;
+};
 
 /*
 exports.nauczyciel = function(req, res) {

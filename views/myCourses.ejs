@@ -16,18 +16,25 @@
                 <%=courses[i].id %>
             </li>
             <li>
-                <%=courses[i].user %>
+                <%=courses[i].teacher %>
             </li>
             <li>
-                <%=courses[i].courseInfo.courseName %>
+                <%=courses[i].courseInfo.name %>
             </li>
             <li>
-                <%=courses[i].courseInfo.Subject %>
+                <%=courses[i].courseInfo.subject %>
             </li>
             <li>
-                <%=courses[i].courseInfo.courseDescription %>
+                <%=courses[i].courseInfo.description %>
+            </li>
+            <li>
+                <%=courses[i].courseInfo.costPerHour %>
+            </li>
+            <li>
+                <%=courses[i].level %>
             </li>
             <br>
+            <a href="/usun/<%=courses[i].id %>">Usuń Ten kurs (bo ssie)</a>
             <% } %>
     </ul>
     <a href="/profile">back to profile</a>

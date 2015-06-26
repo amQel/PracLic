@@ -1,16 +1,19 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 
-var couseSchema = mongoose.Schema({
+var courseSchema = mongoose.Schema({
        id : Number,
        teacher : String,
        courseInfo : {
            name : String,
            subject : String,
-           description : String
+           description : String,
+           costPerHour : Number
        },
-       courseUsers: [ { name : String } ]
+       courseUsers: [ { name : String } ],
+       level : String,
+       
 });
 
 
-module.exports = mongoose.model('Course', couseSchema);
+module.exports = mongoose.model('Course', courseSchema);
