@@ -18,6 +18,8 @@ $(document).ready(function () {
     var $provinceSelection = $editForm.find('select[name=province]');
     var $citySelection = $editForm.find('#citiesCheck');
 
+    $provinceSelection.load('./cities/provinces');
+
     $provinceSelection.on("change", function () {
         $citySelection.load('./citiesCheck/' + $(this).children(":selected").attr("id"));
     });
