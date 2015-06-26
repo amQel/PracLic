@@ -164,6 +164,7 @@ module.exports = function (app, passport) {
         }
 
     });
+    
     app.get('/teacher', function (req, res) {
         if (req.user.local.role == 'teacher') {
             res.render('teacher', {
@@ -178,7 +179,32 @@ module.exports = function (app, passport) {
 
     });
 
-    app.get('/opinion/:teacher', function (req, res) {
+    app.get('/searchall', function (req, res) {
+        
+       
+         
+       
+        
+        
+                if (req.user.local.role == 'teacher') {
+            res.redirect('/searchTeacher');
+        
+           }
+        else if(req.user.local.role == 'student')
+        {
+        res.redirect('/searchStudent');
+            }
+        
+        res.redirect('/search');  
+        
+        
+        
+                 
+    } );
+    
+
+    
+    app.get('/opinion/:teacher', function(req, res){
         var tchr = req.params.teacher;
         res.render('teacherOpinion', {
             user: req.user,
@@ -186,11 +212,30 @@ module.exports = function (app, passport) {
         });
 
     });
+
     app.get('/search', function (req, res) {
-        res.render('search', {
-            //tutaj dane użytkownika req.params .. 
+       res.render('search');
+    });
+    
+    
+    
+    
+        
+        app.get('/searchTeacher', function (req, res) {
+       res.render('searchTeacher', {
+            user: req.user
         });
     });
+        
+        app.get('/searchStudent', function (req, res) {
+       res.render('searchStudent', {
+            user: req.user
+        });
+    });
+        
+          
+            
+    
     app.get('/course', function (req, res) {
         var resend = function (req, res) {
             if (req.isAuthenticated()) {
