@@ -2,52 +2,76 @@
 <html lang="en">
 
 <head>
-
+    <meta charset="UTF-8">
     <% include ./partials/headStudent.ejs %>
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
- 
 </head>
 
 <body class="container">
 
+<header>
+    <% include ./partials/headerStudent.ejs %>
+</header>
 
-    <header>
-        <% include ./partials/headerStudent.ejs %>
-    </header>
+<h1>Add some things to your account:</h1>
+
+<form action="/changeaccount" method="post">
+    <div>
+        <label>Name</label>
+        <input type="text" name="firstName">
+    </div>
+    <div>
+        <label>Surname</label>
+        <input type="text" name="surname">
+    </div>
+    <div>
+        <label>Province</label>
+        <select name="province">
+            <option value="SELECT" disabled selected>Wybierz województwo</option>
+            <option value="dolnoslaskie" id="id1">dolnoœl¹skie</option>
+            <option value="kujawsko-pomorskie" id="id2">kujawsko-pomorskie</option>
+            <option value="lubelskie" id="id3">lubelskie</option>
+            <option value="lubuskie" id="id4">lubuskie</option>
+            <option value="³ódzkie" id="id5">³ódzkie</option>
+            <option value="ma³opolskie" id="id6">ma³opolskie</option>
+            <option value="mazowieckie" id="id7">mazowieckie</option>
+            <option value="opolskie" id="id8">opolskie</option>
+            <option value="podkarpackie" id="id9">podkarpackie</option>
+            <option value="podlaskie" id="id10">podlaskie</option>
+            <option value="pomorskie" id="id11">pomorskie</option>
+            <option value="œl¹skie" id="id12">œl¹skie</option>
+            <option value="œwiêtokrzyskie" id="id13">œwiêtokrzyskie</option>
+            <option value="warmiñsko-mazurskie" id="id14">warmiñsko-mazurskie</option>
+            <option value="wielkopolskie" id="id15">wielkopolskie</option>
+            <option value="zachodniopomorskie" id="id16">zachodniopomorskie</option>
+        </select>
+    </div>
+
+    <div>
+        <label>City</label>
+
+        <div id="citiesCheck">
+
+        </div>
+    </div>
+    <section class="round-border">
+
+        <div>
+            <button type="button" href="#collapse2" class="toggle">Zmien password</button>
+
+        </div>
+        <div id="collapse2" style="display:none">
+            <input type="password" name="password">
+        </div>
+    </section>
+    <br>
 
 
-    <form action="/changeaccount" method="post">
-        <section class="round-border">
+    <button type="submit">Change</button>
+</form>
 
-            <div>
-                <button type="button" href="#collapse1" class="nav-toggle">Zmien email</button>
-
-            </div>
-            <div id="collapse1" style="display:none">
-                <input type="text" name="email">
-            </div>
-        </section>
-
-        <section class="round-border">
-
-            <div>
-                <button type="button" href="#collapse2" class="toggle">Zmien password</button>
-
-            </div>
-            <div id="collapse2" style="display:none">
-                <input type="password" name="password">
-            </div>
-        </section>
-        <br>
-
-
-
-        <button type="submit">Change</button>
-    </form>
-
-    <footer>
-        <% include ./partials/footer.ejs %>
-    </footer>
+<footer>
+    <% include ./partials/footer.ejs %>
+</footer>
 </body>
 <script src="/js/jquery.min.js"></script>
 <script src="../scripts/student.js"></script>
