@@ -7,9 +7,12 @@ var courseSchema = mongoose.Schema({
        courseInfo : {
            name : String,
            subject : String,
-           description : String
+           description : String,
+           costPerHour : Number
        },
-       courseUsers: [ { name : String } ]
+       courseUsers: [ { name : String } ],
+       level : String,
+       
 });
 
 

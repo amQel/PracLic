@@ -211,6 +211,8 @@ module.exports = function (app, passport) {
                 newCourse.courseInfo.subject = courseToUpdate.courseInfo.subject;
                 newCourse.courseInfo.description = courseToUpdate.courseInfo.description;
                 newCourse.courseUsers = courseToUpdate.courseUsers;
+                newCourse.courseInfo.costPerHour = courseToUpdate.courseInfo.costPerHour;
+                newCourse.level = courseToUpdate.level;
 
                 newCourse.save(function (err) {
                     if (err) {
@@ -222,6 +224,16 @@ module.exports = function (app, passport) {
         });
         res.redirect('/profile');
 
+    });
+    
+    app.get('/usun/:id', function(req, res) {
+        var ID = req.params.id;
+        crs.remove({
+                    'id': ID
+                }, function (err) {
+                    console.log(err);
+                });
+        res.redirect('/mycourses');
     });
 
 
@@ -268,6 +280,8 @@ module.exports = function (app, passport) {
             newCourse.courseInfo.name = req.body.courseName;
             newCourse.courseInfo.subject = req.body.Subject;
             newCourse.courseInfo.description = req.body.courseDescription;
+            newCourse.courseInfo.costPerHour = req.body.costPerHour;
+            newCourse.level = req.body.educationLevel;
 
             newCourse.save(function (err) {
                 if (err) {
