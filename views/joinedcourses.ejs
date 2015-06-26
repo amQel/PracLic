@@ -29,7 +29,13 @@
             <li>
                 <%=courses[i].courseInfo.description %>
             </li>
-            <a href="/zapisz/<%= courses[i].id %>">Zapisz mnie na ten kurs!</a>
+            <li>
+                <%=courses[i].courseInfo.costPerHour %>
+            </li>
+            <li>
+                <%=courses[i].level %>
+            </li>
+            <a href="/wypisz/<%= courses[i].id %>">Wypisz mnie z tego kursu!</a>
             <br>
             <% } %>
     </ul>

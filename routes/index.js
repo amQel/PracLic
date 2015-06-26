@@ -226,6 +226,50 @@ module.exports = function (app, passport) {
 
     });
     
+    app.get('/wypisz/:id', function(req, res) {
+         var ID = req.params.id;
+        crs.findOne({
+            'id': ID
+        }, function (err, course) {
+            if (err) {
+                console.log('modafukin erro');
+            } else {
+                var courseToUpdate = course;
+                
+                crs.remove({
+                    'id': courseToUpdate.id
+                }, function (err) {
+                    console.log(err);
+                });
+                
+                
+                courseToUpdate.courseUsers.forEach(function(user, i) {
+                    if(user.name == req.user.local.email){
+                        courseToUpdate.courseUsers.splice(i, 1);
+                    }
+                });
+                
+                var newCourse = new crs();
+                newCourse.id = courseToUpdate.id;
+                newCourse.teacher = courseToUpdate.teacher;
+                newCourse.courseInfo.name = courseToUpdate.courseInfo.name;
+                newCourse.courseInfo.subject = courseToUpdate.courseInfo.subject;
+                newCourse.courseInfo.description = courseToUpdate.courseInfo.description;
+                newCourse.courseUsers = courseToUpdate.courseUsers;
+                newCourse.courseInfo.costPerHour = courseToUpdate.courseInfo.costPerHour;
+                newCourse.level = courseToUpdate.level;
+
+                newCourse.save(function (err) {
+                    if (err) {
+                        console.log('error saving user');
+                        throw err;
+                    }
+                });
+            }
+        });
+        res.redirect('/joinedcourses');
+    });
+    
     app.get('/usun/:id', function(req, res) {
         var ID = req.params.id;
         crs.remove({
