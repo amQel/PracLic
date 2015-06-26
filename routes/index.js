@@ -126,6 +126,49 @@ module.exports = function (app, passport) {
             });
     });
    
+    app.post('/dodaj', function(req, res) {
+    
+      crs.findOne({
+            'id': req.body.courseId
+        }, function (err, course) {
+            if (err) {
+                console.log('modafukin erro');
+            } else {
+                var courseToUpdate = course;
+                var newsa = {
+                    tittle : "tittle1",
+                    message: req.body.newInfo
+                };
+                crs.remove({
+                    'id': courseToUpdate.id
+                }, function (err) {
+                    console.log(err);
+                });
+                courseToUpdate.news.push(newsa);
+
+                var newCourse = new crs();
+                newCourse.id = courseToUpdate.id;
+                newCourse.teacher = courseToUpdate.teacher;
+                newCourse.courseInfo.name = courseToUpdate.courseInfo.name;
+                newCourse.courseInfo.subject = courseToUpdate.courseInfo.subject;
+                newCourse.courseInfo.description = courseToUpdate.courseInfo.description;
+                newCourse.courseUsers = courseToUpdate.courseUsers;
+                newCourse.courseInfo.costPerHour = courseToUpdate.courseInfo.costPerHour;
+                newCourse.files = courseToUpdate.files;
+                newCourse.news = courseToUpdate.news;
+                newCourse.level = courseToUpdate.level;
+
+                newCourse.save(function (err) {
+                    if (err) {
+                        throw err;
+                    }
+                });
+                
+            }
+        });
+        res.redirect('mycourses');
+    });
+          
     app.get('/details/:id', function(req, res) {
         resCourse = [];
         crs.findOne({
@@ -161,9 +204,35 @@ module.exports = function (app, passport) {
     app.get('/profile', isLoggedIn, function (req, res) {
 
         if (req.user.local.role == 'student') {
-            res.render('student', {
-                user: req.user
+            var nws = [];
+            var crsss = [];
+        crs.find({}, function (err, crss) {
+        crss.forEach(function (course) {
+            
+                var joined = 0;
+                course.courseUsers.forEach(function (user) {
+                    if (user.name == req.user.local.email) joined = 1;
+                });
+                if (joined) {
+                    console.log(course);
+                    crsss.push(course);
+                }
+            
+        });
+        crsss.forEach(function(course){
+            course.news.forEach(function(neww, i){
+                if(i<=2){
+                nws.push(neww);
+                console.log(neww);
+                }
             });
+        });
+            res.render('student', {
+                user: req.user,
+                news : nws
+            });
+    });
+            
         } else {
             res.render('teacher', {
                 user: req.user
@@ -301,8 +370,6 @@ module.exports = function (app, passport) {
                  
     } );
     
-
-    
     app.get('/opinion/:teacher', function(req, res){
         var tchr = req.params.teacher;
         res.render('teacherOpinion', {
@@ -316,10 +383,6 @@ module.exports = function (app, passport) {
        res.render('search');
     });
     
-    
-    
-    
-        
     app.get('/searchTeacher', function (req, res) {
        res.render('searchTeacher', {
             user: req.user
@@ -332,9 +395,6 @@ module.exports = function (app, passport) {
         });
     });
         
-          
-            
-    
     app.get('/course', function (req, res) {
         var resend = function (req, res) {
             if (req.isAuthenticated()) {
@@ -653,6 +713,7 @@ var reorganizeUsers = function (cb, req, res) {
     crs.find({}, function (err, crss) {
         crss.forEach(function (course) {
             courses.push(course);
+            console.log(course);
         });
         if (cb) cb(req, res);
     });

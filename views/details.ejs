@@ -51,6 +51,12 @@
                         <input type="text" name="courseId" value="<%=courses[i].id %>" style="display:none;" readonly>
                         <button type="submit">Usuń Ten Kurs</button>
             </form>
+            <br><br><br>
+            <form action="/dodaj" method="post">
+                <input type="text" name="newInfo">
+                <input type="text" name="courseId" value="<%=courses[i].id %>" style="display:none;" readonly>
+                <button type="submit">Dodaj Newsa</button>
+            </form>
             <% } %>
     </ul>
 
