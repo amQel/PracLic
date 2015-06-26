@@ -7,11 +7,29 @@ module.exports = function (app, passport) {
 
     app.get('/', function (req, res) {
         if (req.isAuthenticated()) {
-            res.render('index', {
+         if(req.user.local.role ==='student'){   
+            res.render('indexStudent', {
                 data: 'Zalogowano jako ' + req.user.local.email,
                 user: req.user
             });
-        } else {
+        
+         }
+            
+        else{
+          res.render('indexTeacher', {
+                data: 'Zalogowano jako ' + req.user.local.email,
+                user: req.user
+            });
+        
+        
+        }
+        
+        
+        
+        } 
+        
+        
+        else {
             res.render('index', {
                 user: undefined,
                 data: 'Nie zalogowano'

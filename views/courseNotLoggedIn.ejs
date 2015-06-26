@@ -4,10 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Our Courses</title>
+    <% include ./partials/headStudent.ejs %>
 </head>
 
 <body class="container">
-    <header>
+     <header>
+      <% include ./partials/notlogged.ejs %>
     </header>
     <ul>
         <% for(var i=0; i<courses.length; i++) {%>
@@ -29,8 +31,9 @@
             <br>
             <% } %>
     </ul>
-    <a href="/login">zaloguj się aby móc uczęszczać na kurs</a>
-    <footer>
+    <a href="/login">Zaloguj się aby móc uczęszczać na kurs!</a>
+      <footer>
+        <% include ./partials/footer.ejs %>
     </footer>
 </body>
 
