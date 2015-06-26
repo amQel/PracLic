@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 
-var couseSchema = mongoose.Schema({
+var courseSchema = mongoose.Schema({
        id : Number,
        teacher : String,
        courseInfo : {
@@ -13,4 +13,4 @@ var couseSchema = mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('Course', couseSchema);
+module.exports = mongoose.model('Course', courseSchema);
