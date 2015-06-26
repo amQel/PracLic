@@ -12,7 +12,11 @@
     <% include ./partials/headerStudent.ejs %>
 </header>
 
-<h1>Add some things to your account:</h1>
+<h1>Add an avatar:</h1>
+<input type="file" id="image-uploader"/>
+<div id="image-display"></div>
+
+<h1>Edit your account:</h1>
 
 <form action="/changeaccount" method="post">
     <div>
@@ -35,7 +39,6 @@
         </div>
     </section>
     <br>
-
 
     <button type="submit">Change</button>
 </form>

@@ -34,8 +34,6 @@ module.exports = function (passport) {
                     newUser.local.email = email;
                     newUser.local.password = newUser.generateHash(password);
                     newUser.local.role = req.body.role;
-                    newUser.local.province = req.body.province;
-                    newUser.local.city = req.body.city;
 
                     newUser.save(function(err){
                         if(err){
