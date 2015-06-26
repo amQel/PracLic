@@ -2,40 +2,35 @@ var path = require('path');
 
 var courses = [];
 var crs = require('../model/course');
+var usrs = require('../model/user');
 
 module.exports = function (app, passport) {
 
     app.get('/', function (req, res) {
         if (req.isAuthenticated()) {
-         if(req.user.local.role ==='student'){   
-            res.render('indexStudent', {
-                data: 'Zalogowano jako ' + req.user.local.email,
-                user: req.user
-            });
-        
-         }
-            
-        else{
-          res.render('indexTeacher', {
-                data: 'Zalogowano jako ' + req.user.local.email,
-                user: req.user
-            });
-        
-        
-        }
-        
-        
-        
-        } 
-        
-        
-        else {
+            if (req.user.local.role === 'student') {
+                res.render('indexStudent', {
+                    data: 'Zalogowano jako ' + req.user.local.email,
+                    user: req.user
+                });
+
+            } else {
+                res.render('indexTeacher', {
+                    data: 'Zalogowano jako ' + req.user.local.email,
+                    user: req.user
+                });
+
+
+            }
+
+        } else {
             res.render('index', {
                 user: undefined,
                 data: 'Nie zalogowano'
             });
         }
     });
+
 
     app.get('/login', function (req, res) {
         res.render('login', {
@@ -140,6 +135,26 @@ module.exports = function (app, passport) {
     });
 
 
+    app.get('/teachers', function (req, res) {
+        var renderTeacherData = [];
+        usrs.find({}, function (err, teachers) {
+            teachers.forEach(function (teacher) {
+                
+                if(teacher.local.role == 'teacher'){
+                    console.log(teacher.local.role);
+                    renderTeacherData.push(teacher);
+                }
+            });
+            console.log(renderTeacherData);
+            res.render('teachers', {
+            user : req.user,
+            teachers : renderTeacherData
+        });
+            
+        });
+        
+        
+    });
 
 
     app.get('/student', function (req, res) {
@@ -243,9 +258,9 @@ module.exports = function (app, passport) {
         res.redirect('/profile');
 
     });
-    
-    app.get('/wypisz/:id', function(req, res) {
-         var ID = req.params.id;
+
+    app.get('/wypisz/:id', function (req, res) {
+        var ID = req.params.id;
         crs.findOne({
             'id': ID
         }, function (err, course) {
@@ -253,20 +268,20 @@ module.exports = function (app, passport) {
                 console.log('modafukin erro');
             } else {
                 var courseToUpdate = course;
-                
+
                 crs.remove({
                     'id': courseToUpdate.id
                 }, function (err) {
                     console.log(err);
                 });
-                
-                
-                courseToUpdate.courseUsers.forEach(function(user, i) {
-                    if(user.name == req.user.local.email){
+
+
+                courseToUpdate.courseUsers.forEach(function (user, i) {
+                    if (user.name == req.user.local.email) {
                         courseToUpdate.courseUsers.splice(i, 1);
                     }
                 });
-                
+
                 var newCourse = new crs();
                 newCourse.id = courseToUpdate.id;
                 newCourse.teacher = courseToUpdate.teacher;
@@ -287,14 +302,14 @@ module.exports = function (app, passport) {
         });
         res.redirect('/joinedcourses');
     });
-    
-    app.get('/usun/:id', function(req, res) {
+
+    app.get('/usun/:id', function (req, res) {
         var ID = req.params.id;
         crs.remove({
-                    'id': ID
-                }, function (err) {
-                    console.log(err);
-                });
+            'id': ID
+        }, function (err) {
+            console.log(err);
+        });
         res.redirect('/mycourses');
     });
 
@@ -378,9 +393,7 @@ var reorganizeUsers = function (cb, req, res) {
     courses = [];
     crs.find({}, function (err, crss) {
         crss.forEach(function (course) {
-            console.log(course);
             courses.push(course);
-            console.log(courses.length);
         });
         if (cb) cb(req, res);
     });
@@ -389,7 +402,7 @@ var reorganizeUsers = function (cb, req, res) {
 
 
 
-var sortCurses = function(a, b){
+var sortCurses = function (a, b) {
     return a.id - b.id;
 };
 
