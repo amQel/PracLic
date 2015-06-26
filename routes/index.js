@@ -2,6 +2,7 @@ var path = require('path');
 
 var courses = [];
 var crs = require('../model/course');
+var usrs = require('../model/user');
 
 module.exports = function (app, passport) {
 
@@ -12,29 +13,21 @@ module.exports = function (app, passport) {
                     data: 'Zalogowano jako ' + req.user.local.email,
                     user: req.user
                 });
+            } else {
 
-            }
-
-            else {
                 res.render('indexTeacher', {
                     data: 'Zalogowano jako ' + req.user.local.email,
                     user: req.user
                 });
-
-
             }
-
-
-        }
-
-
-        else {
+        } else {
             res.render('index', {
                 user: undefined,
                 data: 'Nie zalogowano'
             });
         }
     });
+
 
     app.get('/login', function (req, res) {
         res.render('login', {
@@ -138,6 +131,26 @@ module.exports = function (app, passport) {
         });
     });
 
+
+    app.get('/teachers', function (req, res) {
+        var renderTeacherData = [];
+        usrs.find({}, function (err, teachers) {
+            teachers.forEach(function (teacher) {
+                
+                if(teacher.local.role == 'teacher'){
+                    console.log(teacher.local.role);
+                    renderTeacherData.push(teacher);
+                }
+            });
+            console.log(renderTeacherData);
+            res.render('teachers', {
+            user : req.user,
+            teachers : renderTeacherData
+        });
+            
+        });
+
+    });
 
     app.get('/student', function (req, res) {
         if (req.user.local.role == 'student') {
@@ -377,15 +390,12 @@ var reorganizeUsers = function (cb, req, res) {
     courses = [];
     crs.find({}, function (err, crss) {
         crss.forEach(function (course) {
-            console.log(course);
             courses.push(course);
-            console.log(courses.length);
         });
         if (cb) cb(req, res);
     });
 
 };
-
 
 var sortCurses = function (a, b) {
     return a.id - b.id;
