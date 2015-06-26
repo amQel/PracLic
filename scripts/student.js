@@ -13,4 +13,19 @@ $(document).ready(function () {
             }
         });
     });
+
+    var $imageDisplay = $("#image-display");
+
+    function readSingleFile(e) {
+        var file = e.target.files[0];
+        if (file) {
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = function(e){
+            $imageDisplay.html("<p>Super jest</p>");
+        };
+    }
+
+    $("#image-uploader").on('change', readSingleFile, false);
 });
