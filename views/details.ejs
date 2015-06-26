@@ -15,9 +15,6 @@
     <header>
         <% include ./partials/headerTeacher.ejs %>
     </header>
-    <p id="data">
-        <%=data %>
-    </p>
     <ul>
         <% for(var i=0; i<courses.length; i++) {%>
             <li>
@@ -41,16 +38,29 @@
             <li>
                 <%=courses[i].level %>
             </li>
-            <a href="/details/<%=i%>">Szczegóły</a>
+
             <br>
+            <form action="/autenticate" method="post" id="autenticator">
+                <label id="lbl" name="lbl" style="display:none;">Potwierdź Hasłem :</label>
+                <%if(message.length>0){ %>
+                    <p>
+                        <%=message %>
+                    </p>
+                    <% }%>
+                        <input type="password" id="pwd" name="pwd" style="display:none;">
+                        <input type="text" name="courseId" value="<%=courses[i].id %>" style="display:none;" readonly>
+                        <button type="submit">Usuń Ten Kurs</button>
+            </form>
             <% } %>
     </ul>
+
     <a href="/profile">back to profile</a>
-<footer>
-    <% include ./partials/footer.ejs %>
-</footer>
+    <footer>
+        <% include ./partials/footer.ejs %>
+    </footer>
 </body>
 
 <script src="/js/jquery.min.js"></script>
-<script src="../scripts/myCourses.js"></script>
+<script src="../scripts/details.js"></script>
+
 </html>

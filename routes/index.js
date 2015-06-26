@@ -1,6 +1,7 @@
 var path = require('path');
 
 var courses = [];
+
 var crs = require('../model/course');
 var usrs = require('../model/user');
 var opinion = require('../model/opinions');
@@ -88,6 +89,63 @@ module.exports = function (app, passport) {
         failureFlash: true
     }));
 
+    app.post('/autenticate', function(req, res) {
+        resCourse = [];
+        crs.findOne({
+            'id': req.body.courseId
+        }, function (err, course) {
+            if (err) {
+                console.log('modafukin erro');
+            } else {
+                resCourse.push(course);
+            }
+        });
+        usrs.findOne({ 'local.email' : req.user.local.email}, function (err, user) {
+                if(err) {
+                    console.log('error autenticating');
+                } else
+
+                if(!user) {
+                  res.render('details', {
+                      message : 'User with this email doesnt exist!',
+                      courses: resCourse,
+                      user: req.user
+                  });
+                } else
+
+                if(!user.validPassword(req.body.pwd)) {
+                   res.render('details', {
+                      message : 'Wrong Password!',
+                      courses: resCourse,
+                      user: req.user
+                  });
+                } else {
+                    res.redirect('/usun/'+req.body.courseId);
+                }
+            
+            });
+    });
+   
+    app.get('/details/:id', function(req, res) {
+        resCourse = [];
+        crs.findOne({
+            'id': req.params.id
+        }, function (err, course) {
+            if (err) {
+                console.log('modafukin erro');
+            } else {
+                resCourse.push(course);
+                res.render('details', {
+                      message : '',
+                      courses: resCourse,
+                      user: req.user
+        });
+            }
+        });
+        
+         
+    });
+    
     app.get('/register', function (req, res) {
         res.render('register', {
             message: req.flash('registerMessage')
@@ -262,13 +320,13 @@ module.exports = function (app, passport) {
     
     
         
-        app.get('/searchTeacher', function (req, res) {
+    app.get('/searchTeacher', function (req, res) {
        res.render('searchTeacher', {
             user: req.user
         });
     });
         
-        app.get('/searchStudent', function (req, res) {
+    app.get('/searchStudent', function (req, res) {
        res.render('searchStudent', {
             user: req.user
         });
@@ -305,7 +363,7 @@ module.exports = function (app, passport) {
 
     });
 
-app.get('/courseTeacher', function (req, res) {
+    app.get('/courseTeacher', function (req, res) {
         var resend = function (req, res) {
             if (req.isAuthenticated()) {
                 res.render('courseTeacher', {
@@ -422,6 +480,7 @@ app.get('/courseTeacher', function (req, res) {
 
     app.get('/usun/:id', function (req, res) {
         var ID = req.params.id;
+        
         crs.remove({
             'id': ID
         }, function (err) {
@@ -457,6 +516,7 @@ app.get('/courseTeacher', function (req, res) {
                     myCourses.push(course);
                 }
             });
+            lastCourses = myCourses;
             res.render('myCourses', {
                 data: "kursy uzytkownika " + req.user.local.email,
                 courses: myCourses.sort(sortCurses),
