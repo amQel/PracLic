@@ -7,33 +7,20 @@ $(document).ready(function () {
         $(collapse_content_selector).toggle(function () {
             if ($(this).css('display') == 'none') {
 
-                toggle_switch.html('Zmien password');
+                toggle_switch.html('Change password');
             } else {
-                //change the button label to be 'Hide'
-                toggle_switch.html('Nie zmieniaj passwordu');
+                toggle_switch.html('Do not change password');
             }
         });
     });
 
-});
+    var $editForm = $("form");
+    var $provinceSelection = $editForm.find('select[name=province]');
+    var $citySelection = $editForm.find('#citiesCheck');
 
+    $provinceSelection.load('./cities/provinces');
 
-
-$(document).ready(function () {
-    $('.nav-toggle').click(function () {
-
-        var collapse_content_selector = $(this).attr('href');
-
-        var toggle_switch = $(this);
-        $(collapse_content_selector).toggle(function () {
-            if ($(this).css('display') == 'none') {
-
-                toggle_switch.html('Zmien email');
-            } else {
-                //change the button label to be 'Hide'
-                toggle_switch.html('Nie zmieniaj emaila');
-            }
-        });
+    $provinceSelection.on("change", function () {
+        $citySelection.load('./citiesCheck/' + $(this).children(":selected").attr("id"));
     });
-
 });
