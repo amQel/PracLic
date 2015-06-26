@@ -1,71 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html>
+ 
 <head>
+    <title>Register page</title>
+     <link href="../css/register.css" rel="stylesheet" type="text/css" />
     <meta charset="UTF-8">
-    <title>search</title>
 </head>
-
+ 
 <body>
-    <form action="search" method="post" name="search-form">
+    <h1>Register</h1>
+    <% if(message.length> 0) { %>
+        <!-- bajerek dla ejsa, ogolnie jak bedzie error w loginie to tutaj pojdzie render -->
         <div>
-            <label>Province</label>
-            <select name="province">
-                <option value="SELECT" disabled selected>Wybierz województwo</option>
-                <option value="dolnoœl¹skie" id="id1">dolnoœl¹skie</option>
-                <option value="kujawsko-pomorskie" id="id2">kujawsko-pomorskie</option>
-                <option value="lubelskie" id="id3">lubelskie</option>
-                <option value="lubuskie" id="id4">lubuskie</option>
-                <option value="³ódzkie" id="id5">³ódzkie</option>
-                <option value="ma³opolskie" id="id6">ma³opolskie</option>
-                <option value="mazowieckie" id="id7">mazowieckie</option>
-                <option value="opolskie" id="id8">opolskie</option>
-                <option value="podkarpackie" id="id9">podkarpackie</option>
-                <option value="podlaskie" id="id10">podlaskie</option>
-                <option value="pomorskie" id="id11">pomorskie</option>
-                <option value="œl¹skie" id="id12">œl¹skie</option>
-                <option value="œwiêtokrzyskie" id="id13">œwiêtokrzyskie</option>
-                <option value="warmiñsko-mazurskie" id="id14">warmiñsko-mazurskie</option>
-                <option value="wielkopolskie" id="id15">wielkopolskie</option>
-                <option value="zachodniopomorskie" id="id16">zachodniopomorskie</option>
-            </select>
+            <%=message %>
         </div>
-        <div>
-            <label>City</label>
-            <select name="city">
-
-            </select>
-        </div>
-        <div>
-            <select name="education-level">
-                <option value="podstawowa">Szko³a podstawowa</option>
-                <option value="gimnazjum">Gimnazjum</option>
-                <option value="liceum">Liceum</option>
-                <option value="technikum">Technikum</option>
-                <option value="zawodowa">Szko³a zawodowa</option>
-                <option value="studia">Studia</option>
-            </select>
-        </div>
-        <div>
-            <select name="subject">
-                <option value="Jêzyk polski">Jêzyk polski</option>
-                <option value="Jêzyk angielski">Jêzyk angielski</option>
-                <option value="Jêzyk niemiecki">Jêzyk niemiecki</option>
-                <option value="Jêzyk rosyjski">Jêzyk rosyjski</option>
-                <option value="Matematyka">Matematyka</option>
-                <option value="Chemia">Chemia</option>
-                <option value="Fizyka">Fizyka</option>
-                <option value="Biologia">Biologia</option>
-                <option value="Historia">Historia</option>
-                <option value="Geografia">Geografia</option>
-                <option value="Sztuka">Sztuka</option>
-                <option value="Religia">Religia</option>
-                <option value="WOS - Wiedza o spo³eczeñstwie">WOS - Wiedza o spo³eczeñstwie</option>
-                <option value="Informatyka">Informatyka</option>
-                <option value="Wychowanie fizyczne">Wychowanie fizyczne</option>
-            </select>
-        </div>
-    </form>
+        <% } %>
+ 
+            <form action="/register" method="post" name="register-form">
+                <div>
+                    <label>Role</label>
+                    <select name="role">
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Province</label>
+                    <select name="province">
+                        <option value="SELECT" disabled selected>Wybierz wojewÃ³dztwo</option>
+                        <option value="dolnoÅ›lÄ…skie" id="id1">dolnoÅ›lÄ…skie</option>
+                        <option value="kujawsko-pomorskie" id="id2">kujawsko-pomorskie</option>
+                        <option value="lubelskie" id="id3">lubelskie</option>
+                        <option value="lubuskie" id="id4">lubuskie</option>
+                        <option value="Å‚Ã³dzkie" id="id5">Å‚Ã³dzkie</option>
+                        <option value="maÅ‚opolskie" id="id6">maÅ‚opolskie</option>
+                        <option value="mazowieckie" id="id7">mazowieckie</option>
+                        <option value="opolskie" id="id8">opolskie</option>
+                        <option value="podkarpackie" id="id9">podkarpackie</option>
+                        <option value="podlaskie" id="id10">podlaskie</option>
+                        <option value="pomorskie" id="id11">pomorskie</option>
+                        <option value="Å›lÄ…skie" id="id12">Å›lÄ…skie</option>
+                        <option value="Å›wiÄ™tokrzyskie" id="id13">Å›wiÄ™tokrzyskie</option>
+                        <option value="warmiÅ„sko-mazurskie" id="id14">warmiÅ„sko-mazurskie</option>
+                        <option value="wielkopolskie" id="id15">wielkopolskie</option>
+                        <option value="zachodniopomorskie" id="id16">zachodniopomorskie</option>
+                    </select>
+                </div>
+                <div>
+                    <label>City</label>
+                    <select name="city">
+ 
+                    </select>
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input type="text" name="email">
+                </div>
+                <div>
+                    <label>Password</label>
+                    <input type="password" name="password">
+                </div>
+                <button type="submit">Register</button>
+            </form>
+ 
+            <p>Have an account? <a href="/login">Login</a> </p>
+            <script src="/js/jquery.min.js"></script>
+            <script src="../scripts/register_cities.js"></script>
 </body>
-
+ 
 </html>

@@ -342,7 +342,7 @@ module.exports = function (app, passport) {
             });
             res.render('myCourses', {
                 data: "kursy uzytkownika " + req.user.local.email,
-                courses: myCourses.sort(sortCurses)
+                courses: myCourses.sort(sortCurses),user: req.user
             });
         };
         reorganizeUsers(resnd, req, res);

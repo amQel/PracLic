@@ -4,9 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>my courses</title>
+   
+    <% include ./partials/headTeacher.ejs %>
+
 </head>
 
-<body>
+<body class="container">
+    
+    
+    <header>
+        <% include ./partials/headerTeacher.ejs %>
+    </header>
     <p id="data">
         <%=data %>
     </p>
@@ -39,5 +47,7 @@
     </ul>
     <a href="/profile">back to profile</a>
 </body>
-
+ <footer>
+        <% include ./partials/footer.ejs %>
+    </footer>
 </html>
