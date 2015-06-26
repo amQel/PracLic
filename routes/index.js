@@ -51,7 +51,7 @@ module.exports = function (app, passport) {
             }
             res.render('joinedcourses', {
                 user: req.user,
-                courses: sendInfo,
+                courses: sendInfo.sort(sortCurses),
                 data: dataToSend
             });
         }
@@ -160,12 +160,12 @@ module.exports = function (app, passport) {
         var resend = function (req, res) {
             if (req.isAuthenticated()) {
                 res.render('course', {
-                    courses: courses,
+                    courses: courses.sort(sortCurses),
                     user: req.user
                 });
             } else {
                 res.render('courseNotLoggedIn', {
-                    courses: courses,
+                    courses: courses.sort(sortCurses),
                     user: req.user
                 });
                 //funkcja do czyszczenia bazy danych z kursów - wywolywac ostroznie
@@ -269,7 +269,7 @@ module.exports = function (app, passport) {
             });
             res.render('myCourses', {
                 data: "kursy uzytkownika " + req.user.local.email,
-                courses: myCourses
+                courses: myCourses.sort(sortCurses)
             });
         }
         reorganizeUsers(resnd, req, res);
@@ -330,6 +330,10 @@ var reorganizeUsers = function (cb, req, res) {
 };
 
 
+
+var sortCurses = function(a, b){
+    return a.id - b.id;
+};
 
 /*
 exports.nauczyciel = function(req, res) {
