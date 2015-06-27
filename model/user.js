@@ -9,7 +9,9 @@ var userSchema = mongoose.Schema({
        role         : String,
        province     : String,
        cities       : [{ city : String }],
-       avatar       : { data: Buffer, contentType: String }
+       avatar       : { data: Buffer, contentType: String },
+       name         : String,
+       surname      : String
    }
 });
 

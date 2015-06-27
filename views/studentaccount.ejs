@@ -11,7 +11,6 @@
 <header>
     <% include ./partials/headerStudent.ejs %>
 </header>
-
 <h1>Add an avatar:</h1>
 <div>
 <%if(user.local.avatar && user.local.avatar.data) {%>
@@ -26,14 +25,12 @@
     <button type="submit">Upload</button>
 </form>
 
-<div id="uploader"></div>
-
 <h1>Edit your account:</h1>
 
 <form action="/changeaccount" method="post">
     <div>
         <label>Name</label>
-        <input type="text" name="firstName">
+        <input type="text" name="firstName" value="<%= user.local.name %>">
     </div>
     <div>
         <label>Surname</label>
