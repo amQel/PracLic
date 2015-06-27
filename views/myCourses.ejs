@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>my courses</title>
-   
+
     <% include ./partials/headTeacher.ejs %>
 
 </head>
 
 <body class="container">
-    
-    
+
+
     <header>
         <% include ./partials/headerTeacher.ejs %>
     </header>
@@ -41,13 +41,15 @@
             <li>
                 <%=courses[i].level %>
             </li>
+            <a href="/details/<%=courses[i].id %>">Szczegóły</a>
             <br>
-            <a href="/usun/<%=courses[i].id %>">Usuń Ten kurs (bo ssie)</a>
             <% } %>
     </ul>
     <a href="/profile">back to profile</a>
+<footer>
+    <% include ./partials/footer.ejs %>
+</footer>
 </body>
- <footer>
-        <% include ./partials/footer.ejs %>
-    </footer>
+
+
 </html>

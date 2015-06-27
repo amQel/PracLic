@@ -3,14 +3,15 @@
 
 <head>
     <title>Home page</title>
-<link href="../css/register.css" rel="stylesheet" type="text/css"/>
+    
 
-    <%if(user !==undefined){ %>
-        <% include /partials/headerIndexStudent.ejs %>
-            <%} else {%>
 
-                <% include /partials/notlogged.ejs %>
-                    <% }%>
+        
+            
+
+    <% include ./partials/headerTeacher.ejs %>
+
+                    
 
 
 </head>
@@ -20,7 +21,7 @@
     <header>
         <% include /partials/headIndex.ejs %>
     </header>
-    <div class="jumbotron">
+   
         <ul>
             <% for(var i=0; i<teachers.length; i++) {%>
                 <li>
@@ -30,12 +31,7 @@
                     <%=teachers[i].local.city %>
                 </li>
             
-                  <%if(user !==undefined){ %>
-            <a href="/opinion/<%= teachers[i].local.email%>">Wystaw Opinię!</a>
-            <br>
-            <%} else {%>
-                    <% }%>
-                   
+                
                 <br>
                
             
@@ -46,9 +42,5 @@
 
     </div>
 </body>
-
- <footer>
-        <% include ./partials/footer.ejs %>
-    </footer>
 
 </html>

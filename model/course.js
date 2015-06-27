@@ -12,7 +12,8 @@ var courseSchema = mongoose.Schema({
        },
        courseUsers: [ { name : String } ],
        level : String,
-       
+       news : [ {tittle : String, message : String} ],
+       files : [ {data: Buffer, contentType: String} ]
 });
 
 

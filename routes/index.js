@@ -4,6 +4,7 @@ var multiparty = require('multiparty');
 var util = require('util');
 
 var courses = [];
+
 var crs = require('../model/course');
 var usrs = require('../model/user');
 var opinion = require('../model/opinions');
@@ -91,6 +92,106 @@ module.exports = function (app, passport) {
         failureFlash: true
     }));
 
+    app.post('/autenticate', function(req, res) {
+        resCourse = [];
+        crs.findOne({
+            'id': req.body.courseId
+        }, function (err, course) {
+            if (err) {
+                console.log('modafukin erro');
+            } else {
+                resCourse.push(course);
+            }
+        });
+        usrs.findOne({ 'local.email' : req.user.local.email}, function (err, user) {
+                if(err) {
+                    console.log('error autenticating');
+                } else
+
+                if(!user) {
+                  res.render('details', {
+                      message : 'User with this email doesnt exist!',
+                      courses: resCourse,
+                      user: req.user
+                  });
+                } else
+
+                if(!user.validPassword(req.body.pwd)) {
+                   res.render('details', {
+                      message : 'Wrong Password!',
+                      courses: resCourse,
+                      user: req.user
+                  });
+                } else {
+                    res.redirect('/usun/'+req.body.courseId);
+                }
+            
+            });
+    });
+   
+    app.post('/dodaj', function(req, res) {
+    
+      crs.findOne({
+            'id': req.body.courseId
+        }, function (err, course) {
+            if (err) {
+                console.log('modafukin erro');
+            } else {
+                var courseToUpdate = course;
+                var newsa = {
+                    tittle : "tittle1",
+                    message: req.body.newInfo
+                };
+                crs.remove({
+                    'id': courseToUpdate.id
+                }, function (err) {
+                    console.log(err);
+                });
+                courseToUpdate.news.push(newsa);
+
+                var newCourse = new crs();
+                newCourse.id = courseToUpdate.id;
+                newCourse.teacher = courseToUpdate.teacher;
+                newCourse.courseInfo.name = courseToUpdate.courseInfo.name;
+                newCourse.courseInfo.subject = courseToUpdate.courseInfo.subject;
+                newCourse.courseInfo.description = courseToUpdate.courseInfo.description;
+                newCourse.courseUsers = courseToUpdate.courseUsers;
+                newCourse.courseInfo.costPerHour = courseToUpdate.courseInfo.costPerHour;
+                newCourse.files = courseToUpdate.files;
+                newCourse.news = courseToUpdate.news;
+                newCourse.level = courseToUpdate.level;
+
+                newCourse.save(function (err) {
+                    if (err) {
+                        throw err;
+                    }
+                });
+                
+            }
+        });
+        res.redirect('mycourses');
+    });
+          
+    app.get('/details/:id', function(req, res) {
+        resCourse = [];
+        crs.findOne({
+            'id': req.params.id
+        }, function (err, course) {
+            if (err) {
+                console.log('modafukin erro');
+            } else {
+                resCourse.push(course);
+                res.render('details', {
+                      message : '',
+                      courses: resCourse,
+                      user: req.user
+        });
+            }
+        });
+        
+         
+    });
+    
     app.get('/register', function (req, res) {
         res.render('register', {
             message: req.flash('registerMessage')
@@ -106,9 +207,35 @@ module.exports = function (app, passport) {
     app.get('/profile', isLoggedIn, function (req, res) {
 
         if (req.user.local.role == 'student') {
-            res.render('student', {
-                user: req.user
+            var nws = [];
+            var crsss = [];
+        crs.find({}, function (err, crss) {
+        crss.forEach(function (course) {
+            
+                var joined = 0;
+                course.courseUsers.forEach(function (user) {
+                    if (user.name == req.user.local.email) joined = 1;
+                });
+                if (joined) {
+                    console.log(course);
+                    crsss.push(course);
+                }
+            
+        });
+        crsss.forEach(function(course){
+            course.news.forEach(function(neww, i){
+                if(i<=2){
+                nws.push(neww);
+                console.log(neww);
+                }
             });
+        });
+            res.render('student', {
+                user: req.user,
+                news : nws
+            });
+    });
+            
         } else {
             res.render('teacher', {
                 user: req.user
@@ -139,6 +266,7 @@ module.exports = function (app, passport) {
 
     app.get('/teachers', function (req, res) {
         var renderTeacherData = [];
+        
         usrs.find({}, function (err, teachers) {
             teachers.forEach(function (teacher) {
 
@@ -157,6 +285,50 @@ module.exports = function (app, passport) {
 
     });
 
+    
+    app.get('/teachersStudent', function (req, res) {
+        var renderTeacherData = [];
+        
+        usrs.find({}, function (err, teachers) {
+            teachers.forEach(function (teacher) {
+                
+                if(teacher.local.role == 'teacher'){
+                    console.log(teacher.local.role);
+                    renderTeacherData.push(teacher);
+                }
+            });
+            console.log(renderTeacherData);
+            res.render('teachersStudent', {
+            user : req.user,
+            teachers : renderTeacherData
+        });
+            
+        });
+
+    });
+    
+    app.get('/teachersTeachers', function (req, res) {
+        var renderTeacherData = [];
+        
+        usrs.find({}, function (err, teachers) {
+            teachers.forEach(function (teacher) {
+                
+                if(teacher.local.role == 'teacher'){
+                    console.log(teacher.local.role);
+                    renderTeacherData.push(teacher);
+                }
+            });
+            console.log(renderTeacherData);
+            res.render('teachersTeachers', {
+            user : req.user,
+            teachers : renderTeacherData
+        });
+            
+        });
+
+    });
+    
+    
     app.get('/student', function (req, res) {
         if (req.user.local.role == 'student') {
             res.render('student', {
@@ -185,10 +357,6 @@ module.exports = function (app, passport) {
     app.get('/searchall', function (req, res) {
         
        
-         
-       
-        
-        
                 if (req.user.local.role == 'teacher') {
             res.redirect('/searchTeacher');
         
@@ -205,8 +373,6 @@ module.exports = function (app, passport) {
                  
     } );
     
-
-    
     app.get('/opinion/:teacher', function(req, res){
         var tchr = req.params.teacher;
         res.render('teacherOpinion', {
@@ -220,25 +386,18 @@ module.exports = function (app, passport) {
        res.render('search');
     });
     
-    
-    
-    
-        
-        app.get('/searchTeacher', function (req, res) {
+    app.get('/searchTeacher', function (req, res) {
        res.render('searchTeacher', {
             user: req.user
         });
     });
         
-        app.get('/searchStudent', function (req, res) {
+    app.get('/searchStudent', function (req, res) {
        res.render('searchStudent', {
             user: req.user
         });
     });
         
-          
-            
-    
     app.get('/course', function (req, res) {
         var resend = function (req, res) {
             if (req.isAuthenticated()) {
@@ -267,7 +426,35 @@ module.exports = function (app, passport) {
 
     });
 
+    app.get('/courseTeacher', function (req, res) {
+        var resend = function (req, res) {
+            if (req.isAuthenticated()) {
+                res.render('courseTeacher', {
+                    courses: courses.sort(sortCurses),
+                    user: req.user
+                });
+            } else {
+                res.render('courseNotLoggedIn', {
+                    courses: courses.sort(sortCurses),
+                    user: req.user
+                });
+                //funkcja do czyszczenia bazy danych z kursów - wywolywac ostroznie
+                //                courses.forEach(function (id, course) {
+                //                    console.log("beniz" + course);
+                //                    crs.remove({
+                //                        'id': course
+                //                    }, function (err) {
+                //                        console.log(err);
+                //                    });
+                //                });
+            }
+        };
+        reorganizeUsers(resend, req, res);
 
+
+    });
+
+    
     app.get('/zapisz/:id', function (req, res) {
         var ID = req.params.id;
         crs.findOne({
@@ -356,6 +543,7 @@ module.exports = function (app, passport) {
 
     app.get('/usun/:id', function (req, res) {
         var ID = req.params.id;
+        
         crs.remove({
             'id': ID
         }, function (err) {
@@ -391,6 +579,7 @@ module.exports = function (app, passport) {
                     myCourses.push(course);
                 }
             });
+            lastCourses = myCourses;
             res.render('myCourses', {
                 data: "kursy uzytkownika " + req.user.local.email,
                 courses: myCourses.sort(sortCurses),
@@ -472,6 +661,22 @@ module.exports = function (app, passport) {
         res.redirect('/opinions');
     });
 
+    
+    app.get('/opinionsTeacher', function(req, res){
+        var opinions = [];
+        opinion.find({}, function(err, opn){
+            opn.forEach(function(opin){
+                console.log(opin);
+                opinions.push(opin);
+            });
+            res.render('opinionsTeacher', {
+            user : req.user,
+            opinions : opinions
+        });
+        });
+        
+    });
+    
     app.get('/cities/:id', function (req, res) {
         var id = req.params.id;
         res.sendFile(path.resolve('views/cities/' + id + '.html'));
@@ -515,7 +720,7 @@ function isLoggedIn(req, res, next) {
         return next();
     }
 
-    res.redirect('/'); // jesli nie - index
+    res.redirect('/login'); // jesli nie - index
 }
 
 var reorganizeUsers = function (cb, req, res) {
@@ -523,6 +728,7 @@ var reorganizeUsers = function (cb, req, res) {
     crs.find({}, function (err, crss) {
         crss.forEach(function (course) {
             courses.push(course);
+            console.log(course);
         });
         if (cb) cb(req, res);
     });
@@ -533,6 +739,12 @@ var sortCurses = function (a, b) {
     return a.id - b.id;
 };
 
+var usunOpinie = function() {
+    opinion.remove({
+        }, function (err) {
+            console.log(err);
+        });
+};
 /*
  exports.nauczyciel = function(req, res) {
 
