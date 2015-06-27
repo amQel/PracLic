@@ -4,44 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Our Courses</title>
-    
-    <% include ./partials/headStudent.ejs %>
 
-    </head>
+    <% include ./partials/headStudent.ejs %>
+        <link href="../css/courseJumbtron.css" rel="stylesheet" type="text/css" />
+</head>
 
 <body class="container">
     <header>
         <% include ./partials/headerStudent.ejs %>
     </header>
-    <ul>
-        <% for(var i=0; i<courses.length; i++) {%>
-            <li>
-                <%=courses[i].id %>
-            </li>
-            <li>
-                <%=courses[i].teacher %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.name %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.subject %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.description %>
-            </li>
-            <a href="/zapisz/<%= courses[i].id %>">Zapisz mnie na ten kurs!</a>
-            <br>
-            <% } %>
-    </ul>
-    <a href="/profile">Back to profile</a>
-    <footer>
-      
+    <h1>Dostępne kursy</h1>
 
-       
-        <% include ./partials/footer.ejs %>
-    </footer>
-   
+    <% for(var i=0; i<courses.length; i++) {%>
+        <br>
+        <div class="jumbotron">
+            Email:
+            <%=courses[i].teacher %>
+                <br> Imie:
+                <%=courses[i].courseInfo.name %>
+                    <br> Temat:
+                    <%=courses[i].courseInfo.subject %>
+                        <br> Opis kursu:
+                        <%=courses[i].courseInfo.description %>
+                            <br>
+                            <a href="/zapisz/<%= courses[i].id %>">Zapisz mnie na ten kurs!</a>
+                            <br>
+        </div>
+        <% } %>
+            </div>
+            <a href="/profile">Back to profile</a>
+            <footer>
+
+
+
+                <% include ./partials/footer.ejs %>
+            </footer>
+
 </body>
 
 </html>

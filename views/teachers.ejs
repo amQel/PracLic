@@ -23,12 +23,13 @@
     <div class="jumbotron">
         <ul>
             <% for(var i=0; i<teachers.length; i++) {%>
-                <li>
+            
+                
                     <%=teachers[i].local.email %>
-                </li>
-                <li>
+                <br>
+               
                     <%=teachers[i].local.city %>
-                </li>
+                <br>
             
                   <%if(user !==undefined){ %>
             <a href="/opinion/<%= teachers[i].local.email%>">Wystaw Opinię!</a>
