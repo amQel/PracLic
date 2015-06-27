@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     $('.toggleCities').click(function() {
         var $editForm = $("form");
-        var $divCities = $("#changeCities")
+        var $divCities = $("#changeCities");
         var $provinceSelection = $editForm.find('select[name=province]');
         var $citySelection = $editForm.find('#citiesCheck');
 
