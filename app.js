@@ -13,7 +13,6 @@ var routes = require('./routes');
 var path = require('path');
 var static = require('serve-static');
 
-
 mongoose.connect(configDB.url);
 
 require('./config/passport')(passport);

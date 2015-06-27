@@ -1,4 +1,7 @@
 var path = require('path');
+var fs = require('fs');
+var multiparty = require('multiparty');
+var util = require('util');
 
 var courses = [];
 var crs = require('../model/course');
@@ -479,7 +482,19 @@ module.exports = function (app, passport) {
         res.sendFile(path.resolve('views/cities/' + id + 'check.html'));
     });
     
-    
+    app.post('/upload', function(req, res) {
+        var form = new multiparty.Form();
+        form.parse(req, function(err, fields, files) {
+            console.log('received upload');
+            var image = files.imageUploader[0];
+            req.user.local.avatar.data = fs.readFileSync(image.path);
+            req.user.local.avatar.contentType = image.headers['content-type'];
+            req.user.save();
+        });
+        res.render('studentAccount', {
+            user: req.user
+        });
+    });
     
     
     

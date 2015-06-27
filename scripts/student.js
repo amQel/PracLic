@@ -14,18 +14,12 @@ $(document).ready(function () {
         });
     });
 
-    var $imageDisplay = $("#image-display");
-
-    function readSingleFile(e) {
-        var file = e.target.files[0];
-        if (file) {
-            return;
-        }
-        var reader = new FileReader();
-        reader.onload = function(e){
-            $imageDisplay.html("<p>Super jest</p>");
-        };
+    function hexToBase64(str) {
+        return btoa(String.fromCharCode.apply(null, str, replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
     }
-
-    $("#image-uploader").on('change', readSingleFile, false);
+    var $a = $("p#a").text();
+    var $b = $("p#b").text();
+    console.log(a);
+    console.log(hexToBase64(b));
+    $("#image").attr("src", "data:" + a + ";base64," + hexToBase64(b));
 });
