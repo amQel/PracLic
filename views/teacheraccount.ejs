@@ -12,9 +12,25 @@
     <% include ./partials/headerTeacher.ejs %>
 </header>
 
-<h1>Add some things to your account:</h1>
+<h1>Add an avatar:</h1>
+<div>
+    <%if(user.local.avatar && user.local.avatar.data) {%>
+    <img src="data:<%= user.local.avatar.contentType %>;base64,<%= user.local.avatar.data.toString('base64') %>">
+    <%} else {%>
+    <img src="../images/defaultAvatar.png">
+    <%}%>
+</div>
 
-<form action="/changeaccountTeacher" method="post">
+<form id="imageForm" action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="imageUploader"/>
+    <button type="submit">Upload</button>
+</form>
+
+<div id="uploader"></div>
+
+<h1>Edit your account:</h1>
+
+<form action="/changeaccount" method="post">
     <div>
         <label>Name</label>
         <input type="text" name="firstName">
@@ -23,20 +39,7 @@
         <label>Surname</label>
         <input type="text" name="surname">
     </div>
-    <div>
-        <label>Province</label>
-        <select name="province">
-
-        </select>
-    </div>
-
-    <div>
-        <label>City</label>
-
-        <div id="citiesCheck">
-
-        </div>
-    </div>
+    <br/>
     <section class="round-border">
 
         <div>
@@ -51,11 +54,11 @@
 
     <button type="submit">Change</button>
 </form>
+
 <footer>
     <% include ./partials/footer.ejs %>
 </footer>
 </body>
 <script src="/js/jquery.min.js"></script>
-<script src="../scripts/teacher.js"></script>
-
+<script src="../scripts/teacher.js.js"></script>
 </html>

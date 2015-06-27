@@ -14,19 +14,15 @@
 
 <h1>Add an avatar:</h1>
 <div>
-    <p id="a" style="display: none"><%= user.local.avatar.contentType %></p>
-    <p id="b" style="display: none"><%= user.local.avatar.data %></p>
-
-<%if(user.local.avatar === undefined) {%>
+<%if(user.local.avatar && user.local.avatar.data) {%>
+    <img src="data:<%= user.local.avatar.contentType %>;base64,<%= user.local.avatar.data.toString('base64') %>">
+    <%} else {%>
     <img src="../images/defaultAvatar.png">
-<%} else {%>
-    <img id="image" src="">
 <%}%>
 </div>
 
 <form id="imageForm" action="/upload" method="post" enctype="multipart/form-data">
     <input type="file" name="imageUploader"/>
-    <div id="image-display"></div>
     <button type="submit">Upload</button>
 </form>
 
@@ -65,5 +61,4 @@
 </body>
 <script src="/js/jquery.min.js"></script>
 <script src="../scripts/student.js"></script>
-<script src="../bower_components/btoa-umd/dist/btoa-umd.min.js"></script>
 </html>

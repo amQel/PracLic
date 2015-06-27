@@ -92,7 +92,7 @@ module.exports = function (app, passport) {
         failureFlash: true
     }));
 
-    app.post('/autenticate', function(req, res) {
+    app.post('/autenticate', function (req, res) {
         resCourse = [];
         crs.findOne({
             'id': req.body.courseId
@@ -103,35 +103,31 @@ module.exports = function (app, passport) {
                 resCourse.push(course);
             }
         });
-        usrs.findOne({ 'local.email' : req.user.local.email}, function (err, user) {
-                if(err) {
-                    console.log('error autenticating');
-                } else
+        usrs.findOne({'local.email': req.user.local.email}, function (err, user) {
+            if (err) {
+                console.log('error autenticating');
+            } else if (!user) {
+                res.render('details', {
+                    message: 'User with this email doesnt exist!',
+                    courses: resCourse,
+                    user: req.user
+                });
+            } else if (!user.validPassword(req.body.pwd)) {
+                res.render('details', {
+                    message: 'Wrong Password!',
+                    courses: resCourse,
+                    user: req.user
+                });
+            } else {
+                res.redirect('/usun/' + req.body.courseId);
+            }
 
-                if(!user) {
-                  res.render('details', {
-                      message : 'User with this email doesnt exist!',
-                      courses: resCourse,
-                      user: req.user
-                  });
-                } else
-
-                if(!user.validPassword(req.body.pwd)) {
-                   res.render('details', {
-                      message : 'Wrong Password!',
-                      courses: resCourse,
-                      user: req.user
-                  });
-                } else {
-                    res.redirect('/usun/'+req.body.courseId);
-                }
-            
-            });
+        });
     });
-   
-    app.post('/dodaj', function(req, res) {
-    
-      crs.findOne({
+
+    app.post('/dodaj', function (req, res) {
+
+        crs.findOne({
             'id': req.body.courseId
         }, function (err, course) {
             if (err) {
@@ -139,7 +135,7 @@ module.exports = function (app, passport) {
             } else {
                 var courseToUpdate = course;
                 var newsa = {
-                    tittle : "tittle1",
+                    tittle: "tittle1",
                     message: req.body.newInfo
                 };
                 crs.remove({
@@ -166,13 +162,13 @@ module.exports = function (app, passport) {
                         throw err;
                     }
                 });
-                
+
             }
         });
         res.redirect('mycourses');
     });
-          
-    app.get('/details/:id', function(req, res) {
+
+    app.get('/details/:id', function (req, res) {
         resCourse = [];
         crs.findOne({
             'id': req.params.id
@@ -182,16 +178,16 @@ module.exports = function (app, passport) {
             } else {
                 resCourse.push(course);
                 res.render('details', {
-                      message : '',
-                      courses: resCourse,
-                      user: req.user
-        });
+                    message: '',
+                    courses: resCourse,
+                    user: req.user
+                });
             }
         });
-        
-         
+
+
     });
-    
+
     app.get('/register', function (req, res) {
         res.render('register', {
             message: req.flash('registerMessage')
@@ -209,33 +205,33 @@ module.exports = function (app, passport) {
         if (req.user.local.role == 'student') {
             var nws = [];
             var crsss = [];
-        crs.find({}, function (err, crss) {
-        crss.forEach(function (course) {
-            
-                var joined = 0;
-                course.courseUsers.forEach(function (user) {
-                    if (user.name == req.user.local.email) joined = 1;
+            crs.find({}, function (err, crss) {
+                crss.forEach(function (course) {
+
+                    var joined = 0;
+                    course.courseUsers.forEach(function (user) {
+                        if (user.name == req.user.local.email) joined = 1;
+                    });
+                    if (joined) {
+                        console.log(course);
+                        crsss.push(course);
+                    }
+
                 });
-                if (joined) {
-                    console.log(course);
-                    crsss.push(course);
-                }
-            
-        });
-        crsss.forEach(function(course){
-            course.news.forEach(function(neww, i){
-                if(i<=2){
-                nws.push(neww);
-                console.log(neww);
-                }
+                crsss.forEach(function (course) {
+                    course.news.forEach(function (neww, i) {
+                        if (i <= 2) {
+                            nws.push(neww);
+                            console.log(neww);
+                        }
+                    });
+                });
+                res.render('student', {
+                    user: req.user,
+                    news: nws
+                });
             });
-        });
-            res.render('student', {
-                user: req.user,
-                news : nws
-            });
-    });
-            
+
         } else {
             res.render('teacher', {
                 user: req.user
@@ -266,7 +262,7 @@ module.exports = function (app, passport) {
 
     app.get('/teachers', function (req, res) {
         var renderTeacherData = [];
-        
+
         usrs.find({}, function (err, teachers) {
             teachers.forEach(function (teacher) {
 
@@ -285,50 +281,50 @@ module.exports = function (app, passport) {
 
     });
 
-    
+
     app.get('/teachersStudent', function (req, res) {
         var renderTeacherData = [];
-        
+
         usrs.find({}, function (err, teachers) {
             teachers.forEach(function (teacher) {
-                
-                if(teacher.local.role == 'teacher'){
+
+                if (teacher.local.role == 'teacher') {
                     console.log(teacher.local.role);
                     renderTeacherData.push(teacher);
                 }
             });
             console.log(renderTeacherData);
             res.render('teachersStudent', {
-            user : req.user,
-            teachers : renderTeacherData
-        });
-            
+                user: req.user,
+                teachers: renderTeacherData
+            });
+
         });
 
     });
-    
+
     app.get('/teachersTeachers', function (req, res) {
         var renderTeacherData = [];
-        
+
         usrs.find({}, function (err, teachers) {
             teachers.forEach(function (teacher) {
-                
-                if(teacher.local.role == 'teacher'){
+
+                if (teacher.local.role == 'teacher') {
                     console.log(teacher.local.role);
                     renderTeacherData.push(teacher);
                 }
             });
             console.log(renderTeacherData);
             res.render('teachersTeachers', {
-            user : req.user,
-            teachers : renderTeacherData
-        });
-            
+                user: req.user,
+                teachers: renderTeacherData
+            });
+
         });
 
     });
-    
-    
+
+
     app.get('/student', function (req, res) {
         if (req.user.local.role == 'student') {
             res.render('student', {
@@ -339,7 +335,7 @@ module.exports = function (app, passport) {
         }
 
     });
-    
+
     app.get('/teacher', function (req, res) {
         if (req.user.local.role == 'teacher') {
             res.render('teacher', {
@@ -355,25 +351,22 @@ module.exports = function (app, passport) {
     });
 
     app.get('/searchall', function (req, res) {
-        
-       
-                if (req.user.local.role == 'teacher') {
+
+
+        if (req.user.local.role == 'teacher') {
             res.redirect('/searchTeacher');
-        
-           }
-        else if(req.user.local.role == 'student')
-        {
-        res.redirect('/searchStudent');
-            }
-        
-        res.redirect('/search');  
-        
-        
-        
-                 
-    } );
-    
-    app.get('/opinion/:teacher', function(req, res){
+
+        }
+        else if (req.user.local.role == 'student') {
+            res.redirect('/searchStudent');
+        }
+
+        res.redirect('/search');
+
+
+    });
+
+    app.get('/opinion/:teacher', function (req, res) {
         var tchr = req.params.teacher;
         res.render('teacherOpinion', {
             user: req.user,
@@ -383,21 +376,21 @@ module.exports = function (app, passport) {
     });
 
     app.get('/search', function (req, res) {
-       res.render('search');
+        res.render('search');
     });
-    
+
     app.get('/searchTeacher', function (req, res) {
-       res.render('searchTeacher', {
+        res.render('searchTeacher', {
             user: req.user
         });
     });
-        
+
     app.get('/searchStudent', function (req, res) {
-       res.render('searchStudent', {
+        res.render('searchStudent', {
             user: req.user
         });
     });
-        
+
     app.get('/course', function (req, res) {
         var resend = function (req, res) {
             if (req.isAuthenticated()) {
@@ -454,7 +447,7 @@ module.exports = function (app, passport) {
 
     });
 
-    
+
     app.get('/zapisz/:id', function (req, res) {
         var ID = req.params.id;
         crs.findOne({
@@ -543,7 +536,7 @@ module.exports = function (app, passport) {
 
     app.get('/usun/:id', function (req, res) {
         var ID = req.params.id;
-        
+
         crs.remove({
             'id': ID
         }, function (err) {
@@ -661,22 +654,22 @@ module.exports = function (app, passport) {
         res.redirect('/opinions');
     });
 
-    
-    app.get('/opinionsTeacher', function(req, res){
+
+    app.get('/opinionsTeacher', function (req, res) {
         var opinions = [];
-        opinion.find({}, function(err, opn){
-            opn.forEach(function(opin){
+        opinion.find({}, function (err, opn) {
+            opn.forEach(function (opin) {
                 console.log(opin);
                 opinions.push(opin);
             });
             res.render('opinionsTeacher', {
-            user : req.user,
-            opinions : opinions
+                user: req.user,
+                opinions: opinions
+            });
         });
-        });
-        
+
     });
-    
+
     app.get('/cities/:id', function (req, res) {
         var id = req.params.id;
         res.sendFile(path.resolve('views/cities/' + id + '.html'));
@@ -686,31 +679,34 @@ module.exports = function (app, passport) {
         var id = req.params.id;
         res.sendFile(path.resolve('views/cities/' + id + 'check.html'));
     });
-    
-    app.post('/upload', function(req, res) {
+
+    app.post('/upload', function (req, res) {
         var form = new multiparty.Form();
-        form.parse(req, function(err, fields, files) {
-            console.log('received upload');
+        form.parse(req, function (err, fields, files) {
             var image = files.imageUploader[0];
             req.user.local.avatar.data = fs.readFileSync(image.path);
             req.user.local.avatar.contentType = image.headers['content-type'];
             req.user.save();
-        });
-        res.render('studentAccount', {
-            user: req.user
+            if (req.user.local.role === "student") {
+                res.render('studentAccount', {
+                    user: req.user
+                });
+            } else {
+                res.render('teacherAccount', {
+                    user: req.user
+                });
+            }
         });
     });
-    
-    
-    
-    
+
+
     //to musi być na końcu, zostawić to tutaj!!!
-    app.get('*', function(req, res){
+    app.get('*', function (req, res) {
         res.status(404);
         res.render('myFavouritePage', {
-        tittle : "page not found",
-        user : req.user
-        } );
+            tittle: "page not found",
+            user: req.user
+        });
     });
 
 };
@@ -739,11 +735,10 @@ var sortCurses = function (a, b) {
     return a.id - b.id;
 };
 
-var usunOpinie = function() {
-    opinion.remove({
-        }, function (err) {
-            console.log(err);
-        });
+var usunOpinie = function () {
+    opinion.remove({}, function (err) {
+        console.log(err);
+    });
 };
 /*
  exports.nauczyciel = function(req, res) {
