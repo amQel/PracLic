@@ -133,35 +133,33 @@ module.exports = function (app, passport) {
             if (err) {
                 console.log('modafukin erro');
             } else {
-                var courseToUpdate = course;
+//                var courseToUpdate = course;
                 var newsa = {
                     tittle: "tittle1",
                     message: req.body.newInfo
                 };
-                crs.remove({
-                    'id': courseToUpdate.id
-                }, function (err) {
-                    console.log(err);
-                });
-                courseToUpdate.news.push(newsa);
+                course.news.push(newsa);
+                console.log(course);
+//                crs.remove({
+//                    'id': courseToUpdate.id
+//                }, function (err) {
+//                    console.log(err);
+//                });
+//                courseToUpdate.news.push(newsa);
+//
+//                var newCourse = new crs();
+//                newCourse.id = courseToUpdate.id;
+//                newCourse.teacher = courseToUpdate.teacher;
+//                newCourse.courseInfo.name = courseToUpdate.courseInfo.name;
+//                newCourse.courseInfo.subject = courseToUpdate.courseInfo.subject;
+//                newCourse.courseInfo.description = courseToUpdate.courseInfo.description;
+//                newCourse.courseUsers = courseToUpdate.courseUsers;
+//                newCourse.courseInfo.costPerHour = courseToUpdate.courseInfo.costPerHour;
+//                newCourse.files = courseToUpdate.files;
+//                newCourse.news = courseToUpdate.news;
+//                newCourse.level = courseToUpdate.level;
 
-                var newCourse = new crs();
-                newCourse.id = courseToUpdate.id;
-                newCourse.teacher = courseToUpdate.teacher;
-                newCourse.courseInfo.name = courseToUpdate.courseInfo.name;
-                newCourse.courseInfo.subject = courseToUpdate.courseInfo.subject;
-                newCourse.courseInfo.description = courseToUpdate.courseInfo.description;
-                newCourse.courseUsers = courseToUpdate.courseUsers;
-                newCourse.courseInfo.costPerHour = courseToUpdate.courseInfo.costPerHour;
-                newCourse.files = courseToUpdate.files;
-                newCourse.news = courseToUpdate.news;
-                newCourse.level = courseToUpdate.level;
-
-                newCourse.save(function (err) {
-                    if (err) {
-                        throw err;
-                    }
-                });
+                crs.save(course);
 
             }
         });
@@ -456,29 +454,12 @@ module.exports = function (app, passport) {
             if (err) {
                 console.log('modafukin erro');
             } else {
-
-                var courseToUpdate = course;
                 var namee = {
                     name: req.user.local.email
                 };
-                crs.remove({
-                    'id': courseToUpdate.id
-                }, function (err) {
-                    console.log(err);
-                });
-                courseToUpdate.courseUsers.push(namee);
-
-                var newCourse = new crs();
-                newCourse.id = courseToUpdate.id;
-                newCourse.teacher = courseToUpdate.teacher;
-                newCourse.courseInfo.name = courseToUpdate.courseInfo.name;
-                newCourse.courseInfo.subject = courseToUpdate.courseInfo.subject;
-                newCourse.courseInfo.description = courseToUpdate.courseInfo.description;
-                newCourse.courseUsers = courseToUpdate.courseUsers;
-                newCourse.courseInfo.costPerHour = courseToUpdate.courseInfo.costPerHour;
-                newCourse.level = courseToUpdate.level;
-
-                newCourse.save(function (err) {
+                
+                course.courseUsers.push(namee);
+                course.save(function (err) {
                     if (err) {
                         throw err;
                     }
@@ -498,32 +479,14 @@ module.exports = function (app, passport) {
             if (err) {
                 console.log('modafukin erro');
             } else {
-                var courseToUpdate = course;
-
-                crs.remove({
-                    'id': courseToUpdate.id
-                }, function (err) {
-                    console.log(err);
-                });
-
-
-                courseToUpdate.courseUsers.forEach(function (user, i) {
+                
+                course.courseUsers.forEach(function (user, i) {
                     if (user.name == req.user.local.email) {
-                        courseToUpdate.courseUsers.splice(i, 1);
+                        course.courseUsers.splice(i, 1);
                     }
                 });
-
-                var newCourse = new crs();
-                newCourse.id = courseToUpdate.id;
-                newCourse.teacher = courseToUpdate.teacher;
-                newCourse.courseInfo.name = courseToUpdate.courseInfo.name;
-                newCourse.courseInfo.subject = courseToUpdate.courseInfo.subject;
-                newCourse.courseInfo.description = courseToUpdate.courseInfo.description;
-                newCourse.courseUsers = courseToUpdate.courseUsers;
-                newCourse.courseInfo.costPerHour = courseToUpdate.courseInfo.costPerHour;
-                newCourse.level = courseToUpdate.level;
-
-                newCourse.save(function (err) {
+                
+                course.save(function (err) {
                     if (err) {
                         console.log('error saving user');
                         throw err;
