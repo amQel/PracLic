@@ -13,12 +13,13 @@
 </header>
 
 <h1>Add an avatar:</h1>
+
 <div>
-    <%if(user.local.avatar && user.local.avatar.data) {%>
+    <% if(user.local.avatar && user.local.avatar.data) { %>
     <img src="data:<%= user.local.avatar.contentType %>;base64,<%= user.local.avatar.data.toString('base64') %>">
-    <%} else {%>
+    <% } else { %>
     <img src="../images/defaultAvatar.png">
-    <%}%>
+    <% } %>
 </div>
 
 <form id="imageForm" action="/upload" method="post" enctype="multipart/form-data">
@@ -26,18 +27,34 @@
     <button type="submit">Upload</button>
 </form>
 
-<div id="uploader"></div>
-
 <h1>Edit your account:</h1>
 
-<form action="/changeaccount" method="post">
+<form action="/changeaccountTeacher" method="post">
     <div>
         <label>Name</label>
-        <input type="text" name="firstName">
+        <input type="text" name="firstName" value="<%= user.local.name %>">
     </div>
     <div>
         <label>Surname</label>
-        <input type="text" name="surname">
+        <input type="text" name="surname" value="<%= user.local.surname %>">
+    </div>
+
+    <button type="button" class="toggleCities">Change cities!</button>
+    <div id="changeCities" style="display: none;">
+        <div>
+            <label>Province</label>
+            <select name="province">
+
+            </select>
+        </div>
+
+        <div>
+            <label>City</label>
+
+            <div id="citiesCheck">
+
+            </div>
+        </div>
     </div>
     <br/>
     <section class="round-border">
@@ -60,5 +77,5 @@
 </footer>
 </body>
 <script src="/js/jquery.min.js"></script>
-<script src="../scripts/teacher.js.js"></script>
+<script src="../scripts/teacher.js"></script>
 </html>

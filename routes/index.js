@@ -244,6 +244,30 @@ module.exports = function (app, passport) {
 
 
     app.post('/changeaccount', function (req, res) {
+        var name = req.body.firstName;
+        var surname = req.body.surname;
+        var password = req.body.password;
+
+        usrs.findOne({ 'local.email' : req.user.local.email }, function (err, userToEdit) {
+            if(err){
+                throw(err);
+            } else {
+                if(name !== ""){
+                    userToEdit.local.name = name;
+                }
+                if(surname !== ""){
+                    userToEdit.local.surname = surname;
+                }
+                if(password !== ""){
+                    userToEdit.local.password = userToEdit.generateHash(password);
+                }
+            }
+            userToEdit.save(function(err){
+                if(err) {
+                    throw(err);
+                }
+            })
+        });
 
         res.render('changeaccountStudent', {
             user: req.user
@@ -251,6 +275,38 @@ module.exports = function (app, passport) {
     });
 
     app.post('/changeaccountTeacher', function (req, res) {
+        var name = req.body.firstName;
+        var surname = req.body.surname;
+        var password = req.body.password;
+        var province = req.body.province;
+        var cities = req.body.city;
+
+        usrs.findOne({ 'local.email' : req.user.local.email }, function (err, userToEdit) {
+            if(err){
+                throw(err);
+            } else {
+                if(name !== ""){
+                    userToEdit.local.name = name;
+                }
+                if(surname !== ""){
+                    userToEdit.local.surname = surname;
+                }
+                if(password !== ""){
+                    userToEdit.local.password = userToEdit.generateHash(password);
+                }
+                if(province !== undefined) {
+                    userToEdit.local.province = province;
+                }
+                if(cities !== undefined){
+                    userToEdit.local.cities = cities;
+                }
+            }
+            userToEdit.save(function(err){
+                if(err) {
+                    throw(err);
+                }
+            })
+        });
 
         res.render('changeaccountTeacher', {
             user: req.user
