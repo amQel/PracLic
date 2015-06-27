@@ -11,7 +11,8 @@ var userSchema = mongoose.Schema({
        cities       : [String],
        avatar       : { data: Buffer, contentType: String },
        name         : String,
-       surname      : String
+       surname      : String,
+       phone        : String
    }
 });
 

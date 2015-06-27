@@ -38,6 +38,7 @@ module.exports = function (passport) {
                     newUser.surname = "";
                     newUser.province = "";
                     newUser.cities = [];
+                    newUser.phone = "";
 
                     newUser.save(function(err){
                         if(err){
