@@ -18,13 +18,13 @@
             <p>Tutaj znajdziesz najlepsze korepetycje! Zapisz sie na kurs już teraz!</p>
         
             <br>
-            Nowości:
-             <br>
-            <% for(var i=0; i<news.length; i++) {%>
+            <h2>Nowości:</h2>
+            
+            <% for(var i=0; i<news; i++) {%> <<<------ Tutaj wyjebalem z news.lenght 
              
-            <br>
-                <%=news[i].tittle %>
-            <br>
+            
+                <h3>Temat:<%=news[i].tittle %></h3>
+            
            
                 <%=news[i].message %>
           
