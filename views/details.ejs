@@ -58,7 +58,14 @@
                 <button type="submit">Dodaj Newsa</button>
             </form>
             <% } %>
+
+        <form action="/addFile" method="post" enctype="multipart/form-data">
+            <input type="file" name="fileUploader">
+            <button type="submit">Upload</button>
+        </form>
     </ul>
+
+
 
     <a href="/profile">back to profile</a>
     <footer>

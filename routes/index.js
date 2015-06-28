@@ -1,8 +1,9 @@
 var path = require('path');
 var fs = require('fs');
 var multiparty = require('multiparty');
-var util = require('util');
-
+var aws = require('aws-sdk');
+aws.config.loadFromPath('./config/awsConfig.json');
+var S3_BUCKET = 'pracalicencjacka';
 var courses = [];
 
 var crs = require('../model/course');
@@ -126,41 +127,18 @@ module.exports = function (app, passport) {
     });
 
     app.post('/dodaj', function (req, res) {
-
         crs.findOne({
             'id': req.body.courseId
         }, function (err, course) {
             if (err) {
                 console.log('modafukin erro');
             } else {
-//                var courseToUpdate = course;
                 var newsa = {
                     tittle: "tittle1",
                     message: req.body.newInfo
                 };
                 course.news.push(newsa);
-                console.log(course);
-//                crs.remove({
-//                    'id': courseToUpdate.id
-//                }, function (err) {
-//                    console.log(err);
-//                });
-//                courseToUpdate.news.push(newsa);
-//
-//                var newCourse = new crs();
-//                newCourse.id = courseToUpdate.id;
-//                newCourse.teacher = courseToUpdate.teacher;
-//                newCourse.courseInfo.name = courseToUpdate.courseInfo.name;
-//                newCourse.courseInfo.subject = courseToUpdate.courseInfo.subject;
-//                newCourse.courseInfo.description = courseToUpdate.courseInfo.description;
-//                newCourse.courseUsers = courseToUpdate.courseUsers;
-//                newCourse.courseInfo.costPerHour = courseToUpdate.courseInfo.costPerHour;
-//                newCourse.files = courseToUpdate.files;
-//                newCourse.news = courseToUpdate.news;
-//                newCourse.level = courseToUpdate.level;
-
-                crs.save(course);
-
+                course.save();
             }
         });
         res.redirect('mycourses');
@@ -719,6 +697,25 @@ module.exports = function (app, passport) {
                     user: req.user
                 });
             }
+        });
+    });
+
+    app.post('/addFile', function(req, res){
+       var form = new multiparty.Form();
+        form.parse(req, function (err, fields, files) {
+           var file = files.fileUploader[0];
+            console.log(file);
+            //fs.readFile(file.path, function(err, data){
+            //    if(err){
+            //        throw (err);
+            //    }
+            //
+            //    var s3 = new AWS.S3();
+            //    s3.client.putObject({
+            //        Bucket: S3_BUCKET,
+            //        Key:
+            //    })
+            //})
         });
     });
 
