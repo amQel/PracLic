@@ -18,7 +18,8 @@ module.exports = function (app, passport) {
             if (req.user.local.role === 'student') {
                 res.render('indexStudent', {
                     data: 'Zalogowano jako ' + req.user.local.email,
-                    user: req.user
+                    user: req.user,news: req.news
+                    
                 });
             } else {
 
@@ -364,7 +365,8 @@ module.exports = function (app, passport) {
     app.get('/student', function (req, res) {
         if (req.user.local.role == 'student') {
             res.render('student', {
-                user: req.user
+                user: req.user,
+                news: req.news
             });
         } else {
             res.render('index');
