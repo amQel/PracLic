@@ -81,6 +81,10 @@ module.exports = function (app, passport) {
         };
         reorganizeUsers(resend, req, res);
     });
+    
+    app.get('joined/:id', function(req, res) {
+        res.redirect('joinedcourses');
+    });
 
     app.get('/contactTeacher', function (req, res) {
         res.render('contactTeacher', {
