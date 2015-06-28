@@ -11,37 +11,30 @@
 <header>
     <% include ./partials/headerStudent.ejs %>
 </header>
-
 <h1>Add an avatar:</h1>
 <div>
-    <p id="a" style="display: none"><%= user.local.avatar.contentType %></p>
-    <p id="b" style="display: none"><%= user.local.avatar.data %></p>
-
-<%if(user.local.avatar === undefined) {%>
+<%if(user.local.avatar && user.local.avatar.data) {%>
+    <img src="data:<%= user.local.avatar.contentType %>;base64,<%= user.local.avatar.data.toString('base64') %>">
+    <%} else {%>
     <img src="../images/defaultAvatar.png">
-<%} else {%>
-    <img id="image" src="">
 <%}%>
 </div>
 
 <form id="imageForm" action="/upload" method="post" enctype="multipart/form-data">
-    <input type="file" name="imageUploader"/>
-    <div id="image-display"></div>
+    <input type="file" name="imageUploader" accept="image/*"/>
     <button type="submit">Upload</button>
 </form>
-
-<div id="uploader"></div>
 
 <h1>Edit your account:</h1>
 
 <form action="/changeaccount" method="post">
     <div>
         <label>Name</label>
-        <input type="text" name="firstName">
+        <input type="text" name="firstName" value="<%= user.local.name %>">
     </div>
     <div>
         <label>Surname</label>
-        <input type="text" name="surname">
+        <input type="text" name="surname" value="<%= user.local.surname %>">
     </div>
     <br/>
     <section class="round-border">
@@ -62,8 +55,8 @@
 <footer>
     <% include ./partials/footer.ejs %>
 </footer>
+    
 </body>
 <script src="/js/jquery.min.js"></script>
 <script src="../scripts/student.js"></script>
-<script src="../bower_components/btoa-umd/dist/btoa-umd.min.js"></script>
 </html>

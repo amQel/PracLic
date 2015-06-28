@@ -3,15 +3,14 @@
 
 <head>
     <title>Home page</title>
-    
+<% include ./partials/headerStudent.ejs %>
+<link href="../css/teacherJumbotron.css" rel="stylesheet" type="text/css"/>
+
+
 
     
-        
-            
 
-    <% include ./partials/headerIndexStudent.ejs %>
 
-                    
 
 
 </head>
@@ -21,28 +20,42 @@
     <header>
         <% include /partials/headIndex.ejs %>
     </header>
-    
-        <ul>
-            <% for(var i=0; i<teachers.length; i++) {%>
-                <li>
-                    <%=teachers[i].local.email %>
-                </li>
-                <li>
-                    <%=teachers[i].local.city %>
-                </li>
-            
-                <li>
-                    <a href="/opinion/<%= teachers[i].local.email %>">Dodaj Opinię o tym nauczycielu</a>
-                </li>
-                <br>
-               
-            
-            
-           
-            <% } %> 
-        </ul>
+<h1>Nauczyciele :</h1>
+    <ul>
+        <% for(var i=0; i<teachers.length; i++) {%>
+<div class="jumbotron">
 
-    </div>
+
+            <div>
+                <%if(teachers[i].local.avatar && teachers[i].local.avatar.data) {%>
+                    <img src="data:<%= teachers[i].local.avatar.contentType %>;base64,<%= teachers[i].local.avatar.data.toString('base64') %>">
+                    <%} else {%>
+                        <img src="../images/defaultAvatar.png">
+                        <%}%>
+            </div>
+            <br>
+            <div class = "for">
+             Email:<%=teachers[i].local.email %>
+                <br>
+
+                Miasto:<%=teachers[i].local.city %>
+                  
+<br>
+               Telefon:<%=teachers[i].local.phone %>
+                
+                 <br>
+                    <a href="/opinion/<%= teachers[i].local.email %>">Dodaj Opinię o tym nauczycielu</a>
+
+                    <br>
+        <br>
+</div>
+
+
+</div>
+                    <% } %>
+    </ul>
+
+    
 </body>
 
 </html>

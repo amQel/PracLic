@@ -5,41 +5,39 @@
     <meta charset="UTF-8">
     <title>Your Courses</title>
     <% include ./partials/headStudent.ejs %>
+        <link href="../css/courseJumbtron.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="container">
     <header>
         <% include ./partials/headerStudent.ejs %>
     </header>
-    <p><%= data %></p>
-    <ul>
+    <h1><%= data %></h1>
+    
         <% for(var i=0; i<courses.length; i++) {%>
-            <li>
-                <%=courses[i].id %>
-            </li>
-            <li>
-                <%=courses[i].teacher %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.name %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.subject %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.description %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.costPerHour %>
-            </li>
-            <li>
-                <%=courses[i].level %>
-            </li>
-            <a href="/wypisz/<%= courses[i].id %>">Wypisz mnie z tego kursu!</a>
-            <br>
+            <div class="jumbotron">
+             <div class="for">
+                <br>
+                Email:<%=courses[i].teacher %>
+                    <br>
+                    Kurs:<%=courses[i].courseInfo.name %>
+                        <br>
+                        Przedmiot:<%=courses[i].courseInfo.subject %>
+                            <br>
+                            Opis:<%=courses[i].courseInfo.description %>
+                                <br>
+                                Cena za godzine:<%=courses[i].courseInfo.costPerHour %>
+                                    <br>
+                                    Szkola:<%=courses[i].level %>
+                                        <br>
+                                        <a href="/wypisz/<%= courses[i].id %>">Wypisz mnie z tego kursu!</a>
+            
+        <br>
+                 </div>
+            </div>
             <% } %>
-    </ul>
-    <a href="/profile">Back to profile</a>
+    
+    
     <footer>
         <% include ./partials/footer.ejs %>
     </footer>

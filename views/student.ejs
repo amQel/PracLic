@@ -15,17 +15,21 @@
     <main>
         <div class="jumbotron">
             <h1>Witaj studencie!</h1>
-            <p>Tutaj znajdziesz najlepsze korepetycje! Zapisz sie już teraz!</p>
-        <ul>
-            <% for(var i=0; i<news.length; i++) {%>
-            <li>
-                <%=news[i].tittle %>
-            </li>
-            <li>
-                <%=news[i].message %>
-            </li>
+            <p>Tutaj znajdziesz najlepsze korepetycje! Zapisz sie na kurs już teraz!</p>
+        
             <br>
-        </ul>
+            <h2>Nowości:</h2>
+            
+            <% for(var i=0; i<news; i++) {%> <<<------ Tutaj wyjebalem z news.lenght 
+             
+            
+                <h3>Temat:<%=news[i].tittle %></h3>
+            
+           
+                <%=news[i].message %>
+          
+            <br>
+       
             <% } %>
         </div>
     </main>

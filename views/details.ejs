@@ -12,58 +12,76 @@
 <body class="container">
 
 
-    <header>
-        <% include ./partials/headerTeacher.ejs %>
-    </header>
-    <ul>
-        <% for(var i=0; i<courses.length; i++) {%>
-            <li>
-                <%=courses[i].id %>
-            </li>
-            <li>
-                <%=courses[i].teacher %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.name %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.subject %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.description %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.costPerHour %>
-            </li>
-            <li>
-                <%=courses[i].level %>
-            </li>
+<header>
+    <% include ./partials/headerTeacher.ejs %>
+</header>
+<ul>
+    <% for(var i = 0; i < courses.length; i++) { %>
+    <li>
+        <%= courses[i].id %>
+    </li>
+    <li>
+        <%= courses[i].teacher %>
+    </li>
+    <li>
+        <%= courses[i].courseInfo.name %>
+    </li>
+    <li>
+        <%= courses[i].courseInfo.subject %>
+    </li>
+    <li>
+        <%= courses[i].courseInfo.description %>
+    </li>
+    <li>
+        <%= courses[i].courseInfo.costPerHour %>
+    </li>
+    <li>
+        <ul>
+            <% for(var j = 0; j < courses[i].files.length; j++) { %>
+                <li><a href="<%= courses[i].files[j].url %>"><%= courses[i].files[j].name %></a></li>
+            <%}%>
+        </ul>
+    </li>
+    <li>
+        <%= courses[i].level %>
+    </li>
 
-            <br>
-            <form action="/autenticate" method="post" id="autenticator">
-                <label id="lbl" name="lbl" style="display:none;">Potwierdź Hasłem :</label>
-                <%if(message.length>0){ %>
-                    <p>
-                        <%=message %>
-                    </p>
-                    <% }%>
-                        <input type="password" id="pwd" name="pwd" style="display:none;">
-                        <input type="text" name="courseId" value="<%=courses[i].id %>" style="display:none;" readonly>
-                        <button type="submit">Usuń Ten Kurs</button>
-            </form>
-            <br><br><br>
-            <form action="/dodaj" method="post">
-                <input type="text" name="newInfo">
-                <input type="text" name="courseId" value="<%=courses[i].id %>" style="display:none;" readonly>
-                <button type="submit">Dodaj Newsa</button>
-            </form>
-            <% } %>
-    </ul>
+    <br>
 
-    <a href="/profile">back to profile</a>
-    <footer>
-        <% include ./partials/footer.ejs %>
-    </footer>
+    <form action="/autenticate" method="post" id="autenticator">
+        <label id="lbl" name="lbl" style="display:none;">Potwierdź Hasłem :</label>
+        <% if(message.length > 0){ %>
+        <p>
+            <%= message %>
+        </p>
+        <% } %>
+        <input type="password" id="pwd" name="pwd" style="display:none;">
+        <input type="text" name="courseId" value="<%= courses[i].id %>" style="display:none;" readonly>
+        <button type="submit">Usuń Ten Kurs</button>
+    </form>
+    <br><br><br>
+
+    <form action="/dodaj" method="post">
+        <input type="text" name="newInfo">
+        <input type="text" name="courseId" value="<%= courses[i].id %>" style="display:none;" readonly>
+        <button type="submit">Dodaj Newsa</button>
+    </form>
+    <br/>
+
+    <form action="/addFile" method="post" enctype="multipart/form-data">
+        <input type="text" name="courseId" value="<%= courses[i].id %>" style="display:none;" readonly>
+        <input type="file" name="fileUploader"/>
+        <button type="submit">Upload</button>
+    </form>
+    <% } %>
+
+</ul>
+
+
+<a href="/profile">back to profile</a>
+<footer>
+    <% include ./partials/footer.ejs %>
+</footer>
 </body>
 
 <script src="/js/jquery.min.js"></script>

@@ -8,11 +8,13 @@ var userSchema = mongoose.Schema({
        courses      : [{ id : Number }],
        role         : String,
        province     : String,
-       cities       : [{ city : String }],
-       avatar       : { data: Buffer, contentType: String }
+       cities       : [String],
+       avatar       : { data: Buffer, contentType: String },
+       name         : String,
+       surname      : String,
+       phone        : String
    }
 });
-
 
 userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);

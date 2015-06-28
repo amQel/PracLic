@@ -12,31 +12,55 @@
     <% include ./partials/headerTeacher.ejs %>
 </header>
 
-<h1>Add some things to your account:</h1>
+<h1>Add an avatar:</h1>
+
+<div>
+    <% if(user.local.avatar && user.local.avatar.data) { %>
+    <img src="data:<%= user.local.avatar.contentType %>;base64,<%= user.local.avatar.data.toString('base64') %>">
+    <% } else { %>
+    <img src="../images/defaultAvatar.png">
+    <% } %>
+</div>
+
+<form id="imageForm" action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="imageUploader"/>
+    <button type="submit">Upload</button>
+</form>
+
+<h1>Edit your account:</h1>
 
 <form action="/changeaccountTeacher" method="post">
     <div>
         <label>Name</label>
-        <input type="text" name="firstName">
+        <input type="text" name="firstName" value="<%= user.local.name %>">
     </div>
     <div>
         <label>Surname</label>
-        <input type="text" name="surname">
+        <input type="text" name="surname" value="<%= user.local.surname %>">
     </div>
     <div>
-        <label>Province</label>
-        <select name="province">
-
-        </select>
+        <label>Phone</label>
+        <input type="text" name="phone" value="<%= user.local.phone %>"/>
     </div>
+    <button type="button" class="toggleCities">Change cities!</button>
+    <div id="changeCities" style="display: none;">
+        <div>
+            <label>Province</label>
+            <select name="province">
 
-    <div>
-        <label>City</label>
+            </select>
+        </div>
 
-        <div id="citiesCheck">
+        <div>
+            <label>City</label>
 
+            <div id="citiesCheck">
+
+            </div>
         </div>
     </div>
+
+    <br/>
     <section class="round-border">
 
         <div>
@@ -51,11 +75,11 @@
 
     <button type="submit">Change</button>
 </form>
+
 <footer>
     <% include ./partials/footer.ejs %>
 </footer>
 </body>
 <script src="/js/jquery.min.js"></script>
 <script src="../scripts/teacher.js"></script>
-
 </html>

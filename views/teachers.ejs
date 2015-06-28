@@ -2,9 +2,9 @@
 <html>
 
 <head>
-    <title>Home page</title>
+    <title>Nauczyciele</title>
 <link href="../css/register.css" rel="stylesheet" type="text/css"/>
-
+<link href="../css/notloggedJumbo.css" rel="stylesheet" type="text/css"/>
     <%if(user !==undefined){ %>
         <% include /partials/headerIndexStudent.ejs %>
             <%} else {%>
@@ -20,16 +20,24 @@
     <header>
         <% include /partials/headIndex.ejs %>
     </header>
-    <div class="jumbotron">
+    
         <ul>
             <% for(var i=0; i<teachers.length; i++) {%>
-                <li>
-                    <%=teachers[i].local.email %>
-                </li>
-                <li>
-                    <%=teachers[i].local.city %>
-                </li>
-            
+            <div class="jumbotron">
+                 
+                <%if(teachers[i].local.avatar && teachers[i].local.avatar.data) {%>
+                    <img src="data:<%= teachers[i].local.avatar.contentType %>;base64,<%= teachers[i].local.avatar.data.toString('base64') %>">
+                    <%} else {%>
+                        <img src="../images/defaultAvatar.png">
+                        <%}%>
+            <div class = "for">
+                    Email:<%=teachers[i].local.email %>
+                <br>
+               
+                    Miasto:<%=teachers[i].local.city %>
+                <br>
+            Przedmiot:<%=teachers[i].local.subject %>
+                <br>
                   <%if(user !==undefined){ %>
             <a href="/opinion/<%= teachers[i].local.email%>">Wystaw Opinię!</a>
             <br>
@@ -39,12 +47,12 @@
                 <br>
                
             
-            
-           
+              </div>
+           </div>
             <% } %> 
         </ul>
 
-    </div>
+    
 </body>
 
  <footer>
