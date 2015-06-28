@@ -16,6 +16,14 @@
     <% include ./partials/headerTeacher.ejs %>
 </header>
 <ul>
+<% for(var j = 0; j < studentsToJoin.length; j++) { %>
+<% if(j == 0) { %>
+Użytkownicy, którzy chcą dołączyć do twojego kursu:
+<% } %>
+<li><%= studentsToJoin[j].email %> do kursu <%=studentsToJoin[j].name %> <a href="/zaakceptuj/<%= studentsToJoin[j].email %>/<%= studentsToJoin[j].id %>">Zaakceptuj</a> <a href="/odrzuc/<%= studentsToJoin[j].email %>/<%= studentsToJoin[j].id %>">Odrzuć</a></li>
+<% } %>
+</ul>
+<ul>
     <% for(var i = 0; i < courses.length; i++) { %>
     <li>
         <%= courses[i].id %>
