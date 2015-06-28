@@ -766,7 +766,8 @@ module.exports = function (app, passport) {
 
     app.get('/teacheraccount', function (req, res) {
         res.render('teacheraccount', {
-            user: req.user
+            user: req.user,
+            message: ""
         });
     });
 
@@ -802,38 +803,36 @@ module.exports = function (app, passport) {
 
     app.post('/newcourse', function (req, res) {
 
-        var c = [];
-        c = req.user.cities;
-
-        if(c === 0){
-            res.redirect('/teacheraccount');
-            alert("Uzupełnij swoje konto chuju!");
-        } else {
-
-        var resnd = function (req, res) {
-            var newCourse = new crs();
-            newCourse.id = courses.length;
-            newCourse.teacher = req.user.local.email;
-            newCourse.province = req.user.local.province;
-            newCourse.cities = req.user.local.cities;
-            newCourse.courseInfo.name = req.body.courseName;
-            newCourse.courseInfo.subject = req.body.Subject;
-            newCourse.courseInfo.description = req.body.courseDescription;
-            newCourse.courseInfo.costPerHour = req.body.costPerHour;
-            newCourse.files = [];
-            newCourse.level = req.body.educationLevel;
-
-            newCourse.save(function (err) {
-                if (err) {
-                    throw err;
-                }
+        if(req.user.local.province === ""){
+            res.render('teacheraccount', {
+                user: req.user,
+                message: "Update"
             });
+        } else {
+            var resnd = function (req, res) {
+                var newCourse = new crs();
+                newCourse.id = courses.length;
+                newCourse.teacher = req.user.local.email;
+                newCourse.province = req.user.local.province;
+                newCourse.cities = req.user.local.cities;
+                newCourse.courseInfo.name = req.body.courseName;
+                newCourse.courseInfo.subject = req.body.Subject;
+                newCourse.courseInfo.description = req.body.courseDescription;
+                newCourse.courseInfo.costPerHour = req.body.costPerHour;
+                newCourse.files = [];
+                newCourse.level = req.body.educationLevel;
 
-            courses.push(newCourse);
-            res.redirect('/mycourses');
-        };
+                newCourse.save(function (err) {
+                    if (err) {
+                        throw err;
+                    }
+                });
 
-        reorganizeUsers(resnd, req, res);
+                courses.push(newCourse);
+                res.redirect('/mycourses');
+            };
+
+            reorganizeUsers(resnd, req, res);
 
         }
     });
@@ -920,7 +919,8 @@ module.exports = function (app, passport) {
                 });
             } else {
                 res.render('teacherAccount', {
-                    user: req.user
+                    user: req.user,
+                    message: ""
                 });
             }
         });
