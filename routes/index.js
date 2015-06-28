@@ -597,6 +597,10 @@ module.exports = function (app, passport) {
             var newCourse = new crs();
             newCourse.id = courses.length;
             newCourse.teacher = req.user.local.email;
+
+            var locationJson = { province: req.user.local.province, cities: req.user.local.cities };
+
+            newCourse.location.push(locationJson);
             newCourse.courseInfo.name = req.body.courseName;
             newCourse.courseInfo.subject = req.body.Subject;
             newCourse.courseInfo.description = req.body.courseDescription;
