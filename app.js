@@ -17,9 +17,6 @@ mongoose.connect(configDB.url);
 
 require('./config/passport')(passport);
 
-
-
-
 app.use('/js/jquery.min.js', static(__dirname + '/bower_components/jquery/dist/jquery.min.js'));
 app.use('/js/jquery.min.map', static(__dirname + '/bower_components/jquery/dist/jquery.min.map'));
 app.use(express.static(path.join(__dirname)));
