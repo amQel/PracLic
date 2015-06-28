@@ -160,11 +160,13 @@ module.exports = function (app, passport) {
             if (err) {
                 console.log('Wystąpił błąd');
             } else {
+                var d = new Date();
                 var newsa = {
                     tittle: req.body.newsTittle,
                     message: req.body.newInfo,
                     to: "all",
-                    url: "joined/" + course.id
+                    url: "joined/" + course.id,
+                    date: d.getTime()
                 };
                 course.news.unshift(newsa);
                 course.save();
@@ -273,7 +275,7 @@ module.exports = function (app, passport) {
 
                 res.render('student', {
                     user: req.user,
-                    news: nws
+                    news: nws.sort(sortNews)
                 });
             });
 
@@ -583,14 +585,16 @@ module.exports = function (app, passport) {
                                     throw err;
                                 }
                             });
-                            var news = {
+                            var d = new Date();
+                            var newsa = {
                                 tittle: "Zgłoszenie na kurs",
                                 message: "Zgłosiłeś się do kursu " + course.courseInfo.name,
                                 to: req.user.local.email,
-                                url: "/courseStatus"
+                                url: "/courseStatus",
+                                date: d.getTime()
                             };
 
-                            course.news.unshift(news);
+                            course.news.unshift(newsa);
                             course.save(function (err) {
                                 if (err) {
                                     throw err;
@@ -659,11 +663,13 @@ module.exports = function (app, passport) {
                 var namee = {
                     name: req.params.student
                 };
+                var d = new Date();
                 var newsa = {
                     tittle: "Zaakceptowano Zgłoszenie",
                     message: "Twoje zgłoszenie na kurs " + course.courseInfo.name + " zostało zaakceptowane",
                     to: req.params.student,
-                    url: "/joined/" + course.id
+                    url: "/joined/" + course.id, 
+                    date: d.getTime()
                 };
                 course.courseUsers.push(namee);
                 course.news.unshift(newsa);
@@ -685,7 +691,7 @@ module.exports = function (app, passport) {
 
             }
         });
-        res.redirect('/profile');
+        res.redirect('/details/'+req.params.courseId);
     });
 
     app.get('/odrzuc/:student/:courseId', function (req, res) {
@@ -696,12 +702,14 @@ module.exports = function (app, passport) {
             if (err) {
                 console.log('modafukin erro');
             } else {
+                var d = new Date();
 
                 var newsa = {
                     tittle: "Odrzucono Zgłoszenie",
                     message: "Twoje zgłoszenie na kurs " + course.courseInfo.name + " zostało odrzucone\nZobacz zamiast tego inne kursy",
                     to: req.params.courseId,
-                    url: "/course"
+                    url: "/course",
+                    date: d.getTime()
                 };
 
                 course.news.unshift(newsa);
@@ -812,7 +820,8 @@ module.exports = function (app, passport) {
 
         var resnd = function (req, res) {
             var newCourse = new crs();
-            newCourse.id = courses.length;
+           crs.find({}, function (err, crss) {
+            newCourse.id = crss[crss.length-1].id+1;
             newCourse.teacher = req.user.local.email;
             newCourse.province = req.user.local.province;
             newCourse.cities = req.user.local.cities;
@@ -831,6 +840,9 @@ module.exports = function (app, passport) {
 
             courses.push(newCourse);
             res.redirect('/mycourses');
+        
+    });
+            
         };
 
         reorganizeUsers(resnd, req, res);
@@ -943,11 +955,13 @@ module.exports = function (app, passport) {
                         name: filename,
                         url: urlString
                     };
+                    var d = new Date();
                     var newsa = {
                     tittle: "Nowy Materiał",
                     message: "Dodano nowy materiał naukowy do Twojego kursu",
                     to: "all",
-                    url: "joined/" + course.id
+                    url: "joined/" + course.id,
+                    date: d.getTime()
                 };
                     course.news.unshift(newsa);
                     course.files.push(jsonFile);
@@ -1069,6 +1083,9 @@ var reorganizeUsers = function (cb, req, res) {
 
 var sortCurses = function (a, b) {
     return a.id - b.id;
+};
+var sortNews = function (a, b) {
+    return b.date - a.date;
 };
 
 var usunOpinie = function () {
