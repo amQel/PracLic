@@ -552,7 +552,7 @@ module.exports = function (app, passport) {
                     }, function (err, questions) {
 
                         if (questions.length > 0) {
-                            
+
                             join = false;
                         }
 
@@ -570,7 +570,6 @@ module.exports = function (app, passport) {
                         }
 
                     });
-
 
 
                 }
@@ -885,25 +884,37 @@ module.exports = function (app, passport) {
         }
 
         if (!(minimum === "")) {
-            if(!(maximum === "")) {
-                query["courseInfo.costPerHour"] = {$gt: parseInt(minimum,10), $lt: parseInt(maximum,10)};
+            if (!(maximum === "")) {
+                query["courseInfo.costPerHour"] = {$gt: parseInt(minimum, 10), $lt: parseInt(maximum, 10)};
                 flag = false;
             } else {
-                query["courseInfo.costPerHour"] = {$gt: parseInt(minimum,10)};
+                query["courseInfo.costPerHour"] = {$gt: parseInt(minimum, 10)};
             }
         }
 
         if (!(maximum === "") && flag) {
-            query["courseInfo.costPerHour"] = {$lt: parseInt(maximum,10)};
+            query["courseInfo.costPerHour"] = {$lt: parseInt(maximum, 10)};
         }
 
-        console.log(query);
-
         crs.find(query, function (err, courses) {
-            res.render('courseNotLoggedIn', {
-                courses: courses.sort(sortCurses),
-                user: req.user
-            });
+            if(req.user === undefined) {
+                res.render('courseNotLoggedIn', {
+                    courses: courses.sort(sortCurses),
+                    user: req.user
+                });
+            } else {
+                if(req.user.local.role === "student") {
+                    res.render('course', {
+                        courses: courses.sort(sortCurses),
+                        user: req.user
+                    });
+                } else if(req.user.local.role === "teacher"){
+                    res.render('courseTeacher', {
+                        courses: courses.sort(sortCurses),
+                        user: req.user
+                    });
+                }
+            }
         });
     });
 

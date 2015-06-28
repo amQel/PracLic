@@ -2,7 +2,6 @@
 
 $(document).ready(function () {
     var $searchForm = $("form");
-    var $divCities = $("#city");
     var $provinceSelection = $searchForm.find('select[name=province]');
     var $citySelection = $searchForm.find('select[name=city]');
     var $subjectSelection = $searchForm.find('select[name=subject]');
