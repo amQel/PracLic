@@ -332,6 +332,7 @@ module.exports = function (app, passport) {
         var password = req.body.password;
         var province = req.body.province;
         var cities = req.body.city;
+        var flag = 0;
 
         usrs.findOne({
             'local.email': req.user.local.email
@@ -353,9 +354,32 @@ module.exports = function (app, passport) {
                 }
                 if (province !== undefined) {
                     userToEdit.local.province = province;
+                    flag = 1;
                 }
                 if (cities !== undefined) {
                     userToEdit.local.cities = cities;
+                    flag = 2;
+                }
+
+                if(flag > 0) {
+                    crs.find({ teacher: req.user.local.email}, function (err, courses) {
+                       if(err){
+                           throw (err);
+                       } else {
+                           if(flag === 1) {
+                                for(i=0;i<courses.length;i++){
+                                    courses[i].province = province;
+                                    courses[i].save();
+                                }
+                           } else if (flag === 2) {
+                                for(i=0;i<courses.length;i++){
+                                    courses[i].province = province;
+                                    courses[i].cities = cities;
+                                    courses[i].save();
+                                }
+                           }
+                       }
+                    });
                 }
             }
             userToEdit.save(function (err) {
