@@ -5,237 +5,251 @@
     <meta charset="UTF-8">
     <title>Add Course</title>
     <% include ./partials/headTeacher.ejs %>
+        <link href="../css/jumboaddcourse.css" rel="stylesheet" type="text/css" />
 
 </head>
 
 
 <body class="container">
-<header>
-    <% include ./partials/headerTeacher.ejs %>
-</header>
-<form action="/newcourse" method="post">
-    <div>
-        <label>Course Name</label>
-        <input type="text" name="courseName">
-    </div>
-    <br>
+    <header>
+        <% include ./partials/headerTeacher.ejs %>
+            </header>
 
-    <div>
-        <input type="checkbox" name="educationLevel" value="Szkoła podstawowa"/>
-        Szkoła podstawowa
-        <input type="checkbox" name="educationLevel" value="Gimnazjum"/>
-        Gimnazjum
-        <input type="checkbox" name="educationLevel" value="Liceum"/>
-        Liceum
-        <input type="checkbox" name="educationLevel" value="Technikum"/>
-        Technikum
-        <input type="checkbox" name="educationLevel" value="Szkoła zawodowa"/>
-        Szkoła zawodowa
-        <input type="checkbox" name="educationLevel" value="Studia"/>
-        Studia
-    </div>
-    <br>
+            <h2>Dodaj kurs</h2>
+            <form action="/newcourse" method="post">
+                <div class="jumbotron">
+                    <label>Nazwa kursu</label>
+                    <div>
 
-    <div>
-        <label>Subject</label>
-        <select name="Subject" id="Subject">
-            <option value="aktorstwo ">aktorstwo</option>
-            <option value="algebra ">algebra</option>
-            <option value="analiza matematyczna ">analiza matematyczna</option>
-            <option value="anatomia ">anatomia</option>
-            <option value="architektura ">architektura</option>
-            <option value="astronomia ">astronomia</option>
-            <option value="automatyka ">automatyka</option>
-            <option value="badania operacyjne ">badania operacyjne</option>
-            <option value="BHP ">BHP</option>
-            <option value="bibliotekoznawstwo ">bibliotekoznawstwo</option>
-            <option value="biochemia ">biochemia</option>
-            <option value="biologia ">biologia</option>
-            <option value="biologia molekularna ">biologia molekularna</option>
-            <option value="brydż ">brydż</option>
-            <option value="budownictwo ">budownictwo</option>
-            <option value="ceramika ">ceramika</option>
-            <option value="chemia ">chemia</option>
-            <option value="doradztwo zawodowe ">doradztwo zawodowe</option>
-            <option value="dziennikarstwo ">dziennikarstwo</option>
-            <option value="efektywna nauka ">efektywna nauka</option>
-            <option value="ekonometria ">ekonometria</option>
-            <option value="ekonomia ">ekonomia</option>
-            <option value="ekonomia matematyczna ">ekonomia matematyczna</option>
-            <option value="elektroenergetyka ">elektroenergetyka</option>
-            <option value="elektronika ">elektronika</option>
-            <option value="elektrotechnika ">elektrotechnika</option>
-            <option value="emisja głosu ">emisja głosu</option>
-            <option value="energetyka ">energetyka</option>
-            <option value="energoelektronika ">energoelektronika</option>
-            <option value="ergonomia ">ergonomia</option>
-            <option value="etyka ">etyka</option>
-            <option value="etykieta biznesu ">etykieta biznesu</option>
-            <option value="farmacja ">farmacja</option>
-            <option value="filozofia ">filozofia</option>
-            <option value="finanse i rachunkowość ">finanse i rachunkowość</option>
-            <option value="fitness ">fitness</option>
-            <option value="fizyka ">fizyka</option>
-            <option value="florystyka ">florystyka</option>
-            <option value="fotografia ">fotografia</option>
-            <option value="fryzjerstwo ">fryzjerstwo</option>
-            <option value="genetyka ">genetyka</option>
-            <option value="geodezja ">geodezja</option>
-            <option value="geografia ">geografia</option>
-            <option value="geologia ">geologia</option>
-            <option value="geometria wykreślna ">geometria wykreślna</option>
-            <option value="grafika komputerowa ">grafika komputerowa</option>
-            <option value="historia ">historia</option>
-            <option value="historia sztuki ">historia sztuki</option>
-            <option value="hotelarstwo ">hotelarstwo</option>
-            <option value="informatyka ">informatyka</option>
-            <option value="inżynieria chemiczna ">inżynieria chemiczna</option>
-            <option value="jazda konna ">jazda konna</option>
-            <option value="jazda na deskorolce ">jazda na deskorolce</option>
-            <option value="jazda na nartach ">jazda na nartach</option>
-            <option value="język afrikaans ">język afrikaans</option>
-            <option value="język akadyjski ">język akadyjski</option>
-            <option value="język albański ">język albański</option>
-            <option value="język angielski ">język angielski</option>
-            <option value="język arabski ">język arabski</option>
-            <option value="język azerbejdżański ">język azerbejdżański</option>
-            <option value="język białoruski ">język białoruski</option>
-            <option value="język bułgarski ">język bułgarski</option>
-            <option value="język chiński ">język chiński</option>
-            <option value="język chorwacki ">język chorwacki</option>
-            <option value="język czeski ">język czeski</option>
-            <option value="język dari ">język dari</option>
-            <option value="język duński ">język duński</option>
-            <option value="język egipski ">język egipski</option>
-            <option value="język esperanto ">język esperanto</option>
-            <option value="język estoński ">język estoński</option>
-            <option value="język fiński ">język fiński</option>
-            <option value="język francuski ">język francuski</option>
-            <option value="język grecki ">język grecki</option>
-            <option value="język gruziński ">język gruziński</option>
-            <option value="język hebrajski ">język hebrajski</option>
-            <option value="język hindi ">język hindi</option>
-            <option value="język hiszpański ">język hiszpański</option>
-            <option value="język holenderski ">język holenderski</option>
-            <option value="język indonezyjski ">język indonezyjski</option>
-            <option value="język islandzki ">język islandzki</option>
-            <option value="język japoński ">język japoński</option>
-            <option value="język jidysz ">język jidysz</option>
-            <option value="język kataloński ">język kataloński</option>
-            <option value="język koreański ">język koreański</option>
-            <option value="język litewski ">język litewski</option>
-            <option value="język łotewski ">język łotewski</option>
-            <option value="język łużycki ">język łużycki</option>
-            <option value="język macedoński ">język macedoński</option>
-            <option value="język migowy ">język migowy</option>
-            <option value="język mongolski ">język mongolski</option>
-            <option value="język niderlandzki ">język niderlandzki</option>
-            <option value="język niemiecki ">język niemiecki</option>
-            <option value="język norweski ">język norweski</option>
-            <option value="język paszto ">język paszto</option>
-            <option value="język perski ">język perski</option>
-            <option value="język polski ">język polski</option>
-            <option value="język polski dla cudzoziemców ">język polski dla cudzoziemców</option>
-            <option value="język portugalski ">język portugalski</option>
-            <option value="język rosyjski ">język rosyjski</option>
-            <option value="język rumuński ">język rumuński</option>
-            <option value="język serbski ">język serbski</option>
-            <option value="język słowacki ">język słowacki</option>
-            <option value="język słoweński ">język słoweński</option>
-            <option value="język sumeryjski ">język sumeryjski</option>
-            <option value="język szwedzki ">język szwedzki</option>
-            <option value="język tajski ">język tajski</option>
-            <option value="język turecki ">język turecki</option>
-            <option value="język tybetański ">język tybetański</option>
-            <option value="język ukraiński ">język ukraiński</option>
-            <option value="język uzbecki ">język uzbecki</option>
-            <option value="język węgierski ">język węgierski</option>
-            <option value="język wietnamski ">język wietnamski</option>
-            <option value="język włoski ">język włoski</option>
-            <option value="konstrukcje inżynierskie ">konstrukcje inżynierskie</option>
-            <option value="kosmetologia ">kosmetologia</option>
-            <option value="łacina ">łacina</option>
-            <option value="logika ">logika</option>
-            <option value="logistyka ">logistyka</option>
-            <option value="logopedia ">logopedia</option>
-            <option value="malarstwo i rysunek ">malarstwo i rysunek</option>
-            <option value="marketing ">marketing</option>
-            <option value="matematyka ">matematyka</option>
-            <option value="matematyka dyskretna ">matematyka dyskretna</option>
-            <option value="matematyka wyższa ">matematyka wyższa</option>
-            <option value="mechanika ">mechanika</option>
-            <option value="mechanika budowli ">mechanika budowli</option>
-            <option value="mechanika płynów ">mechanika płynów</option>
-            <option value="medycyna ">medycyna</option>
-            <option value="metodologia badań ">metodologia badań</option>
-            <option value="metody numeryczne ">metody numeryczne</option>
-            <option value="mikrobiologia ">mikrobiologia</option>
-            <option value="modelarstwo ">modelarstwo</option>
-            <option value="motywacja ">motywacja</option>
-            <option value="muzyka ">muzyka</option>
-            <option value="nauczanie początkowe ">nauczanie początkowe</option>
-            <option value="nauka jazdy ">nauka jazdy</option>
-            <option value="nauka o materiałach ">nauka o materiałach</option>
-            <option value="obsługa komputera ">obsługa komputera</option>
-            <option value="ochrona środowiska ">ochrona środowiska</option>
-            <option value="pedagogika ">pedagogika</option>
-            <option value="pływanie ">pływanie</option>
-            <option value="podstawy konstrukcji maszyn ">podstawy konstrukcji maszyn</option>
-            <option value="politologia ">politologia</option>
-            <option value="pozycjonowanie stron ">pozycjonowanie stron</option>
-            <option value="prawo ">prawo</option>
-            <option value="prognozowanie ">prognozowanie</option>
-            <option value="programowanie ">programowanie</option>
-            <option value="przedsiębiorczość ">przedsiębiorczość</option>
-            <option value="przyroda ">przyroda</option>
-            <option value="psychologia ">psychologia</option>
-            <option value="public relations ">public relations</option>
-            <option value="rachunek prawdopodobieństwa ">rachunek prawdopodobieństwa</option>
-            <option value="rachunkowość ">rachunkowość</option>
-            <option value="rolnictwo ">rolnictwo</option>
-            <option value="rysunek techniczny ">rysunek techniczny</option>
-            <option value="rzeźba ">rzeźba</option>
-            <option value="samoobrona ">samoobrona</option>
-            <option value="jazda na snowboardzie ">jazda na snowboardzie</option>
-            <option value="socjologia ">socjologia</option>
-            <option value="statystyka ">statystyka</option>
-            <option value="szachy ">szachy</option>
-            <option value="sztuka cyrkowa ">sztuka cyrkowa</option>
-            <option value="szycie na maszynie ">szycie na maszynie</option>
-            <option value="taniec ">taniec</option>
-            <option value="techniki pamięciowe ">techniki pamięciowe</option>
-            <option value="telekomunikacja ">telekomunikacja</option>
-            <option value="tenis ">tenis</option>
-            <option value="termodynamika ">termodynamika</option>
-            <option value="turystyka ">turystyka</option>
-            <option value="tworzenie stron ">tworzenie stron</option>
-            <option value="witraż ">witraż</option>
-            <option value="wos ">wos</option>
-            <option value="wytrzymałość materiałów ">wytrzymałość materiałów</option>
-            <option value="zarządzanie ">zarządzanie</option>
-            <option value="żeglarstwo">żeglarstwo</option>
-        </select>
-    </div>
-    <br>
+                        <input type="text" name="courseName">
+                    </div>
+                    <br>
+                    <label>Szkoła</label>
 
-    <div>
-        <label>Description</label>
-        <textarea rows="4" cols="40" name="courseDescription">Please add some description</textarea>
-    </div>
-    <div>
-        <label>Preferable Cost Per Hour</label>
-        <input type="text" name="costPerHour">
-    </div>
-    <button type="submit">Add</button>
-</form>
-<br>
+                    <div class="check">
+                        <input type="checkbox" name="educationLevel" value="Szkoła podstawowa" /> Szkoła podstawowa
+                        <br><input type="checkbox" name="educationLevel" value="Gimnazjum" /> Gimnazjum
+                        <br><input type="checkbox" name="educationLevel" value="Liceum" /> Liceum
+                        <br><input type="checkbox" name="educationLevel" value="Technikum" /> Technikum
+                        <br><input type="checkbox" name="educationLevel" value="Szkoła zawodowa" /> Szkoła zawodowa
+                        <br><input type="checkbox" name="educationLevel" value="Studia" /> Studia
 
-<li><a href="/">Back</a>
-</li>
+                    </div>
+                    <br>
+                    <label>Przedmiot</label>
+                    <div>
 
-<footer>
-    <% include ./partials/footer.ejs %>
-</footer>
+                        <select name="Subject" id="Subject">
+                            <option value="Aktorstwo ">Aktorstwo </option>
+                            <option value="Algebra ">Algebra </option>
+                            <option value="Analiza matematyczna ">Analiza matematyczna </option>
+                            <option value="Anatomia ">Anatomia </option>
+                            <option value="Architektura ">Architektura </option>
+                            <option value="Astronomia ">Astronomia </option>
+                            <option value="Automatyka ">Automatyka </option>
+                            <option value="Badania operacyjne ">Badania operacyjne </option>
+                            <option value="BHP ">BHP </option>
+                            <option value="Bibliotekoznawstwo ">Bibliotekoznawstwo </option>
+                            <option value="Biochemia ">Biochemia </option>
+                            <option value="Biologia ">Biologia </option>
+                            <option value="Biologia molekularna ">Biologia molekularna </option>
+                            <option value="Brydż ">Brydż </option>
+                            <option value="Budownictwo ">Budownictwo </option>
+                            <option value="Ceramika ">Ceramika </option>
+                            <option value="Chemia ">Chemia </option>
+                            <option value="Doradztwo zawodowe ">Doradztwo zawodowe </option>
+                            <option value="Dziennikarstwo ">Dziennikarstwo </option>
+                            <option value="Efektywna nauka ">Efektywna nauka </option>
+                            <option value="Ekonometria ">Ekonometria </option>
+                            <option value="Ekonomia ">Ekonomia </option>
+                            <option value="Ekonomia matematyczna ">Ekonomia matematyczna </option>
+                            <option value="Elektroenergetyka ">Elektroenergetyka </option>
+                            <option value="Elektronika ">Elektronika </option>
+                            <option value="Elektrotechnika ">Elektrotechnika </option>
+                            <option value="Emisja głosu ">Emisja głosu </option>
+                            <option value="Energetyka ">Energetyka </option>
+                            <option value="Energoelektronika ">Energoelektronika </option>
+                            <option value="Ergonomia ">Ergonomia </option>
+                            <option value="Etyka ">Etyka </option>
+                            <option value="Etykieta biznesu ">Etykieta biznesu </option>
+                            <option value="Farmacja ">Farmacja </option>
+                            <option value="Filozofia ">Filozofia </option>
+                            <option value="Finanse i rachunkowość ">Finanse i rachunkowość </option>
+                            <option value="Fitness ">Fitness </option>
+                            <option value="Fizyka ">fizyka </option>
+                            <option value="Florystyka ">florystyka </option>
+                            <option value="Fotografia ">fotografia </option>
+                            <option value="Fryzjerstwo ">fryzjerstwo </option>
+                            <option value="Genetyka ">genetyka </option>
+                            <option value="Geodezja ">geodezja </option>
+                            <option value="Geografia ">geografia </option>
+                            <option value="Geologia ">geologia </option>
+                            <option value="Geometria wykreślna ">geometria wykreślna </option>
+                            <option value="Grafika komputerowa ">grafika komputerowa </option>
+                            <option value="Historia ">historia </option>
+                            <option value="Historia sztuki ">historia sztuki </option>
+                            <option value="Hotelarstwo ">hotelarstwo </option>
+                            <option value="Informatyka ">informatyka </option>
+                            <option value="Inżynieria chemiczna ">inżynieria chemiczna </option>
+                            <option value="Jazda konna ">jazda konna </option>
+                            <option value="Jazda na deskorolce ">jazda na deskorolce </option>
+                            <option value="Jazda na nartach ">jazda na nartach </option>
+                            <option value="Język afrikaans ">język afrikaans </option>
+                            <option value="Język akadyjski ">język akadyjski </option>
+                            <option value="Język albański ">język albański </option>
+                            <option value="Język angielski ">język angielski </option>
+                            <option value="Język arabski ">język arabski </option>
+                            <option value="Język azerbejdżański ">język azerbejdżański </option>
+                            <option value="Język białoruski ">język białoruski </option>
+                            <option value="Język bułgarski ">język bułgarski </option>
+                            <option value="Język chiński ">język chiński </option>
+                            <option value="Język chorwacki ">język chorwacki </option>
+                            <option value="Język czeski ">język czeski </option>
+                            <option value="Język dari ">język dari </option>
+                            <option value="Język duński ">język duński </option>
+                            <option value="Język egipski ">język egipski </option>
+                            <option value="Język esperanto ">język esperanto </option>
+                            <option value="Język estoński ">język estoński </option>
+                            <option value="Język fiński ">język fiński </option>
+                            <option value="Język francuski ">język francuski </option>
+                            <option value="Język grecki ">język grecki </option>
+                            <option value="Język gruziński ">język gruziński </option>
+                            <option value="Język hebrajski ">język hebrajski </option>
+                            <option value="Język hindi ">język hindi </option>
+                            <option value="Język hiszpański ">język hiszpański </option>
+                            <option value="Język holenderski ">język holenderski </option>
+                            <option value="Język indonezyjski ">język indonezyjski </option>
+                            <option value="Język islandzki ">język islandzki </option>
+                            <option value="Język japoński ">język japoński </option>
+                            <option value="Język jidysz ">język jidysz </option>
+                            <option value="Język kataloński ">język kataloński </option>
+                            <option value="Język koreański ">język koreański </option>
+                            <option value="Język litewski ">język litewski </option>
+                            <option value="Język łotewski ">język łotewski </option>
+                            <option value="Język łużycki ">język łużycki </option>
+                            <option value="Język macedoński ">język macedoński </option>
+                            <option value="Język migowy ">język migowy </option>
+                            <option value="Język mongolski ">język mongolski </option>
+                            <option value="Język niderlandzki ">język niderlandzki </option>
+                            <option value="Język niemiecki ">język niemiecki </option>
+                            <option value="Język norweski ">język norweski </option>
+                            <option value="Język paszto ">język paszto </option>
+                            <option value="Język perski ">język perski </option>
+                            <option value="Język polski ">język polski </option>
+                            <option value="Język polski dla cudzoziemców ">język polski dla cudzoziemców </option>
+                            <option value="Język portugalski ">język portugalski </option>
+                            <option value="Język rosyjski ">język rosyjski </option>
+                            <option value="Język rumuński ">język rumuński </option>
+                            <option value="Język serbski ">język serbski </option>
+                            <option value="Język słowacki ">język słowacki </option>
+                            <option value="Język słoweński ">język słoweński </option>
+                            <option value="Język sumeryjski ">język sumeryjski </option>
+                            <option value="Język szwedzki ">język szwedzki </option>
+                            <option value="Język tajski ">język tajski </option>
+                            <option value="Język turecki ">język turecki </option>
+                            <option value="Język tybetański ">język tybetański </option>
+                            <option value="Język ukraiński ">język ukraiński </option>
+                            <option value="Język uzbecki ">język uzbecki </option>
+                            <option value="Język węgierski ">język węgierski </option>
+                            <option value="Język wietnamski ">język wietnamski </option>
+                            <option value="Język włoski ">język włoski </option>
+                            <option value="Konstrukcje inżynierskie ">konstrukcje inżynierskie </option>
+                            <option value="Kosmetologia ">kosmetologia </option>
+                            <option value="Łacina ">łacina </option>
+                            <option value="Logika ">logika </option>
+                            <option value="Logistyka ">logistyka </option>
+                            <option value="Logopedia ">logopedia </option>
+                            <option value="Malarstwo i rysunek ">malarstwo i rysunek </option>
+                            <option value="Marketing ">marketing </option>
+                            <option value="Matematyka ">matematyka </option>
+                            <option value="Matematyka dyskretna ">matematyka dyskretna </option>
+                            <option value="Matematyka wyższa ">matematyka wyższa </option>
+                            <option value="Mechanika ">mechanika </option>
+                            <option value="Mechanika budowli ">mechanika budowli </option>
+                            <option value="Mechanika płynów ">mechanika płynów </option>
+                            <option value="Medycyna ">medycyna </option>
+                            <option value="Metodologia badań ">metodologia badań </option>
+                            <option value="Metody numeryczne ">metody numeryczne </option>
+                            <option value="Mikrobiologia ">mikrobiologia </option>
+                            <option value="Modelarstwo ">modelarstwo </option>
+                            <option value="Motywacja ">motywacja </option>
+                            <option value="Muzyka ">muzyka </option>
+                            <option value="Nauczanie początkowe ">nauczanie początkowe </option>
+                            <option value="Nauka jazdy ">nauka jazdy </option>
+                            <option value="Nauka o materiałach ">nauka o materiałach </option>
+                            <option value="Obsługa komputera ">obsługa komputera </option>
+                            <option value="Ochrona środowiska ">ochrona środowiska </option>
+                            <option value="Pedagogika ">pedagogika </option>
+                            <option value="Pływanie ">pływanie </option>
+                            <option value="Podstawy konstrukcji maszyn ">podstawy konstrukcji maszyn </option>
+                            <option value="Politologia ">politologia </option>
+                            <option value="Pozycjonowanie stron ">pozycjonowanie stron </option>
+                            <option value="Prawo ">prawo </option>
+                            <option value="Prognozowanie ">prognozowanie </option>
+                            <option value="Programowanie ">programowanie </option>
+                            <option value="Przedsiębiorczość ">przedsiębiorczość </option>
+                            <option value="Przyroda ">przyroda </option>
+                            <option value="Psychologia ">psychologia </option>
+                            <option value="Public relations ">public relations </option>
+                            <option value="Rachunek prawdopodobieństwa ">rachunek prawdopodobieństwa </option>
+                            <option value="Rachunkowość ">rachunkowość </option>
+                            <option value="Rolnictwo ">rolnictwo </option>
+                            <option value="Rysunek techniczny ">rysunek techniczny </option>
+                            <option value="Rzeźba ">rzeźba </option>
+                            <option value="Samoobrona ">samoobrona </option>
+                            <option value="Jazda na snowboardzie ">jazda na snowboardzie </option>
+                            <option value="Socjologia ">socjologia </option>
+                            <option value="Statystyka ">statystyka </option>
+                            <option value="Szachy ">szachy </option>
+                            <option value="Sztuka cyrkowa ">sztuka cyrkowa </option>
+                            <option value="Szycie na maszynie ">szycie na maszynie </option>
+                            <option value="Taniec ">taniec </option>
+                            <option value="Techniki pamięciowe ">techniki pamięciowe </option>
+                            <option value="Telekomunikacja ">telekomunikacja </option>
+                            <option value="Tenis ">tenis </option>
+                            <option value="Termodynamika ">termodynamika </option>
+                            <option value="Turystyka ">turystyka </option>
+                            <option value="Tworzenie stron ">tworzenie stron </option>
+                            <option value="Witraż ">witraż </option>
+                            <option value="WOS ">wos </option>
+                            <option value="Wytrzymałość materiałów ">wytrzymałość materiałów </option>
+                            <option value="Zarządzanie ">zarządzanie </option>
+                            <option value="Żeglarstwo">żeglarstwo</option>
+                        </select>
+                    </div>
+                    <br>
+                    <label>Opis</label>
+                    <div class="area">
+
+                        <textarea rows="4" cols="40" name="courseDescription">Please add some description</textarea>
+                    </div>
+                    <br>
+                    <label>Cena za godzine</label>
+                    <div>
+
+                        <input type="text" name="costPerHour">
+                    </div>
+                    <br>
+                    <button type="submit">Add</button>
+                </div>
+            </form>
+
+
+
+
+
+
+
+
+
+
+            <br>
+
+        
+
+            <footer>
+                <% include ./partials/footer.ejs %>
+            </footer>
 </body>
 
 </html>
