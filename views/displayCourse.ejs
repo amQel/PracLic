@@ -13,16 +13,14 @@
     <header>
         <% include ./partials/headerStudent.ejs %>
     </header>
-    <h1>Dostępne kursy :</h1>        
+    <h1>Kurs z przedmiotu <%=courses.courseInfo.subject %> </h1>        
         <div class="jumbotron">
             <div class="for"> 
                 <br>
+                <b> Kurs: </b><%=courses.courseInfo.name %>
+                <br>
                 <b>Email: </b><%=courses.teacher %>
-                    <br>
-                   <b> Kurs: </b><%=courses.courseInfo.name %>
-                        <br>
-                      <b>  Przedmiot: </b><%=courses.courseInfo.subject %>
-                            <br>
+                <br>
                <b> Telefon: </b><%=courses.courseInfo.phone %>
                 <br>
                           <b>  Opis: </b><%=courses.courseInfo.description %>
@@ -31,8 +29,17 @@
                                     <br>
                                 <b>    Szkola: </b><%=courses.level %>
                                         <br>
-                                  <b>      <a href="/wypisz/<%= courses.id %>">Wypisz mnie z tego kursu!</a></b>
+                                      
+                                <b>Dostępne Materiały : </b>
+                                       <ul>
+            <% for(var j = 0; j < courses.files.length; j++) { %>
+               <% if(courses.files[j].name != '') { %>
+                <li><a href="<%= courses.files[j].url %>"><%= courses.files[j].name %></a></li>
+                <%}%>
+            <%}%>
+        </ul>
                                         <br>
+                                        <b>      <a href="/wypisz/<%= courses.id %>">Wypisz mnie z tego kursu!</a></b>
             </div>
              </div>
              
