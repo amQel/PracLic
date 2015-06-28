@@ -12,7 +12,7 @@ var courseSchema = mongoose.Schema({
     },
     courseUsers: [{ name: String}],
     level: [String],
-    news: [{ tittle: String, message: String, to: String, url: String }],
+    news: [{ tittle: String, message: String, to: String, url: String, date:Number }],
     files: [{ name: String, url: String }],
     province: String,
     cities: [String]
