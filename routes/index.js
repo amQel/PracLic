@@ -144,27 +144,8 @@ module.exports = function (app, passport) {
                 };
                 course.news.push(newsa);
                 console.log(course);
-//                crs.remove({
-//                    'id': courseToUpdate.id
-//                }, function (err) {
-//                    console.log(err);
-//                });
-//                courseToUpdate.news.push(newsa);
-//
-//                var newCourse = new crs();
-//                newCourse.id = courseToUpdate.id;
-//                newCourse.teacher = courseToUpdate.teacher;
-//                newCourse.courseInfo.name = courseToUpdate.courseInfo.name;
-//                newCourse.courseInfo.subject = courseToUpdate.courseInfo.subject;
-//                newCourse.courseInfo.description = courseToUpdate.courseInfo.description;
-//                newCourse.courseUsers = courseToUpdate.courseUsers;
-//                newCourse.courseInfo.costPerHour = courseToUpdate.courseInfo.costPerHour;
-//                newCourse.files = courseToUpdate.files;
-//                newCourse.news = courseToUpdate.news;
-//                newCourse.level = courseToUpdate.level;
-
-                crs.save(course);
                 
+                crs.save(course);
             }
         });
         res.redirect('mycourses');
