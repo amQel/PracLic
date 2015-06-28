@@ -6,9 +6,9 @@ $(document).ready(function () {
         $(collapse_content_selector).toggle(function () {
             if ($(this).css('display') == 'none') {
 
-                toggle_switch.html('Change password');
+                toggle_switch.html('Zmien hasło');
             } else {
-                toggle_switch.html('Do not change password');
+                toggle_switch.html('Nie zmieniaj hasła');
             }
         });
     });
@@ -27,4 +27,19 @@ $(document).ready(function () {
             $citySelection.load('./citiesCheck/' + $(this).children(":selected").attr("id"));
         });
     });
+
+
+
+  
+$('.guzik').alert();
+
+
+
+
+
+
+
+
 });
+
+
