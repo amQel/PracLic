@@ -278,6 +278,7 @@ module.exports = function (app, passport) {
     app.post('/changeaccountTeacher', function (req, res) {
         var name = req.body.firstName;
         var surname = req.body.surname;
+        var phone = req.body.phone;
         var password = req.body.password;
         var province = req.body.province;
         var cities = req.body.city;
@@ -291,6 +292,9 @@ module.exports = function (app, passport) {
                 }
                 if(surname !== ""){
                     userToEdit.local.surname = surname;
+                }
+                if(phone !== ""){
+                    userToEdit.local.phone = phone;
                 }
                 if(password !== ""){
                     userToEdit.local.password = userToEdit.generateHash(password);
