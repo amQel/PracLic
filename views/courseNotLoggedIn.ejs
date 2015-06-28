@@ -22,15 +22,15 @@
 <ul>
     <% for(var i = 0; i < courses.length; i++) { %>
     <div class="jumbotron">
-        Email:<%= courses[i].teacher %>
+        <b>Email: </b><%= courses[i].teacher %>
         <br>
-        Nazwa:<%= courses[i].courseInfo.name %>
+       <b> Nazwa: </b><%= courses[i].courseInfo.name %>
         <br>
-        Przedmiot:<%= courses[i].courseInfo.subject %>
+       <b> Przedmiot: </b><%= courses[i].courseInfo.subject %>
         <br>
-        Opis:<%= courses[i].courseInfo.description %>
+       <b> Opis: </b><%= courses[i].courseInfo.description %>
         <br>
-        <a href="/login">Zaloguj się aby móc uczęszczać na kurs!</a>
+       <b> <a href="/login">Zaloguj się aby móc uczęszczać na kurs!</a></b>
     </div>
     <% } %>
 </ul>
