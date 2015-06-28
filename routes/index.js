@@ -82,8 +82,19 @@ module.exports = function (app, passport) {
         reorganizeUsers(resend, req, res);
     });
     
-    app.get('joined/:id', function(req, res) {
-        res.redirect('joinedcourses');
+    app.get('/joined/:id', function(req, res) {
+        crs.findOne({ 'id' : req.params.id }, function (err, course) {
+            
+            if (err) {
+                console.log('error loading course');
+            }
+            res.render('displayCourse', {
+                user : req.user,
+                courses : course
+            });
+            
+        });
+        
     });
 
     app.get('/contactTeacher', function (req, res) {
