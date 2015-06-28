@@ -195,7 +195,6 @@ module.exports = function (app, passport) {
                                 quest.name = course.courseInfo.name;
                                 quest.email = question.student;
                                 quest.id = req.params.id;
-                                console.log(quest);
                                 studentsWillingToJoin.push(quest);
                             }
                         }
@@ -240,7 +239,6 @@ module.exports = function (app, passport) {
                         if (user.name == req.user.local.email) joined = 1;
                     });
                     if (joined) {
-                        console.log(course);
                         crsss.push(course);
                     }
 
@@ -249,7 +247,6 @@ module.exports = function (app, passport) {
                     course.news.forEach(function (neww, i) {
                         if (i <= 2) {
                             nws.push(neww);
-                            console.log(neww);
                         }
                     });
                 });
@@ -358,11 +355,9 @@ module.exports = function (app, passport) {
             teachers.forEach(function (teacher) {
 
                 if (teacher.local.role == 'teacher') {
-                    console.log(teacher.local.role);
                     renderTeacherData.push(teacher);
                 }
             });
-            console.log(renderTeacherData);
             res.render('teachers', {
                 user: req.user,
                 teachers: renderTeacherData
@@ -380,11 +375,9 @@ module.exports = function (app, passport) {
             teachers.forEach(function (teacher) {
 
                 if (teacher.local.role == 'teacher') {
-                    console.log(teacher.local.role);
                     renderTeacherData.push(teacher);
                 }
             });
-            console.log(renderTeacherData);
             res.render('teachersStudent', {
                 user: req.user,
                 teachers: renderTeacherData
@@ -401,11 +394,9 @@ module.exports = function (app, passport) {
             teachers.forEach(function (teacher) {
 
                 if (teacher.local.role == 'teacher') {
-                    console.log(teacher.local.role);
                     renderTeacherData.push(teacher);
                 }
             });
-            console.log(renderTeacherData);
             res.render('teachersTeachers', {
                 user: req.user,
                 teachers: renderTeacherData
@@ -544,6 +535,8 @@ module.exports = function (app, passport) {
 
             var ID = req.params.id;
             var question = new askToJoin();
+            var join = true;
+
 
             crs.findOne({
                 'id': ID
@@ -551,15 +544,33 @@ module.exports = function (app, passport) {
                 if (err) {
                     console.log('modafukin erro');
                 } else {
+                    askToJoin.find({
+                        'teacher': course.teacher,
+                        'student': req.user.local.email,
+                        'courseId': req.params.id
 
-                    question.teacher = course.teacher;
-                    question.student = req.user.local.email;
-                    question.courseId = ID;
-                    question.save(function (err) {
-                        if (err) {
-                            throw err;
+                    }, function (err, questions) {
+
+                        if (questions.length > 0) {
+
+                            join = false;
                         }
+
+                        if (join) {
+                            question.teacher = course.teacher;
+                            question.student = req.user.local.email;
+                            question.courseId = ID;
+                            question.save(function (err) {
+                                if (err) {
+                                    throw err;
+                                }
+                            });
+                        } else {
+                            console.log("exists");
+                        }
+
                     });
+
 
                 }
 
@@ -588,9 +599,9 @@ module.exports = function (app, passport) {
                 });
 
                 askToJoin.remove({
-                    'teacher' : req.user.local.email,
-                    'student' : req.params.student,
-                    'courseId' : req.params.courseId
+                    'teacher': req.user.local.email,
+                    'student': req.params.student,
+                    'courseId': req.params.courseId
                 }, function (err) {
                     console.log(err);
                 });
@@ -599,20 +610,17 @@ module.exports = function (app, passport) {
         });
         res.redirect('/profile');
     });
-    
-     app.get('/odrzuc/:student/:courseId', function (req, res) {
+
+    app.get('/odrzuc/:student/:courseId', function (req, res) {
         askToJoin.remove({
-                    'teacher' : req.user.local.email,
-                    'student' : req.params.student,
-                    'courseId' : req.params.courseId
-                }, function (err) {
-                    console.log(err);
-                });
-        res.redirect('/details/'+req.params.courseId);
+            'teacher': req.user.local.email,
+            'student': req.params.student,
+            'courseId': req.params.courseId
+        }, function (err) {
+            console.log(err);
+        });
+        res.redirect('/details/' + req.params.courseId);
     });
-
-
-
 
 
     app.get('/wypisz/:id', function (req, res) {
@@ -744,7 +752,6 @@ module.exports = function (app, passport) {
         var opinions = [];
         opinion.find({}, function (err, opn) {
             opn.forEach(function (opin) {
-                console.log(opin);
                 opinions.push(opin);
             });
             res.render('opinions', {
@@ -769,7 +776,6 @@ module.exports = function (app, passport) {
         var opinions = [];
         opinion.find({}, function (err, opn) {
             opn.forEach(function (opin) {
-                console.log(opin);
                 opinions.push(opin);
             });
             res.render('opinionsTeacher', {
@@ -856,30 +862,59 @@ module.exports = function (app, passport) {
         var city = req.body.city;
         var educationLevel = req.body.level;
         var subject = req.body.subject;
+        var minimum = req.body.minimum;
+        var maximum = req.body.maximum;
+        var flag = true;
         var query = {};
 
         if (!(province === undefined)) {
             query.province = province;
 
-            if(!(city === undefined)) {
+            if (!(city === undefined)) {
                 query.cities = {$in: [city]};
             }
         }
 
-        if(!(educationLevel === undefined)){
+        if (!(educationLevel === undefined)) {
             query.level = {$in: [educationLevel]};
         }
 
-        if(!(subject === undefined)){
+        if (!(subject === undefined)) {
             query.subject = subject;
         }
 
+        if (!(minimum === "")) {
+            if (!(maximum === "")) {
+                query["courseInfo.costPerHour"] = {$gt: parseInt(minimum, 10), $lt: parseInt(maximum, 10)};
+                flag = false;
+            } else {
+                query["courseInfo.costPerHour"] = {$gt: parseInt(minimum, 10)};
+            }
+        }
+
+        if (!(maximum === "") && flag) {
+            query["courseInfo.costPerHour"] = {$lt: parseInt(maximum, 10)};
+        }
+
         crs.find(query, function (err, courses) {
-            console.log(courses);
-            res.render('courseNotLoggedIn', {
-                courses: courses.sort(sortCurses),
-                user: req.user
-            });
+            if(req.user === undefined) {
+                res.render('courseNotLoggedIn', {
+                    courses: courses.sort(sortCurses),
+                    user: req.user
+                });
+            } else {
+                if(req.user.local.role === "student") {
+                    res.render('course', {
+                        courses: courses.sort(sortCurses),
+                        user: req.user
+                    });
+                } else if(req.user.local.role === "teacher"){
+                    res.render('courseTeacher', {
+                        courses: courses.sort(sortCurses),
+                        user: req.user
+                    });
+                }
+            }
         });
     });
 
@@ -908,7 +943,6 @@ var reorganizeUsers = function (cb, req, res) {
     crs.find({}, function (err, crss) {
         crss.forEach(function (course) {
             courses.push(course);
-            console.log(course);
         });
         if (cb) cb(req, res);
     });
