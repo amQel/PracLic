@@ -7,7 +7,7 @@
 
 
         
-            
+            <link href="../css/teacherJumbotron.css" rel="stylesheet" type="text/css"/>
 
     <% include ./partials/headerTeacher.ejs %>
 
@@ -24,18 +24,27 @@
    
         <ul>
             <% for(var i=0; i<teachers.length; i++) {%>
-                <li>
-                    <%=teachers[i].local.email %>
-                </li>
-                <li>
-                    <%=teachers[i].local.city %>
-                </li>
+            <div class="jumbotron">
+                
+              <div>
+                <%if(teachers[i].local.avatar && teachers[i].local.avatar.data) {%>
+                    <img src="data:<%= teachers[i].local.avatar.contentType %>;base64,<%= teachers[i].local.avatar.data.toString('base64') %>">
+                    <%} else {%>
+                        <img src="../images/defaultAvatar.png">
+                        <%}%>
+            </div>
+                <div class="for">
+                <br>
+                <b>Email: </b><%=teachers[i].local.email %>
+                <br>
+                <b>Miasto: </b><%=teachers[i].local.city %>
+               
             
                 
                 <br>
                
-            
-            
+            </div>
+            </div>
            
             <% } %> 
         </ul>

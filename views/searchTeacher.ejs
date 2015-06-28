@@ -3,6 +3,7 @@
 
 <head>
     <% include ./partials/headTeacher.ejs %>
+    <link href="../css/opinionsJumbotron.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body class="container">
@@ -10,10 +11,11 @@
       <% include ./partials/headerTeacher.ejs %>
     </header>
     <form action="search" method="post" name="search-form">
-        
-        <div>
+        <div class="jumbotron">
+        <label>Województwo</label>
+            <div>
             
-            <label>Province</label>
+            
             
             <select name="province">
                 <option value="SELECT" disabled selected>Wybierz województwo</option>
@@ -35,16 +37,18 @@
                 <option value="zachodniopomorskie" id="id16">zachodniopomorskie</option>
                  </select>
              </div>
-        
-        <div>
+            <br>
+        <label>Miasto</label>
+        <div class="city1">
             
-            <label>City</label>
+            
             
             <select name="city">
                 </select>
              </div>
-        
-        <div>
+        <br>
+            <label>Szkoła</label>
+        <div class="school">
             
             <select name="education-level">
                 
@@ -61,8 +65,9 @@
                 <option value="studia">Studia</option>
                  </select>
             </div>
-        
-        <div>
+        <br>
+            <label>Przedmiot</label>
+        <div class="sub">
             
             <select name="subject">
                 
@@ -97,6 +102,7 @@
                 <option value="Wychowanie fizyczne">Wychowanie fizyczne</option>
                  </select>
              </div>
+            </div>
          </form>
 </body>
 <footer>

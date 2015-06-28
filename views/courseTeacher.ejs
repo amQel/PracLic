@@ -6,7 +6,7 @@
     <title>Our Courses</title>
     
     <% include ./partials/headTeacher.ejs %>
-
+  <link href="../css/courseJumbtron.css" rel="stylesheet" type="text/css" />
     </head>
 
 <body class="container">
@@ -15,23 +15,18 @@
     </header>
     <ul>
         <% for(var i=0; i<courses.length; i++) {%>
-            <li>
-                <%=courses[i].id %>
-            </li>
-            <li>
-                <%=courses[i].teacher %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.name %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.subject %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.description %>
-            </li>
-            <a href="/zapisz/<%= courses[i].id %>">Zapisz mnie na ten kurs!</a>
+           
+            <div class="jumbotron">
+                <b>Nauczyciel: </b><%=courses[i].teacher %>
             <br>
+                <b>Nazwa kursu: </b><%=courses[i].courseInfo.name %>
+            <br>
+                <b>Przedmiot: </b><%=courses[i].courseInfo.subject %>
+            <br>
+                <b>Opis: </b><%=courses[i].courseInfo.description %>
+            <br>
+            </div>
+            
             <% } %>
     </ul>
     <a href="/profile">Back to profile</a>

@@ -6,7 +6,7 @@
     <title>my courses</title>
 
     <% include ./partials/headTeacher.ejs %>
-
+  <link href="../css/junbomycourses.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="container">
@@ -15,34 +15,28 @@
     <header>
         <% include ./partials/headerTeacher.ejs %>
     </header>
-    <p id="data">
+    <h2 id="data">
         <%=data %>
-    </p>
+    </h2>
+    <br>
     <ul>
         <% for(var i=0; i<courses.length; i++) {%>
-            <li>
-                <%=courses[i].id %>
-            </li>
-            <li>
-                <%=courses[i].teacher %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.name %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.subject %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.description %>
-            </li>
-            <li>
-                <%=courses[i].courseInfo.costPerHour %>
-            </li>
-            <li>
-                <%=courses[i].level %>
-            </li>
-            <a href="/details/<%=courses[i].id %>">Szczegóły</a>
+        <div class="jumbotron">
+               <b>Email:</b> <%=courses[i].teacher %>
+              <br>
+               <b> Nazwa kursu: </b><%=courses[i].courseInfo.name %>
+             <br>
+               <b> Przedmiot: </b><%=courses[i].courseInfo.subject %>
+             <br>
+               <b> Opis:</b> <%=courses[i].courseInfo.description %>
+             <br>
+               <b> Cena za godzine: </b><%=courses[i].courseInfo.costPerHour %>
+             <br>
+              <b>  Szkoła: </b><%=courses[i].level %>
             <br>
+          <b>  <a href="/details/<%=courses[i].id %>"> Szczegóły</a></b>
+            <br>
+        </div>    
             <% } %>
     </ul>
     <a href="/profile">back to profile</a>

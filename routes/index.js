@@ -110,7 +110,7 @@ module.exports = function (app, passport) {
             'id': req.body.courseId
         }, function (err, course) {
             if (err) {
-                console.log('modafukin erro');
+                console.log('Wystąpił błąd');
             } else {
                 resCourse.push(course);
             }
@@ -120,13 +120,13 @@ module.exports = function (app, passport) {
                 console.log('error autenticating');
             } else if (!user) {
                 res.render('details', {
-                    message: 'User with this email doesnt exist!',
+                    message: 'Użytkownik z takim emailem juz istenieje!',
                     courses: resCourse,
                     user: req.user
                 });
             } else if (!user.validPassword(req.body.pwd)) {
                 res.render('details', {
-                    message: 'Wrong Password!',
+                    message: 'Złe hasło!',
                     courses: resCourse,
                     user: req.user
                 });
@@ -142,7 +142,7 @@ module.exports = function (app, passport) {
             'id': req.body.courseId
         }, function (err, course) {
             if (err) {
-                console.log('modafukin erro');
+                console.log('Wystąpił błąd');
             } else {
                 var newsa = {
                     tittle: "tittle1",
@@ -161,7 +161,7 @@ module.exports = function (app, passport) {
             'id': req.params.id
         }, function (err, course) {
             if (err) {
-                console.log('modafukin erro');
+                console.log('Wystąpił błąd');
             } else {
                 resCourse.push(course);
                 res.render('details', {
@@ -587,7 +587,7 @@ module.exports = function (app, passport) {
             });
             lastCourses = myCourses;
             res.render('myCourses', {
-                data: "kursy uzytkownika " + req.user.local.email,
+                data: "Kursy uzytkownika " + req.user.local.email,
                 courses: myCourses.sort(sortCurses),
                 user: req.user
             });
