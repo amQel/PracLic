@@ -15,19 +15,18 @@
     <main>
         <div class="jumbotron">
             <h1>Witaj studencie!</h1>
-            <p>Tutaj znajdziesz najlepsze korepetycje! Zapisz sie na kurs już teraz!</p>
+            <p>Kursy, na których zaakceptowanie oczekujesz :</p>
         
             <br>
             <h2>Nowości:</h2>
             
-            <% for(var i=0; i<news.length; i++) {%>
+            <% for(var i=0; i<courses.length; i++) {%>
              
             
-                <h3>Temat:<%=news[i].tittle %></h3>
+                <h3>Tytuł Kursu: <%=courses[i].tittle %></h3>
             
            
-                <%=news[i].message %>
-                <a href="<%=news[i].url%>">Szczegóły</a>
+                Opis Kursu: <%=courses[i].message %>
           
             <br>
        

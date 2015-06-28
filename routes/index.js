@@ -153,7 +153,7 @@ module.exports = function (app, passport) {
         });
     });
 
-    app.post('/dodaj', function (req, res) {
+    app.post('/dodajNewsa', function (req, res) {
         crs.findOne({
             'id': req.body.courseId
         }, function (err, course) {
@@ -161,10 +161,12 @@ module.exports = function (app, passport) {
                 console.log('Wystąpił błąd');
             } else {
                 var newsa = {
-                    tittle: "tittle1",
-                    message: req.body.newInfo
+                    tittle: req.body.newsTittle,
+                    message: req.body.newInfo,
+                    to: "all",
+                    url: "joined/" + course.id
                 };
-                course.news.push(newsa);
+                course.news.unshift(newsa);
                 course.save();
             }
         });
@@ -232,6 +234,7 @@ module.exports = function (app, passport) {
         if (req.user.local.role == 'student') {
             var nws = [];
             var crsss = [];
+            var notJoined = [];
             crs.find({}, function (err, crss) {
                 crss.forEach(function (course) {
 
@@ -240,19 +243,35 @@ module.exports = function (app, passport) {
                         if (user.name == req.user.local.email) joined = 1;
                     });
                     if (joined) {
-
                         crsss.push(course);
+                    } else {
+                        notJoined.push(course);
                     }
 
                 });
                 crsss.forEach(function (course) {
                     course.news.forEach(function (neww, i) {
-                        if (i <= 2) {
+
+                        if ((i <= 10) && (((neww.to == "all")) || (neww.to == req.user.local.email))) {
+
                             nws.push(neww);
-                            console.log(neww);
+
                         }
                     });
                 });
+
+                notJoined.forEach(function (course) {
+                    course.news.forEach(function (neww, i) {
+
+                        if ((i <= 10) && (neww.to == req.user.local.email)) {
+
+                            nws.push(neww);
+
+                        }
+                    });
+                });
+
+
                 res.render('student', {
                     user: req.user,
                     news: nws
@@ -418,10 +437,7 @@ module.exports = function (app, passport) {
 
     app.get('/student', function (req, res) {
         if (req.user.local.role == 'student') {
-            res.render('student', {
-                user: req.user,
-                news: req.news
-            });
+            res.redirect('/profile');
         } else {
             res.render('index');
         }
@@ -561,7 +577,7 @@ module.exports = function (app, passport) {
                     }, function (err, questions) {
 
                         if (questions.length > 0) {
-                            
+
                             join = false;
                         }
 
@@ -574,6 +590,20 @@ module.exports = function (app, passport) {
                                     throw err;
                                 }
                             });
+                            var news = {
+                                tittle: "Zgłoszenie na kurs",
+                                message: "Zgłosiłeś się do kursu " + course.courseInfo.name,
+                                to: req.user.local.email,
+                                url: "/courseStatus"
+                            };
+
+                            course.news.unshift(news);
+                            course.save(function (err) {
+                                if (err) {
+                                    throw err;
+                                }
+                            });
+
                         } else {
                             console.log("exists");
                         }
@@ -591,6 +621,42 @@ module.exports = function (app, passport) {
         }
     });
 
+    app.get('/courseStatus', function (req, res) {
+       
+        var foundCourse = [];
+        askToJoin.find({
+            'student': req.user.local.email
+        }, function (err, questions) {
+            questions.forEach(function (question) {
+                crs.findOne({
+                    'id': question.courseId
+                }, function (err, course) {
+                     
+                    if (err) {
+                        console.log('modafukin erro');
+                    } else {
+                        
+                        var crsToPush = {
+                            tittle: course.courseInfo.name,
+                            message: course.courseInfo.description
+                        };
+                        
+                        foundCourse.unshift(crsToPush);
+                        
+                        
+                    }
+
+                });
+            });
+            
+            setTimeout(function(){ res.render('courseStatus', {
+                courses: foundCourse,
+                user: req.user
+            });}, 300);
+           
+        });
+    });
+
     app.get('/zaakceptuj/:student/:courseId', function (req, res) {
         crs.findOne({
             'id': req.params.courseId
@@ -601,12 +667,21 @@ module.exports = function (app, passport) {
                 var namee = {
                     name: req.params.student
                 };
+                var newsa = {
+                    tittle: "Zaakceptowano Zgłoszenie",
+                    message: "Twoje zgłoszenie na kurs " + course.courseInfo.name + " zostało zaakceptowane",
+                    to: req.params.student,
+                    url: "/joined/" + course.id
+                };
                 course.courseUsers.push(namee);
+                course.news.unshift(newsa);
+
                 course.save(function (err) {
                     if (err) {
                         throw err;
                     }
                 });
+
 
                 askToJoin.remove({
                     'teacher': req.user.local.email,
@@ -622,12 +697,38 @@ module.exports = function (app, passport) {
     });
 
     app.get('/odrzuc/:student/:courseId', function (req, res) {
-        askToJoin.remove({
-            'teacher': req.user.local.email,
-            'student': req.params.student,
-            'courseId': req.params.courseId
-        }, function (err) {
-            console.log(err);
+
+        crs.findOne({
+            'id': req.params.courseId
+        }, function (err, course) {
+            if (err) {
+                console.log('modafukin erro');
+            } else {
+
+                var newsa = {
+                    tittle: "Odrzucono Zgłoszenie",
+                    message: "Twoje zgłoszenie na kurs " + course.courseInfo.name + " zostało odrzucone\nZobacz zamiast tego inne kursy",
+                    to: req.params.courseId,
+                    url: "/course"
+                };
+
+                course.news.unshift(newsa);
+                course.save(function (err) {
+                    if (err) {
+                        throw err;
+                    }
+                });
+
+
+                askToJoin.remove({
+                    'teacher': req.user.local.email,
+                    'student': req.params.student,
+                    'courseId': req.params.courseId
+                }, function (err) {
+                    console.log(err);
+                });
+
+            }
         });
         res.redirect('/details/' + req.params.courseId);
     });
@@ -847,6 +948,13 @@ module.exports = function (app, passport) {
                         name: filename,
                         url: urlString
                     };
+                    var newsa = {
+                    tittle: "Nowy Materiał",
+                    message: "Dodano nowy materiał naukowy do Twojego kursu",
+                    to: "all",
+                    url: "joined/" + course.id
+                };
+                    course.news.unshift(newsa);
                     course.files.push(jsonFile);
                     course.save();
                 }
