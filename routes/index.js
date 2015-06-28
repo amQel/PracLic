@@ -713,6 +713,7 @@ module.exports = function (app, passport) {
         var form = new multiparty.Form();
         form.parse(req, function (err, fields, files) {
             var file = files.fileUploader[0];
+            var filename = file.originalFilename;
 
             crs.findOne({
                 'id': fields.courseId[0]
@@ -720,8 +721,8 @@ module.exports = function (app, passport) {
                 if (err) {
                     console.log('modafukin erro');
                 } else {
-                    var urlString = "https://s3-eu-west-1.amazonaws.com/pracalicencjacka/" + file.originalFilename;
-                    var jsonFile = { name : file.originalFilename, url : urlString };
+                    var urlString = "https://s3-eu-west-1.amazonaws.com/pracalicencjacka/" + filename;
+                    var jsonFile = { name : filename, url : urlString };
                     course.files.push(jsonFile);
                     course.save();
                 }
@@ -735,7 +736,7 @@ module.exports = function (app, passport) {
                 var s3 = new aws.S3();
                 s3.putObject({
                     Bucket: S3_BUCKET,
-                    Key: file.originalFilename,
+                    Key: filename,
                     Body: data
                 }, function(err) {
                     if(err) {
