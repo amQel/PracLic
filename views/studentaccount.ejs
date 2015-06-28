@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <% include ./partials/headStudent.ejs %>
+         <link href="../css/junbomycourses.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="container">
@@ -11,7 +12,8 @@
 <header>
     <% include ./partials/headerStudent.ejs %>
 </header>
-<h1>Add an avatar:</h1>
+<h1>Dodaj avatar:</h1>
+     <div class="jumbotron">
 <div>
 <%if(user.local.avatar && user.local.avatar.data) {%>
     <img src="data:<%= user.local.avatar.contentType %>;base64,<%= user.local.avatar.data.toString('base64') %>">
@@ -24,16 +26,20 @@
     <input type="file" name="imageUploader" accept="image/*"/>
     <button type="submit">Upload</button>
 </form>
-
-<h1>Edit your account:</h1>
+</div>
+<h1>Edytuj konto:</h1>
 
 <form action="/changeaccount" method="post">
-    <div>
-        <label>Name</label>
+    <div class="jumbotron">
+    <label>Imie</label>
+        <div>
+        
         <input type="text" name="firstName" value="<%= user.local.name %>">
     </div>
+   <br>
+        <label>Nazwisko</label>
     <div>
-        <label>Surname</label>
+        
         <input type="text" name="surname" value="<%= user.local.surname %>">
     </div>
     <br/>
@@ -46,10 +52,12 @@
         <div id="collapse2" style="display:none">
             <input type="password" name="password">
         </div>
+        
     </section>
     <br>
 
     <button type="submit">Change</button>
+        </div>
 </form>
 
 <footer>

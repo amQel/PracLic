@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
     <% include ./partials/headTeacher.ejs %>
     <link href="../css/opinionsJumbotron.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -10,101 +11,57 @@
      <header>
       <% include ./partials/headerTeacher.ejs %>
     </header>
-    <form action="search" method="post" name="search-form">
-        <div class="jumbotron">
-        <label>Województwo</label>
-            <div>
-            
-            
-            
-            <select name="province">
-                <option value="SELECT" disabled selected>Wybierz województwo</option>
-                <option value="dolnośląskie" id="id1">dolnośląskie</option>
-                <option value="kujawsko-pomorskie" id="id2">kujawsko-pomorskie</option>
-                <option value="lubelskie" id="id3">lubelskie</option>
-                <option value="lubuskie" id="id4">lubuskie</option>
-                <option value="łódzkie" id="id5">łódzkie</option>
-                <option value="małopolskie" id="id6">małopolskie</option>
-                <option value="mazowieckie" id="id7">mazowieckie</option>
-                <option value="opolskie" id="id8">opolskie</option>
-                <option value="podkarpackie" id="id9">podkarpackie</option>
-                <option value="podlaskie" id="id10">podlaskie</option>
-                <option value="pomorskie" id="id11">pomorskie</option>
-                <option value="śląskie" id="id12">śląskie</option>
-                <option value="świętokrzyskie" id="id13">świętokrzyskie</option>
-                <option value="warmińsko-mazurskie" id="id14">warmińsko-mazurskie</option>
-                <option value="wielkopolskie" id="id15">wielkopolskie</option>
-                <option value="zachodniopomorskie" id="id16">zachodniopomorskie</option>
+     <form action="/search" method="post" name="search-form">
+         <div class="jumbotron">
+             <div class="province">
+
+                 <label>Województwo</label>
+
+                 <select name="province">
+
                  </select>
              </div>
-            <br>
-        <label>Miasto</label>
-        <div class="city1">
-            
-            
-            
-            <select name="city">
-                </select>
-             </div>
-        <br>
-            <label>Szkoła</label>
-        <div class="school">
-            
-            <select name="education-level">
-                
-                <option value="podstawowa">Szkoła podstawowa</option>
-                
-                <option value="gimnazjum">Gimnazjum</option>
-                
-                <option value="liceum">Liceum</option>
-                
-                <option value="technikum">Technikum</option>
-                
-                <option value="zawodowa">Szkoła zawodowa</option>
-                
-                <option value="studia">Studia</option>
-                 </select>
-            </div>
-        <br>
-            <label>Przedmiot</label>
-        <div class="sub">
-            
-            <select name="subject">
-                
-                <option value="Język polski">Język polski</option>
-                
-                <option value="Język angielski">Język angielski</option>
-                
-                <option value="Język niemiecki">Język niemiecki</option>
-                
-                <option value="Język rosyjski">Język rosyjski</option>
-                
-                <option value="Matematyka">Matematyka</option>
-                
-                <option value="Chemia">Chemia</option>
-                
-                <option value="Fizyka">Fizyka</option>
-                
-                <option value="Biologia">Biologia</option>
-                
-                <option value="Historia">Historia</option>
-                
-                <option value="Geografia">Geografia</option>
-            
-                <option value="Sztuka">Sztuka</option>
-                
-                <option value="Religia">Religia</option>
-                
-                <option value="WOS - Wiedza o społeczeństwie">WOS - Wiedza o społeczeństwie</option>
-                
-                <option value="Informatyka">Informatyka</option>
-                
-                <option value="Wychowanie fizyczne">Wychowanie fizyczne</option>
+             <br>
+             <label>Miasto</label>
+
+             <select name="city">
+
+             </select>
+             <br>
+             <br>
+             <label>Szkoła</label>
+
+             <div class="education">
+
+                 <select name="level">
+
                  </select>
              </div>
-            </div>
-         </form>
+             <br>
+             <div>
+                 <label>Subject</label>
+                 <select name="subject">
+                 </select>
+             </div>
+             <br>
+             <div>
+                 <label>Price</label>
+                 <br/>
+                 <label>Minimum</label>
+                 <br/>
+                 <input name="minimum" type="number" min="0"/>
+                 <br/>
+                 <label>Maximum</label>
+                 <br/>
+                 <input name="maximum" type="number" min="0"/>
+             </div>
+             <button type="submit" class="btn btn-success">Search</button>
+         </div>
+
+     </form>
 </body>
+<script src="/js/jquery.min.js"></script>
+<script src="../scripts/search.js"></script>
 <footer>
         <% include ./partials/footer.ejs %>
     </footer>

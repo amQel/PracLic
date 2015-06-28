@@ -197,7 +197,6 @@ module.exports = function (app, passport) {
                                 quest.name = course.courseInfo.name;
                                 quest.email = question.student;
                                 quest.id = req.params.id;
-                                console.log(quest);
                                 studentsWillingToJoin.push(quest);
                             }
                         }
@@ -255,7 +254,7 @@ module.exports = function (app, passport) {
                         if ((i <= 10) && (((neww.to == "all")) || (neww.to == req.user.local.email))) {
 
                             nws.push(neww);
-
+                            
                         }
                     });
                 });
@@ -377,11 +376,9 @@ module.exports = function (app, passport) {
             teachers.forEach(function (teacher) {
 
                 if (teacher.local.role == 'teacher') {
-                    console.log(teacher.local.role);
                     renderTeacherData.push(teacher);
                 }
             });
-            console.log(renderTeacherData);
             res.render('teachers', {
                 user: req.user,
                 teachers: renderTeacherData
@@ -399,11 +396,9 @@ module.exports = function (app, passport) {
             teachers.forEach(function (teacher) {
 
                 if (teacher.local.role == 'teacher') {
-                    console.log(teacher.local.role);
                     renderTeacherData.push(teacher);
                 }
             });
-            console.log(renderTeacherData);
             res.render('teachersStudent', {
                 user: req.user,
                 teachers: renderTeacherData
@@ -420,11 +415,9 @@ module.exports = function (app, passport) {
             teachers.forEach(function (teacher) {
 
                 if (teacher.local.role == 'teacher') {
-                    console.log(teacher.local.role);
                     renderTeacherData.push(teacher);
                 }
             });
-            console.log(renderTeacherData);
             res.render('teachersTeachers', {
                 user: req.user,
                 teachers: renderTeacherData
@@ -611,7 +604,6 @@ module.exports = function (app, passport) {
                     });
 
 
-
                 }
 
                 res.redirect('/profile');
@@ -732,9 +724,6 @@ module.exports = function (app, passport) {
         });
         res.redirect('/details/' + req.params.courseId);
     });
-
-
-
 
 
     app.get('/wypisz/:id', function (req, res) {
@@ -866,7 +855,6 @@ module.exports = function (app, passport) {
         var opinions = [];
         opinion.find({}, function (err, opn) {
             opn.forEach(function (opin) {
-                console.log(opin);
                 opinions.push(opin);
             });
             res.render('opinions', {
@@ -891,7 +879,6 @@ module.exports = function (app, passport) {
         var opinions = [];
         opinion.find({}, function (err, opn) {
             opn.forEach(function (opin) {
-                console.log(opin);
                 opinions.push(opin);
             });
             res.render('opinionsTeacher', {
@@ -985,34 +972,59 @@ module.exports = function (app, passport) {
         var city = req.body.city;
         var educationLevel = req.body.level;
         var subject = req.body.subject;
+        var minimum = req.body.minimum;
+        var maximum = req.body.maximum;
+        var flag = true;
         var query = {};
 
         if (!(province === undefined)) {
             query.province = province;
 
             if (!(city === undefined)) {
-                query.cities = {
-                    $in: [city]
-                };
+                query.cities = {$in: [city]};
             }
         }
 
         if (!(educationLevel === undefined)) {
-            query.level = {
-                $in: [educationLevel]
-            };
+            query.level = {$in: [educationLevel]};
         }
 
         if (!(subject === undefined)) {
             query.subject = subject;
         }
 
-        crs.find(query, function (err, courses) {
+        if (!(minimum === "")) {
+            if (!(maximum === "")) {
+                query["courseInfo.costPerHour"] = {$gt: parseInt(minimum, 10), $lt: parseInt(maximum, 10)};
+                flag = false;
+            } else {
+                query["courseInfo.costPerHour"] = {$gt: parseInt(minimum, 10)};
+            }
+        }
 
-            res.render('courseNotLoggedIn', {
-                courses: courses.sort(sortCurses),
-                user: req.user
-            });
+        if (!(maximum === "") && flag) {
+            query["courseInfo.costPerHour"] = {$lt: parseInt(maximum, 10)};
+        }
+
+        crs.find(query, function (err, courses) {
+            if(req.user === undefined) {
+                res.render('courseNotLoggedIn', {
+                    courses: courses.sort(sortCurses),
+                    user: req.user
+                });
+            } else {
+                if(req.user.local.role === "student") {
+                    res.render('course', {
+                        courses: courses.sort(sortCurses),
+                        user: req.user
+                    });
+                } else if(req.user.local.role === "teacher"){
+                    res.render('courseTeacher', {
+                        courses: courses.sort(sortCurses),
+                        user: req.user
+                    });
+                }
+            }
         });
     });
 
