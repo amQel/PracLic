@@ -535,6 +535,8 @@ module.exports = function (app, passport) {
 
             var ID = req.params.id;
             var question = new askToJoin();
+            var join = true;
+
 
             crs.findOne({
                 'id': ID
@@ -542,15 +544,34 @@ module.exports = function (app, passport) {
                 if (err) {
                     console.log('modafukin erro');
                 } else {
+                    askToJoin.find({
+                        'teacher': course.teacher,
+                        'student': req.user.local.email,
+                        'courseId': req.params.id
 
-                    question.teacher = course.teacher;
-                    question.student = req.user.local.email;
-                    question.courseId = ID;
-                    question.save(function (err) {
-                        if (err) {
-                            throw err;
+                    }, function (err, questions) {
+
+                        if (questions.length > 0) {
+                            
+                            join = false;
                         }
+
+                        if (join) {
+                            question.teacher = course.teacher;
+                            question.student = req.user.local.email;
+                            question.courseId = ID;
+                            question.save(function (err) {
+                                if (err) {
+                                    throw err;
+                                }
+                            });
+                        } else {
+                            console.log("exists");
+                        }
+
                     });
+
+
 
                 }
 
