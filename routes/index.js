@@ -240,7 +240,7 @@ module.exports = function (app, passport) {
                         if (user.name == req.user.local.email) joined = 1;
                     });
                     if (joined) {
-                        console.log(course);
+
                         crsss.push(course);
                     }
 
@@ -544,6 +544,8 @@ module.exports = function (app, passport) {
 
             var ID = req.params.id;
             var question = new askToJoin();
+            var join = true;
+
 
             crs.findOne({
                 'id': ID
@@ -551,15 +553,34 @@ module.exports = function (app, passport) {
                 if (err) {
                     console.log('modafukin erro');
                 } else {
+                    askToJoin.find({
+                        'teacher': course.teacher,
+                        'student': req.user.local.email,
+                        'courseId': req.params.id
 
-                    question.teacher = course.teacher;
-                    question.student = req.user.local.email;
-                    question.courseId = ID;
-                    question.save(function (err) {
-                        if (err) {
-                            throw err;
+                    }, function (err, questions) {
+
+                        if (questions.length > 0) {
+                            
+                            join = false;
                         }
+
+                        if (join) {
+                            question.teacher = course.teacher;
+                            question.student = req.user.local.email;
+                            question.courseId = ID;
+                            question.save(function (err) {
+                                if (err) {
+                                    throw err;
+                                }
+                            });
+                        } else {
+                            console.log("exists");
+                        }
+
                     });
+
+
 
                 }
 
@@ -588,9 +609,9 @@ module.exports = function (app, passport) {
                 });
 
                 askToJoin.remove({
-                    'teacher' : req.user.local.email,
-                    'student' : req.params.student,
-                    'courseId' : req.params.courseId
+                    'teacher': req.user.local.email,
+                    'student': req.params.student,
+                    'courseId': req.params.courseId
                 }, function (err) {
                     console.log(err);
                 });
@@ -599,16 +620,16 @@ module.exports = function (app, passport) {
         });
         res.redirect('/profile');
     });
-    
-     app.get('/odrzuc/:student/:courseId', function (req, res) {
+
+    app.get('/odrzuc/:student/:courseId', function (req, res) {
         askToJoin.remove({
-                    'teacher' : req.user.local.email,
-                    'student' : req.params.student,
-                    'courseId' : req.params.courseId
-                }, function (err) {
-                    console.log(err);
-                });
-        res.redirect('/details/'+req.params.courseId);
+            'teacher': req.user.local.email,
+            'student': req.params.student,
+            'courseId': req.params.courseId
+        }, function (err) {
+            console.log(err);
+        });
+        res.redirect('/details/' + req.params.courseId);
     });
 
 
@@ -861,21 +882,25 @@ module.exports = function (app, passport) {
         if (!(province === undefined)) {
             query.province = province;
 
-            if(!(city === undefined)) {
-                query.cities = {$in: [city]};
+            if (!(city === undefined)) {
+                query.cities = {
+                    $in: [city]
+                };
             }
         }
 
-        if(!(educationLevel === undefined)){
-            query.level = {$in: [educationLevel]};
+        if (!(educationLevel === undefined)) {
+            query.level = {
+                $in: [educationLevel]
+            };
         }
 
-        if(!(subject === undefined)){
+        if (!(subject === undefined)) {
             query.subject = subject;
         }
 
         crs.find(query, function (err, courses) {
-            console.log(courses);
+
             res.render('courseNotLoggedIn', {
                 courses: courses.sort(sortCurses),
                 user: req.user
@@ -908,7 +933,6 @@ var reorganizeUsers = function (cb, req, res) {
     crs.find({}, function (err, crss) {
         crss.forEach(function (course) {
             courses.push(course);
-            console.log(course);
         });
         if (cb) cb(req, res);
     });
