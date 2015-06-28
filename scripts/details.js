@@ -17,4 +17,14 @@ $(document).ready(function(){
         }
     });
     
+    $('#uploader').submit(function(event){
+        if($('#upload').val() == ""){
+            event.preventDefault();
+            $('#problem').html('Error Loading File');
+        } else
+        {
+            $('#problem').html('');
+        }
+    });
+    
 });

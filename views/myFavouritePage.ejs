@@ -6,7 +6,11 @@
     <link href="../css/main.css" rel="stylesheet" type="text/css" />
 
     <%if(user !==undefined){ %>
+       <% if(user.local.role == 'student'){ %>
         <% include /partials/headerIndexStudent.ejs %>
+           <% } else {%>
+           <% include /partials/headerIndexTeacher.ejs %>
+           <% } %>
             <%} else {%>
 
                 <% include /partials/notlogged.ejs %>

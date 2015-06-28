@@ -16,6 +16,14 @@
     <% include ./partials/headerTeacher.ejs %>
 </header>
 <ul>
+<% for(var j = 0; j < studentsToJoin.length; j++) { %>
+<% if(j == 0) { %>
+Użytkownicy, którzy chcą dołączyć do twojego kursu:
+<% } %>
+<li><%= studentsToJoin[j].email %> do kursu <%=studentsToJoin[j].name %> <a href="/zaakceptuj/<%= studentsToJoin[j].email %>/<%= studentsToJoin[j].id %>">Zaakceptuj</a> <a href="/odrzuc/<%= studentsToJoin[j].email %>/<%= studentsToJoin[j].id %>">Odrzuć</a></li>
+<% } %>
+</ul>
+<ul>
     <% for(var i = 0; i < courses.length; i++) { %>
     <li>
         <%= courses[i].id %>
@@ -62,16 +70,20 @@
     <br><br><br>
 
     <form action="/dodaj" method="post">
-        <input type="text" name="newInfo">
+       <label>Tytuł Informacji</label>
+        <input type="text" name="newsTittle">
+        <label>Wiadomość</label>
+        <textarea name="newInfo" id="newInfo" cols="30" rows="10"></textarea>
         <input type="text" name="courseId" value="<%= courses[i].id %>" style="display:none;" readonly>
-        <button type="submit">Dodaj Newsa</button>
+        <button type="submit">Wyślij do uczniów</button>
     </form>
     <br/>
 
-    <form action="/addFile" method="post" enctype="multipart/form-data">
+    <form action="/addFile" method="post" id="uploader" enctype="multipart/form-data">
         <input type="text" name="courseId" value="<%= courses[i].id %>" style="display:none;" readonly>
-        <input type="file" name="fileUploader"/>
-        <button type="submit">Upload</button>
+        <p id="problem"></p>
+        <input type="file" id="upload" name="fileUploader"/>
+        <button type="submit">Dodaj Plik Do Kursu</button>
     </form>
     <% } %>
 
