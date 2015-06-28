@@ -13,29 +13,31 @@
         <% include ./partials/headerStudent.ejs %>
     </header>
     <h1><%= data %></h1>
-    <ul>
+    
         <% for(var i=0; i<courses.length; i++) {%>
             <div class="jumbotron">
-
+             <div class="for">
                 <br>
-                <%=courses[i].teacher %>
+                Email:<%=courses[i].teacher %>
                     <br>
-                    <%=courses[i].courseInfo.name %>
+                    Kurs:<%=courses[i].courseInfo.name %>
                         <br>
-                        <%=courses[i].courseInfo.subject %>
+                        Przedmiot:<%=courses[i].courseInfo.subject %>
                             <br>
-                            <%=courses[i].courseInfo.description %>
+                            Opis:<%=courses[i].courseInfo.description %>
                                 <br>
-                                <%=courses[i].courseInfo.costPerHour %>
+                                Cena za godzine:<%=courses[i].courseInfo.costPerHour %>
                                     <br>
-                                    <%=courses[i].level %>
+                                    Szkola:<%=courses[i].level %>
                                         <br>
                                         <a href="/wypisz/<%= courses[i].id %>">Wypisz mnie z tego kursu!</a>
-                                        <br>
+            
+        <br>
+                 </div>
             </div>
             <% } %>
-    </ul>
-    <a href="/profile">Back to profile</a>
+    
+    
     <footer>
         <% include ./partials/footer.ejs %>
     </footer>

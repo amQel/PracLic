@@ -3,7 +3,7 @@
 
 <head>
     <title>Home page</title>
-<% include ./partials/headerIndexStudent.ejs %>
+<% include ./partials/headerStudent.ejs %>
 <link href="../css/teacherJumbotron.css" rel="stylesheet" type="text/css"/>
 
 
@@ -20,7 +20,7 @@
     <header>
         <% include /partials/headIndex.ejs %>
     </header>
-
+<h1>Nauczyciele :</h1>
     <ul>
         <% for(var i=0; i<teachers.length; i++) {%>
 <div class="jumbotron">
@@ -35,13 +35,14 @@
             </div>
             <br>
             <div class = "for">
-             <%=teachers[i].local.email %>
+             Email:<%=teachers[i].local.email %>
                 <br>
 
-                <%=teachers[i].local.city %>
+                Miasto:<%=teachers[i].local.city %>
                   
 
-                    <br>
+               
+                 <br>
                     <a href="/opinion/<%= teachers[i].local.email %>">Dodaj Opinię o tym nauczycielu</a>
 
                     <br>

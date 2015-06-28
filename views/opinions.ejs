@@ -4,35 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Our Courses</title>
-   <head>
+  
     <% include ./partials/headStudent.ejs %>
-</head>
+<link href="../css/opinionsJumbotron.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body class="container">
     <header>
         <% include ./partials/headerStudent.ejs %>
     </header>
+    <h1>Twoje opinie :</h1>
     <ul>
         <% for(var i=0; i<opinions.length; i++) {%>
-            <li>
-                <%=opinions[i].student %>
-            </li>
-            <li>
-                <%=opinions[i].teacher %>
-            </li>
-            <li>
-                <%=opinions[i].opinion %>
-            </li>
+        <div class="jumbotron">
+            <div class = "for">
+            <br>
+                Student:<%=opinions[i].student %>
+            <br>
+                Nauczyciel:<%=opinions[i].teacher %>
+            <br>
+                Opinia:<%=opinions[i].opinion %>
+            <br>
 
            
 
             <a href="/usunOpinion/<%= opinions[i].id %>">Usuń tą opinię</a>
 
             <br>
+                </div>
+            </div>
             <% } %>
     </ul>
-    <a href="/profile">Back to profile</a>
+   
     <footer>
       
 
