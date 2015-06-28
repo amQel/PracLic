@@ -18,19 +18,19 @@
             <div class="jumbotron">
              <div class="for">
                 <br>
-                Email:<%=courses[i].teacher %>
+                <b>Email: </b><%=courses[i].teacher %>
                     <br>
-                    Kurs:<%=courses[i].courseInfo.name %>
+                 <b>Kurs: </b><%=courses[i].courseInfo.name %>
                         <br>
-                        Przedmiot:<%=courses[i].courseInfo.subject %>
+                        <b>Przedmiot: </b><%=courses[i].courseInfo.subject %>
                             <br>
-                            Opis:<%=courses[i].courseInfo.description %>
+                            <b>Opis: </b><%=courses[i].courseInfo.description %>
                                 <br>
-                                Cena za godzine:<%=courses[i].courseInfo.costPerHour %>
+                                <b>Cena za godzine: </b><%=courses[i].courseInfo.costPerHour %>
                                     <br>
-                                    Szkola:<%=courses[i].level %>
+                                    <b>Szkola: </b><%=courses[i].level %>
                                         <br>
-                                        <a href="/wypisz/<%= courses[i].id %>">Wypisz mnie z tego kursu!</a>
+                                       <b> <a href="/wypisz/<%= courses[i].id %>">Wypisz mnie z tego kursu!</a></b>
             
         <br>
                  </div>
