@@ -16,3 +16,20 @@ position: relative;
     
     top: -40px;
 }
+
+
+.province{
+position: relative;
+    right: 10px;
+}
+
+.city {
+position: relative;
+ right: 77px;
+}
+
+.education{
+position: relative;
+ right: 16px;
+
+}

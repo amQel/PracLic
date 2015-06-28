@@ -36,6 +36,12 @@ module.exports = function (app, passport) {
         }
     });
 
+    app.get('/notloggedOpinions', function (req, res) {
+        res.render('notloggedOpinions');
+           
+       
+    });
+    
 
     app.get('/login', function (req, res) {
         res.render('login', {

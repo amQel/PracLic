@@ -2,18 +2,23 @@
 <html lang="en">
 
 <head>
+    <Title>Szukaj</Title>
     <% include ./partials/headStudent.ejs %>
+    <link href="../css/opinionsJumbotron.css" rel="stylesheet" type="text/css"/>
+     <link href="../css/login.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="container">
      <header>
+         
       <% include ./partials/notlogged.ejs %>
+         
     </header>
     <form action="search" method="post" name="search-form">
-        
-        <div>
+        <div class="jumbotron">
+        <div class="province">
             
-            <label>Province</label>
+            <label>Województwo</label>
             
             <select name="province">
                 
@@ -36,16 +41,19 @@
                 <option value="zachodniopomorskie" id="id16">zachodniopomorskie</option>
                  </select>
              </div>
-        
-        <div>
+            <br>
+        <label>Miasto</label>
+        <div class="city">
             
-            <label>City</label>
+            
             
             <select name="city">
                 </select>
              </div>
-        
-        <div>
+        <br>
+            
+            <label>Szkoła</label>
+        <div class="education">
             
             <select name="education-level">
                 
@@ -62,8 +70,9 @@
                 <option value="studia">Studia</option>
                  </select>
             </div>
-        
-        <div>
+        <br>
+            <label>Przedmiot</label>
+       <div class="subject">
             
             <select name="subject">
                 
@@ -98,6 +107,7 @@
                 <option value="Wychowanie fizyczne">Wychowanie fizyczne</option>
                  </select>
              </div>
+            </div>
          </form>
 </body>
  <footer>

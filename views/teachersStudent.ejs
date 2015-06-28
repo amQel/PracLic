@@ -28,7 +28,7 @@
 
             <div>
                 <%if(teachers[i].local.avatar && teachers[i].local.avatar.data) {%>
-                    <img src="data:<%= user.local.avatar.contentType %>;base64,<%= user.local.avatar.data.toString('base64') %>">
+                    <img src="data:<%= teachers[i].local.avatar.contentType %>;base64,<%= teachers[i].local.avatar.data.toString('base64') %>">
                     <%} else {%>
                         <img src="../images/defaultAvatar.png">
                         <%}%>
