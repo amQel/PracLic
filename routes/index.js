@@ -802,6 +802,14 @@ module.exports = function (app, passport) {
 
     app.post('/newcourse', function (req, res) {
 
+        var c = [];
+        c = req.user.cities;
+
+        if(c === 0){
+            res.redirect('/teacheraccount');
+            alert("Uzupełnij swoje konto chuju!");
+        } else {
+
         var resnd = function (req, res) {
             var newCourse = new crs();
             newCourse.id = courses.length;
@@ -827,7 +835,7 @@ module.exports = function (app, passport) {
 
         reorganizeUsers(resnd, req, res);
 
-
+        }
     });
     app.post('/opinion', function (req, res) {
 
