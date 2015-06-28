@@ -7,32 +7,38 @@
     <link href="../css/register.css" rel="stylesheet" type="text/css"/>
     <link href="../css/courseJumbtron.css" rel="stylesheet" type="text/css"/>
     <% include ./partials/headStudent.ejs %>
-    
+
 </head>
 
 <body class="container">
-     <header>
-      <% include ./partials/notlogged.ejs %>
-    </header>
-    <ul>
-        <% for(var i=0; i<courses.length; i++) {%>
-        <div class="jumbotron">
-               Email:<%= courses[i].teacher %>
-             <br>
-                Nazwa:<%= courses[i].courseInfo.name %>
-             <br>
-                Przedmiot:<%= courses[i].courseInfo.subject %>
-             <br>
-                Opis:<%= courses[i].courseInfo.description %>
-            <br>
-            <a href="/login">Zaloguj się aby móc uczęszczać na kurs!</a>
-            </div>
-            <% } %>
-    </ul>
-    
-      <footer>
-        <% include ./partials/footer.ejs %>
-    </footer>
+<header>
+    <% include ./partials/notlogged.ejs %>
+</header>
+<% if(courses.length === 0) { %>
+<div class="jumbotron">
+    NIE ZNALEZIONO!
+</div>
+<%} else {%>
+<ul>
+    <% for(var i = 0; i < courses.length; i++) { %>
+    <div class="jumbotron">
+        Email:<%= courses[i].teacher %>
+        <br>
+        Nazwa:<%= courses[i].courseInfo.name %>
+        <br>
+        Przedmiot:<%= courses[i].courseInfo.subject %>
+        <br>
+        Opis:<%= courses[i].courseInfo.description %>
+        <br>
+        <a href="/login">Zaloguj się aby móc uczęszczać na kurs!</a>
+    </div>
+    <% } %>
+</ul>
+<%}%>
+
+<footer>
+    <% include ./partials/footer.ejs %>
+</footer>
 </body>
 
 </html>

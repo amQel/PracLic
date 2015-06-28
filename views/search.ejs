@@ -3,6 +3,7 @@
 
 <head>
     <Title>Szukaj</Title>
+    <meta charset="UTF-8">
     <% include ./partials/headStudent.ejs %>
     <link href="../css/opinionsJumbotron.css" rel="stylesheet" type="text/css"/>
     <link href="../css/login.css" rel="stylesheet" type="text/css"/>
@@ -14,7 +15,7 @@
     <% include ./partials/notlogged.ejs %>
 
 </header>
-<form action="search" method="post" name="search-form">
+<form action="/search" method="post" name="search-form">
     <div class="jumbotron">
         <div class="province">
 
@@ -22,242 +23,35 @@
 
             <select name="province">
 
-                <option value="SELECT" disabled selected>Wybierz wojewÃ³dztwo</option>
-                <option value="dolnoÅ›lÄ…skie" id="id1">dolnoÅ›lÄ…skie</option>
-                <option value="kujawsko-pomorskie" id="id2">kujawsko-pomorskie</option>
-                <option value="lubelskie" id="id3">lubelskie</option>
-                <option value="lubuskie" id="id4">lubuskie</option>
-                <option value="Å‚Ã³dzkie" id="id5">Å‚Ã³dzkie</option>
-                <option value="maÅ‚opolskie" id="id6">maÅ‚opolskie</option>
-                <option value="mazowieckie" id="id7">mazowieckie</option>
-                <option value="opolskie" id="id8">opolskie</option>
-                <option value="podkarpackie" id="id9">podkarpackie</option>
-                <option value="podlaskie" id="id10">podlaskie</option>
-                <option value="pomorskie" id="id11">pomorskie</option>
-                <option value="Å›lÄ…skie" id="id12">Å›lÄ…skie</option>
-                <option value="Å›wiÄ™tokrzyskie" id="id13">Å›wiÄ™tokrzyskie</option>
-                <option value="warmiÅ„sko-mazurskie" id="id14">warmiÅ„sko-mazurskie</option>
-                <option value="wielkopolskie" id="id15">wielkopolskie</option>
-                <option value="zachodniopomorskie" id="id16">zachodniopomorskie</option>
             </select>
         </div>
         <br>
         <label>Miasto</label>
 
-        <div class="city">
-
-
             <select name="city">
-            </select>
-        </div>
-        <br>
 
+            </select>
+        <br>
+        <br>
         <label>SzkoÅ‚a</label>
 
         <div class="education">
 
-            <select name="education-level">
+            <select name="level">
 
-                <option value="podstawowa">SzkoÅ‚a podstawowa</option>
-
-                <option value="gimnazjum">Gimnazjum</option>
-
-                <option value="liceum">Liceum</option>
-
-                <option value="technikum">Technikum</option>
-
-                <option value="zawodowa">SzkoÅ‚a zawodowa</option>
-
-                <option value="studia">Studia</option>
             </select>
         </div>
         <br>
-        <label>Przedmiot</label>
-
         <div>
             <label>Subject</label>
-            <select name="Subject" id="Subject">
-                <option value="aktorstwo ">aktorstwo</option>
-                <option value="algebra ">algebra</option>
-                <option value="analiza matematyczna ">analiza matematyczna</option>
-                <option value="anatomia ">anatomia</option>
-                <option value="architektura ">architektura</option>
-                <option value="astronomia ">astronomia</option>
-                <option value="automatyka ">automatyka</option>
-                <option value="badania operacyjne ">badania operacyjne</option>
-                <option value="BHP ">BHP</option>
-                <option value="bibliotekoznawstwo ">bibliotekoznawstwo</option>
-                <option value="biochemia ">biochemia</option>
-                <option value="biologia ">biologia</option>
-                <option value="biologia molekularna ">biologia molekularna</option>
-                <option value="bryd¿ ">bryd¿</option>
-                <option value="budownictwo ">budownictwo</option>
-                <option value="ceramika ">ceramika</option>
-                <option value="chemia ">chemia</option>
-                <option value="doradztwo zawodowe ">doradztwo zawodowe</option>
-                <option value="dziennikarstwo ">dziennikarstwo</option>
-                <option value="efektywna nauka ">efektywna nauka</option>
-                <option value="ekonometria ">ekonometria</option>
-                <option value="ekonomia ">ekonomia</option>
-                <option value="ekonomia matematyczna ">ekonomia matematyczna</option>
-                <option value="elektroenergetyka ">elektroenergetyka</option>
-                <option value="elektronika ">elektronika</option>
-                <option value="elektrotechnika ">elektrotechnika</option>
-                <option value="emisja g³osu ">emisja g³osu</option>
-                <option value="energetyka ">energetyka</option>
-                <option value="energoelektronika ">energoelektronika</option>
-                <option value="ergonomia ">ergonomia</option>
-                <option value="etyka ">etyka</option>
-                <option value="etykieta biznesu ">etykieta biznesu</option>
-                <option value="farmacja ">farmacja</option>
-                <option value="filozofia ">filozofia</option>
-                <option value="finanse i rachunkowoœæ ">finanse i rachunkowoœæ</option>
-                <option value="fitness ">fitness</option>
-                <option value="fizyka ">fizyka</option>
-                <option value="florystyka ">florystyka</option>
-                <option value="fotografia ">fotografia</option>
-                <option value="fryzjerstwo ">fryzjerstwo</option>
-                <option value="genetyka ">genetyka</option>
-                <option value="geodezja ">geodezja</option>
-                <option value="geografia ">geografia</option>
-                <option value="geologia ">geologia</option>
-                <option value="geometria wykreœlna ">geometria wykreœlna</option>
-                <option value="grafika komputerowa ">grafika komputerowa</option>
-                <option value="historia ">historia</option>
-                <option value="historia sztuki ">historia sztuki</option>
-                <option value="hotelarstwo ">hotelarstwo</option>
-                <option value="informatyka ">informatyka</option>
-                <option value="in¿ynieria chemiczna ">in¿ynieria chemiczna</option>
-                <option value="jazda konna ">jazda konna</option>
-                <option value="jazda na deskorolce ">jazda na deskorolce</option>
-                <option value="jazda na nartach ">jazda na nartach</option>
-                <option value="jêzyk afrikaans ">jêzyk afrikaans</option>
-                <option value="jêzyk akadyjski ">jêzyk akadyjski</option>
-                <option value="jêzyk albañski ">jêzyk albañski</option>
-                <option value="jêzyk angielski ">jêzyk angielski</option>
-                <option value="jêzyk arabski ">jêzyk arabski</option>
-                <option value="jêzyk azerbejd¿añski ">jêzyk azerbejd¿añski</option>
-                <option value="jêzyk bia³oruski ">jêzyk bia³oruski</option>
-                <option value="jêzyk bu³garski ">jêzyk bu³garski</option>
-                <option value="jêzyk chiñski ">jêzyk chiñski</option>
-                <option value="jêzyk chorwacki ">jêzyk chorwacki</option>
-                <option value="jêzyk czeski ">jêzyk czeski</option>
-                <option value="jêzyk dari ">jêzyk dari</option>
-                <option value="jêzyk duñski ">jêzyk duñski</option>
-                <option value="jêzyk egipski ">jêzyk egipski</option>
-                <option value="jêzyk esperanto ">jêzyk esperanto</option>
-                <option value="jêzyk estoñski ">jêzyk estoñski</option>
-                <option value="jêzyk fiñski ">jêzyk fiñski</option>
-                <option value="jêzyk francuski ">jêzyk francuski</option>
-                <option value="jêzyk grecki ">jêzyk grecki</option>
-                <option value="jêzyk gruziñski ">jêzyk gruziñski</option>
-                <option value="jêzyk hebrajski ">jêzyk hebrajski</option>
-                <option value="jêzyk hindi ">jêzyk hindi</option>
-                <option value="jêzyk hiszpañski ">jêzyk hiszpañski</option>
-                <option value="jêzyk holenderski ">jêzyk holenderski</option>
-                <option value="jêzyk indonezyjski ">jêzyk indonezyjski</option>
-                <option value="jêzyk islandzki ">jêzyk islandzki</option>
-                <option value="jêzyk japoñski ">jêzyk japoñski</option>
-                <option value="jêzyk jidysz ">jêzyk jidysz</option>
-                <option value="jêzyk kataloñski ">jêzyk kataloñski</option>
-                <option value="jêzyk koreañski ">jêzyk koreañski</option>
-                <option value="jêzyk litewski ">jêzyk litewski</option>
-                <option value="jêzyk ³otewski ">jêzyk ³otewski</option>
-                <option value="jêzyk ³u¿ycki ">jêzyk ³u¿ycki</option>
-                <option value="jêzyk macedoñski ">jêzyk macedoñski</option>
-                <option value="jêzyk migowy ">jêzyk migowy</option>
-                <option value="jêzyk mongolski ">jêzyk mongolski</option>
-                <option value="jêzyk niderlandzki ">jêzyk niderlandzki</option>
-                <option value="jêzyk niemiecki ">jêzyk niemiecki</option>
-                <option value="jêzyk norweski ">jêzyk norweski</option>
-                <option value="jêzyk paszto ">jêzyk paszto</option>
-                <option value="jêzyk perski ">jêzyk perski</option>
-                <option value="jêzyk polski ">jêzyk polski</option>
-                <option value="jêzyk polski dla cudzoziemców ">jêzyk polski dla cudzoziemców</option>
-                <option value="jêzyk portugalski ">jêzyk portugalski</option>
-                <option value="jêzyk rosyjski ">jêzyk rosyjski</option>
-                <option value="jêzyk rumuñski ">jêzyk rumuñski</option>
-                <option value="jêzyk serbski ">jêzyk serbski</option>
-                <option value="jêzyk s³owacki ">jêzyk s³owacki</option>
-                <option value="jêzyk s³oweñski ">jêzyk s³oweñski</option>
-                <option value="jêzyk sumeryjski ">jêzyk sumeryjski</option>
-                <option value="jêzyk szwedzki ">jêzyk szwedzki</option>
-                <option value="jêzyk tajski ">jêzyk tajski</option>
-                <option value="jêzyk turecki ">jêzyk turecki</option>
-                <option value="jêzyk tybetañski ">jêzyk tybetañski</option>
-                <option value="jêzyk ukraiñski ">jêzyk ukraiñski</option>
-                <option value="jêzyk uzbecki ">jêzyk uzbecki</option>
-                <option value="jêzyk wêgierski ">jêzyk wêgierski</option>
-                <option value="jêzyk wietnamski ">jêzyk wietnamski</option>
-                <option value="jêzyk w³oski ">jêzyk w³oski</option>
-                <option value="konstrukcje in¿ynierskie ">konstrukcje in¿ynierskie</option>
-                <option value="kosmetologia ">kosmetologia</option>
-                <option value="³acina ">³acina</option>
-                <option value="logika ">logika</option>
-                <option value="logistyka ">logistyka</option>
-                <option value="logopedia ">logopedia</option>
-                <option value="malarstwo i rysunek ">malarstwo i rysunek</option>
-                <option value="marketing ">marketing</option>
-                <option value="matematyka ">matematyka</option>
-                <option value="matematyka dyskretna ">matematyka dyskretna</option>
-                <option value="matematyka wy¿sza ">matematyka wy¿sza</option>
-                <option value="mechanika ">mechanika</option>
-                <option value="mechanika budowli ">mechanika budowli</option>
-                <option value="mechanika p³ynów ">mechanika p³ynów</option>
-                <option value="medycyna ">medycyna</option>
-                <option value="metodologia badañ ">metodologia badañ</option>
-                <option value="metody numeryczne ">metody numeryczne</option>
-                <option value="mikrobiologia ">mikrobiologia</option>
-                <option value="modelarstwo ">modelarstwo</option>
-                <option value="motywacja ">motywacja</option>
-                <option value="muzyka ">muzyka</option>
-                <option value="nauczanie pocz¹tkowe ">nauczanie pocz¹tkowe</option>
-                <option value="nauka jazdy ">nauka jazdy</option>
-                <option value="nauka o materia³ach ">nauka o materia³ach</option>
-                <option value="obs³uga komputera ">obs³uga komputera</option>
-                <option value="ochrona œrodowiska ">ochrona œrodowiska</option>
-                <option value="pedagogika ">pedagogika</option>
-                <option value="p³ywanie ">p³ywanie</option>
-                <option value="podstawy konstrukcji maszyn ">podstawy konstrukcji maszyn</option>
-                <option value="politologia ">politologia</option>
-                <option value="pozycjonowanie stron ">pozycjonowanie stron</option>
-                <option value="prawo ">prawo</option>
-                <option value="prognozowanie ">prognozowanie</option>
-                <option value="programowanie ">programowanie</option>
-                <option value="przedsiêbiorczoœæ ">przedsiêbiorczoœæ</option>
-                <option value="przyroda ">przyroda</option>
-                <option value="psychologia ">psychologia</option>
-                <option value="public relations ">public relations</option>
-                <option value="rachunek prawdopodobieñstwa ">rachunek prawdopodobieñstwa</option>
-                <option value="rachunkowoœæ ">rachunkowoœæ</option>
-                <option value="rolnictwo ">rolnictwo</option>
-                <option value="rysunek techniczny ">rysunek techniczny</option>
-                <option value="rzeŸba ">rzeŸba</option>
-                <option value="samoobrona ">samoobrona</option>
-                <option value="jazda na snowboardzie ">jazda na snowboardzie</option>
-                <option value="socjologia ">socjologia</option>
-                <option value="statystyka ">statystyka</option>
-                <option value="szachy ">szachy</option>
-                <option value="sztuka cyrkowa ">sztuka cyrkowa</option>
-                <option value="szycie na maszynie ">szycie na maszynie</option>
-                <option value="taniec ">taniec</option>
-                <option value="techniki pamiêciowe ">techniki pamiêciowe</option>
-                <option value="telekomunikacja ">telekomunikacja</option>
-                <option value="tenis ">tenis</option>
-                <option value="termodynamika ">termodynamika</option>
-                <option value="turystyka ">turystyka</option>
-                <option value="tworzenie stron ">tworzenie stron</option>
-                <option value="witra¿ ">witra¿</option>
-                <option value="wos ">wos</option>
-                <option value="wytrzyma³oœæ materia³ów ">wytrzyma³oœæ materia³ów</option>
-                <option value="zarz¹dzanie ">zarz¹dzanie</option>
-                <option value="¿eglarstwo">¿eglarstwo</option>
+            <select name="subject">
             </select>
         </div>
         <br>
+        <button type="submit" class="btn btn-success">Search</button>
     </div>
+
 </form>
-</body>
 </body>
 <script src="/js/jquery.min.js"></script>
 <script src="../scripts/search.js"></script>

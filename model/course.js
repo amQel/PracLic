@@ -14,7 +14,8 @@ var courseSchema = mongoose.Schema({
     level: [String],
     news: [{ tittle: String, message: String }],
     files: [{ name: String, url: String }],
-    location: [{ province: String, cities: [String] }]
+    province: String,
+    cities: [String]
 });
 
 

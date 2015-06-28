@@ -34,11 +34,11 @@ module.exports = function (passport) {
                     newUser.local.email = email;
                     newUser.local.password = newUser.generateHash(password);
                     newUser.local.role = req.body.role;
-                    newUser.name = "";
-                    newUser.surname = "";
-                    newUser.province = "";
-                    newUser.cities = [];
-                    newUser.phone = "";
+                    newUser.local.name = "";
+                    newUser.local.surname = "";
+                    newUser.local.province = "";
+                    newUser.local.cities = [];
+                    newUser.local.phone = "";
 
                     newUser.save(function(err){
                         if(err){

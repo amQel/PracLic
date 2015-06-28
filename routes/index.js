@@ -38,10 +38,10 @@ module.exports = function (app, passport) {
 
     app.get('/notloggedOpinions', function (req, res) {
         res.render('notloggedOpinions');
-           
-       
+
+
     });
-    
+
 
     app.get('/login', function (req, res) {
         res.render('login', {
@@ -597,10 +597,8 @@ module.exports = function (app, passport) {
             var newCourse = new crs();
             newCourse.id = courses.length;
             newCourse.teacher = req.user.local.email;
-
-            var locationJson = { province: req.user.local.province, cities: req.user.local.cities };
-
-            newCourse.location.push(locationJson);
+            newCourse.province = req.user.local.province;
+            newCourse.cities = req.user.local.cities;
             newCourse.courseInfo.name = req.body.courseName;
             newCourse.courseInfo.subject = req.body.Subject;
             newCourse.courseInfo.description = req.body.courseDescription;
@@ -726,14 +724,14 @@ module.exports = function (app, passport) {
                     console.log('modafukin erro');
                 } else {
                     var urlString = "https://s3-eu-west-1.amazonaws.com/pracalicencjacka/" + filename;
-                    var jsonFile = { name : filename, url : urlString };
+                    var jsonFile = {name: filename, url: urlString};
                     course.files.push(jsonFile);
                     course.save();
                 }
             });
 
-            fs.readFile(file.path, function(err, data){
-                if(err){
+            fs.readFile(file.path, function (err, data) {
+                if (err) {
                     throw (err);
                 }
 
@@ -742,12 +740,44 @@ module.exports = function (app, passport) {
                     Bucket: S3_BUCKET,
                     Key: filename,
                     Body: data
-                }, function(err) {
-                    if(err) {
+                }, function (err) {
+                    if (err) {
                         throw (err);
                     }
                 });
                 res.redirect('/mycourses');
+            });
+        });
+    });
+
+    app.post('/search', function (req, res) {
+        var province = req.body.province;
+        var city = req.body.city;
+        var educationLevel = req.body.level;
+        var subject = req.body.subject;
+        var query = {};
+
+        if (!(province === undefined)) {
+            query.province = province;
+
+            if(!(city === undefined)) {
+                query.cities = {$in: [city]};
+            }
+        }
+
+        if(!(educationLevel === undefined)){
+            query.level = {$in: [educationLevel]};
+        }
+
+        if(!(subject === undefined)){
+            query.subject = subject;
+        }
+
+        crs.find(query, function (err, courses) {
+            console.log(courses);
+            res.render('courseNotLoggedIn', {
+                courses: courses.sort(sortCurses),
+                user: req.user
             });
         });
     });
