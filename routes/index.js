@@ -18,8 +18,8 @@ module.exports = function (app, passport) {
             if (req.user.local.role === 'student') {
                 res.render('indexStudent', {
                     data: 'Zalogowano jako ' + req.user.local.email,
-                    user: req.user,news: req.news
-                    
+                    user: req.user, news: req.news
+
                 });
             } else {
 
@@ -227,22 +227,22 @@ module.exports = function (app, passport) {
         var surname = req.body.surname;
         var password = req.body.password;
 
-        usrs.findOne({ 'local.email' : req.user.local.email }, function (err, userToEdit) {
-            if(err){
+        usrs.findOne({'local.email': req.user.local.email}, function (err, userToEdit) {
+            if (err) {
                 throw(err);
             } else {
-                if(name !== ""){
+                if (name !== "") {
                     userToEdit.local.name = name;
                 }
-                if(surname !== ""){
+                if (surname !== "") {
                     userToEdit.local.surname = surname;
                 }
-                if(password !== ""){
+                if (password !== "") {
                     userToEdit.local.password = userToEdit.generateHash(password);
                 }
             }
-            userToEdit.save(function(err){
-                if(err) {
+            userToEdit.save(function (err) {
+                if (err) {
                     throw(err);
                 }
             })
@@ -261,31 +261,31 @@ module.exports = function (app, passport) {
         var province = req.body.province;
         var cities = req.body.city;
 
-        usrs.findOne({ 'local.email' : req.user.local.email }, function (err, userToEdit) {
-            if(err){
+        usrs.findOne({'local.email': req.user.local.email}, function (err, userToEdit) {
+            if (err) {
                 throw(err);
             } else {
-                if(name !== ""){
+                if (name !== "") {
                     userToEdit.local.name = name;
                 }
-                if(surname !== ""){
+                if (surname !== "") {
                     userToEdit.local.surname = surname;
                 }
-                if(phone !== ""){
+                if (phone !== "") {
                     userToEdit.local.phone = phone;
                 }
-                if(password !== ""){
+                if (password !== "") {
                     userToEdit.local.password = userToEdit.generateHash(password);
                 }
-                if(province !== undefined) {
+                if (province !== undefined) {
                     userToEdit.local.province = province;
                 }
-                if(cities !== undefined){
+                if (cities !== undefined) {
                     userToEdit.local.cities = cities;
                 }
             }
-            userToEdit.save(function(err){
-                if(err) {
+            userToEdit.save(function (err) {
+                if (err) {
                     throw(err);
                 }
             })
@@ -497,7 +497,7 @@ module.exports = function (app, passport) {
                 var namee = {
                     name: req.user.local.email
                 };
-                
+
                 course.courseUsers.push(namee);
                 course.save(function (err) {
                     if (err) {
@@ -519,13 +519,13 @@ module.exports = function (app, passport) {
             if (err) {
                 console.log('modafukin erro');
             } else {
-                
+
                 course.courseUsers.forEach(function (user, i) {
                     if (user.name == req.user.local.email) {
                         course.courseUsers.splice(i, 1);
                     }
                 });
-                
+
                 course.save(function (err) {
                     if (err) {
                         console.log('error saving user');
@@ -595,6 +595,7 @@ module.exports = function (app, passport) {
             newCourse.courseInfo.subject = req.body.Subject;
             newCourse.courseInfo.description = req.body.courseDescription;
             newCourse.courseInfo.costPerHour = req.body.costPerHour;
+            newCourse.files = [];
             newCourse.level = req.body.educationLevel;
 
             newCourse.save(function (err) {
@@ -702,22 +703,41 @@ module.exports = function (app, passport) {
         });
     });
 
-    app.post('/addFile', function(req, res){
-       var form = new multiparty.Form();
+    app.post('/addFile', function (req, res) {
+        var form = new multiparty.Form();
         form.parse(req, function (err, fields, files) {
-           var file = files.fileUploader[0];
-            console.log(file);
-            //fs.readFile(file.path, function(err, data){
-            //    if(err){
-            //        throw (err);
-            //    }
-            //
-            //    var s3 = new AWS.S3();
-            //    s3.client.putObject({
-            //        Bucket: S3_BUCKET,
-            //        Key:
-            //    })
-            //})
+            var file = files.fileUploader[0];
+
+            crs.findOne({
+                'id': fields.courseId[0]
+            }, function (err, course) {
+                if (err) {
+                    console.log('modafukin erro');
+                } else {
+                    var urlString = "https://s3-eu-west-1.amazonaws.com/pracalicencjacka/" + file.originalFilename;
+                    var jsonFile = { name : file.originalFilename, url : urlString };
+                    course.files.push(jsonFile);
+                    course.save();
+                }
+            });
+
+            fs.readFile(file.path, function(err, data){
+                if(err){
+                    throw (err);
+                }
+
+                var s3 = new aws.S3();
+                s3.putObject({
+                    Bucket: S3_BUCKET,
+                    Key: file.originalFilename,
+                    Body: data
+                }, function(err) {
+                    if(err) {
+                        throw (err);
+                    }
+                });
+                res.redirect('/mycourses');
+            });
         });
     });
 
