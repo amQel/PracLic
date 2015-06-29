@@ -37,10 +37,12 @@
             <div class = "for">
             <b> Email: </b><%=teachers[i].local.email %>
                 <br>
+                <b> Miasta: </b>
+                <% for(var j=0; j<teachers[i].local.cities.length; j++) {%>
+                <b><%=teachers[i].local.cities[j] %><% if(j<teachers[i].local.cities.length-1){%>,<% } %> </b>
+                <% }%>
 
-                <b>Miasto: </b><%=teachers[i].local.city %>
-                  
-<br>
+                <br>
               <b>Telefon: </b><%=teachers[i].local.phone %>
                 
                  <br>

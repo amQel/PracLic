@@ -38,8 +38,7 @@
                 <% for(var j=0; j<teachers[i].local.cities.length; j++) {%>
                 <b><%=teachers[i].local.cities[j] %><% if(j<teachers[i].local.cities.length-1){%>,<% } %> </b>
                 <% }%>
-                <br>
-                <b> Przedmiot: </b><%=teachers[i].local.subject %></b>
+
                 <br>
                   <%if(user !==undefined){ %>
             <b><a href="/opinion/<%= teachers[i].local.email%>">Wystaw Opinię!</a></b>

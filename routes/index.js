@@ -5,6 +5,7 @@ var aws = require('aws-sdk');
 aws.config.loadFromPath('./config/awsConfig.json');
 var S3_BUCKET = 'pracalicencjacka';
 var courses = [];
+var studentsWillingToJoinGlobal = [];
 
 var crs = require('../model/course');
 var usrs = require('../model/user');
@@ -120,6 +121,8 @@ module.exports = function (app, passport) {
 
     app.post('/autenticate', function (req, res) {
         resCourse = [];
+
+
         crs.findOne({
             'id': req.body.courseId
         }, function (err, course) {
@@ -138,13 +141,16 @@ module.exports = function (app, passport) {
                 res.render('details', {
                     message: 'Użytkownik z takim emailem juz istenieje!',
                     courses: resCourse,
-                    user: req.user
+                    user: req.user,
+                    studentsToJoin : studentsWillingToJoinGlobal
+
                 });
             } else if (!user.validPassword(req.body.pwd)) {
                 res.render('details', {
                     message: 'Złe hasło!',
                     courses: resCourse,
-                    user: req.user
+                    user: req.user,
+                    studentsToJoin : studentsWillingToJoinGlobal
                 });
             } else {
                 res.redirect('/usun/' + req.body.courseId);
@@ -203,6 +209,7 @@ module.exports = function (app, passport) {
                             }
                         }
                     });
+                    studentsWillingToJoinGlobal = studentsWillingToJoin;
                     resCourse.push(course);
                     res.render('details', {
                         message: '',
@@ -731,7 +738,7 @@ module.exports = function (app, passport) {
                 var newsa = {
                     tittle: "Odrzucono Zgłoszenie",
                     message: "Twoje zgłoszenie na kurs " + course.courseInfo.name + " zostało odrzucone\nZobacz zamiast tego inne kursy",
-                    to: req.params.courseId,
+                    to: req.params.student,
                     url: "/course",
                     date: d.getTime()
                 };

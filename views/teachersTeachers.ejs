@@ -37,7 +37,13 @@
                 <br>
                 <b>Email: </b><%=teachers[i].local.email %>
                 <br>
-                <b>Miasto: </b><%=teachers[i].local.city %>
+                    <b> Miasta: </b>
+                    <% for(var j=0; j<teachers[i].local.cities.length; j++) {%>
+                    <b><%=teachers[i].local.cities[j] %><% if(j<teachers[i].local.cities.length-1){%>,<% } %> </b>
+                    <% }%>
+
+                    <br>
+
                
             
                 
